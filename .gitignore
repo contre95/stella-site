@@ -1,0 +1,9 @@
+.env
+.hugo_build.lock
+node_modules
+public
+resources
+
+# stella checkout the docs are built from (scripts/fetch-stella.sh)
+.stella
+.stella-ref

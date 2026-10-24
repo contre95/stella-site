@@ -1,0 +1,51 @@
+// Stella look: the app's palette (Tailwind grays, pink accent from styles/input.css)
+// on a black background, with the system font stack the app uses.
+
+$stella-accent: #db2777; // pink-600
+$stella-link: #f9a8d4; // pink-300
+$stella-link-hover: #f472b6; // pink-400
+$stella-active: #fbcfe8; // pink-200
+
+$font-family-sans-serif:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+// Body text at the sidebar's size (Doks bumps it to 1.125rem from md up)
+$font-size-md: $font-size-base;
+
+$font-family-monospace: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+// Light mode
+$primary: $stella-accent;
+$body-bg: #f8fafc;
+$body-color: #374151;
+
+// Dark mode
+$body-bg-dark: #000;
+$body-color-dark: #d1d5db; // gray-300
+$headings-color-dark: #fff;
+$link-color-dark: $stella-link;
+$button-color-dark: $stella-link;
+$focus-color-dark: $stella-link-hover;
+$border-dark: rgba(31, 41, 55, 0.7); // gray-800/70
+$body-overlay-dark: rgba(17, 24, 39, 0.6); // gray-900/60
+$light-bg-subtle-dark: #111827;
+$light-border-subtle-dark: #1f2937;
+$navbar-dark-color: $body-color-dark;
+$navbar-dark-hover-color: #f472b6; // pink-400
+$navbar-dark-active-color: $stella-active;
+
+:root,
+::backdrop {
+    --sl-color-accent-high: #{$stella-link};
+}

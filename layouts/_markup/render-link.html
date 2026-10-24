@@ -1,0 +1,26 @@
+{{- /*
+Overrides the Doks link hook so the docs pulled from the stella repo can keep
+GitHub-friendly relative links ("plugins.md", "../jobs.md#webhooks", "features/")
+and still point at the right page here. External links, anchors and mailto
+links behave as before.
+*/ -}}
+{{- $dest := .Destination -}}
+{{- $u := urls.Parse $dest -}}
+{{- if (strings.HasPrefix $dest "mailto") -}}
+  {{- with .Text -}}
+    {{- partial "main/email" (dict "emailAddress" $.Destination "emailTitle" .) -}}
+  {{- else -}}
+    {{- partial "main/email" (dict "emailAddress" $.Destination) -}}
+  {{- end -}}
+{{- else -}}
+  {{- if and (not $u.IsAbs) $u.Path (not (strings.HasPrefix $u.Path "/")) -}}
+    {{- $target := path.Join .Page.File.Dir $u.Path | strings.TrimSuffix ".md" | strings.TrimSuffix "/_index" -}}
+    {{- with site.GetPage $target -}}
+      {{- $dest = .RelPermalink -}}
+      {{- with $u.Fragment -}}{{- $dest = printf "%s#%s" $dest . -}}{{- end -}}
+    {{- else -}}
+      {{- warnf "%s: unresolved link %q" $.Page.File.Path $.Destination -}}
+    {{- end -}}
+  {{- end -}}
+  <a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- end -}}

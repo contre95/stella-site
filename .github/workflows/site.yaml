@@ -1,0 +1,86 @@
+name: Site
+# Builds the docs (Hugo, pages from stella's docs/ folder) from the latest stella
+# release and publishes them to a branch. A git-connected Cloudflare Pages project
+# deploys that branch:
+#
+#   build/docs -> stella-docs (stella.contre.io)
+#
+# - push to main / manual run: always rebuilds.
+# - daily schedule: rebuilds only when the docs aren't on the latest release yet
+#   (the build branch has a version.txt with the stella tag it was built from).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: stella tag or branch to build from (default latest release)
+        type: string
+        required: false
+  schedule:
+    - cron: "0 5 * * *"
+
+permissions:
+  contents: write # push the build branch
+
+concurrency:
+  group: site
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    outputs:
+      ref: ${{ steps.resolve.outputs.ref }}
+      docs: ${{ steps.resolve.outputs.docs }}
+    steps:
+      - name: Resolve stella ref
+        id: resolve
+        env:
+          REF: ${{ inputs.ref }}
+          EVENT: ${{ github.event_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ -z "$REF" ]; then
+            REF=$(git ls-remote --tags --refs --sort=-v:refname https://github.com/contre95/stella 'v*' \
+              | sed 's|.*refs/tags/||' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+          fi
+          [ -n "$REF" ] || { echo "no stella release found"; exit 1; }
+          echo "ref=$REF" >>"$GITHUB_OUTPUT"
+          build=true live=""
+          if [ "$EVENT" = schedule ]; then
+            live=$(curl -fsS "https://raw.githubusercontent.com/$REPO/build/docs/version.txt" 2>/dev/null || true)
+            [ "$live" = "$REF" ] && build=false
+          fi
+          echo "docs: build=$build (published: ${live:-none}, latest: $REF)"
+          echo "docs=$build" >>"$GITHUB_OUTPUT"
+
+  docs:
+    needs: resolve
+    if: needs.resolve.outputs.docs == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 0.148.1
+          extended: true
+      - name: Fetch stella
+        env:
+          STELLA_REF: ${{ needs.resolve.outputs.ref }}
+        run: scripts/fetch-stella.sh
+      - name: Build docs
+        run: |
+          npm ci
+          npm run build
+          cp .stella-ref public/version.txt
+      - name: Publish to build/docs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: ${{ needs.resolve.outputs.ref }}
+        run: |
+          scripts/publish-branch.sh public build/docs "docs: stella $REF (site ${GITHUB_SHA::7})"

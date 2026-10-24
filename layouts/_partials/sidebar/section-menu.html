@@ -1,0 +1,4 @@
+{{- /* Lists the section's pages directly, without the section itself as a wrapper. */ -}}
+{{- with site.GetPage (printf "/%s" .Section) }}
+  {{ partial "sidebar/render-section-menu.html" (dict "currentPage" $ "nodes" .Pages) }}
+{{- end }}

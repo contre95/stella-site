@@ -1,0 +1,769 @@
+// Stella look, mirroring the app's views (public/css/input.css and the
+// Tailwind classes in views/): black patterned background, translucent gray-900
+// cards with gray-800 borders, the glowing pink wordmark, a roomy sidebar with
+// icons, and gradient icon tiles.
+
+$stella-pattern: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 0h2v20H9V0zm25.134.84l1.732 1-10 17.32-1.732-1 10-17.32zm-20 20l1.732 1-10 17.32-1.732-1 10-17.32zM58.16 4.134l1 1.732-17.32 10-1-1.732 17.32-10zm-40 40l1 1.732-17.32 10-1-1.732 17.32-10zM80 9v2H60V9h20zM20 69v2H0v-2h20zm79.32-55l-1 1.732-17.32-10L82 4l17.32 10zm-80 80l-1 1.732-17.32-10L2 84l17.32 10zm96.546-75.84l-1.732 1-10-17.32 1.732-1 10 17.32zm-100 100l-1.732 1-10-17.32 1.732-1 10 17.32zM38.16 24.134l1 1.732-17.32 10-1-1.732 17.32-10zM60 29v2H40v-2h20zm19.32 5l-1 1.732-17.32-10L62 24l17.32 10zm16.546 4.16l-1.732 1-10-17.32 1.732-1 10 17.32zM111 40h-2V20h2v20zm3.134.84l1.732 1-10 17.32-1.732-1 10-17.32zM40 49v2H20v-2h20zm19.32 5l-1 1.732-17.32-10L42 44l17.32 10zm16.546 4.16l-1.732 1-10-17.32 1.732-1 10 17.32zM91 60h-2V40h2v20zm3.134.84l1.732 1-10 17.32-1.732-1 10-17.32zm24.026 3.294l1 1.732-17.32 10-1-1.732 17.32-10zM39.32 74l-1 1.732-17.32-10L22 64l17.32 10zm16.546 4.16l-1.732 1-10-17.32 1.732-1 10 17.32zM71 80h-2V60h2v20zm3.134.84l1.732 1-10 17.32-1.732-1 10-17.32zm24.026 3.294l1 1.732-17.32 10-1-1.732 17.32-10zM120 89v2h-20v-2h20zm-84.134 9.16l-1.732 1-10-17.32 1.732-1 10 17.32zM51 100h-2V80h2v20zm3.134.84l1.732 1-10 17.32-1.732-1 10-17.32zm24.026 3.294l1 1.732-17.32 10-1-1.732 17.32-10zM100 109v2H80v-2h20zm19.32 5l-1 1.732-17.32-10 1-1.732 17.32 10zM31 120h-2v-20h2v20z' fill='%23848484' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+
+// Tailwind colors used by the app
+$gray-400-tw: #9ca3af;
+$gray-500-tw: #6b7280;
+$gray-800-tw: #1f2937;
+$gray-900-tw: #111827;
+$neutral-800-tw: #262626;
+$card-bg-dark: rgba(17, 24, 39, 0.3); // gray-900/30
+$card-bg-dark-hover: rgba(17, 24, 39, 0.6);
+$card-border-dark: rgba(31, 41, 55, 0.7); // gray-800/70
+$card-bg-light: rgba(255, 255, 255, 0.6);
+$card-border-light: rgba(229, 231, 235, 0.8);
+
+$icon-colors: (
+    blue: #3b82f6,
+    cyan: #06b6d4,
+    purple: #a855f7,
+    pink: #ec4899,
+    green: #22c55e,
+    orange: #f97316,
+);
+
+// ---------------------------------------------------------------- page
+
+// Icons we place ourselves (sidebar, buttons, tiles) opt out of Doks'
+// `.content .svg-inline` sizing and bottom margin, meant for page content.
+.content .svg-inline-custom,
+.svg-inline-custom {
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    background-color: $body-bg;
+    background-image: linear-gradient(135deg, rgba(236, 72, 153, 0.03) 0%, transparent 50%), $stella-pattern;
+    background-attachment: fixed;
+}
+
+@include color-mode(dark) {
+    body {
+        background-color: #000;
+        background-image: linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, transparent 70%), $stella-pattern;
+    }
+}
+
+::selection {
+    background: rgba(236, 72, 153, 0.45);
+    color: #fff;
+}
+
+// ---------------------------------------------------------------- header
+
+.navbar {
+    background-color: rgba(248, 250, 252, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid $card-border-light;
+}
+
+@include color-mode(dark) {
+    .navbar,
+    body.home .navbar {
+        background-color: rgba(0, 0, 0, 0.6);
+        border-bottom: 1px solid $card-border-dark;
+    }
+
+    .navbar .btn-link:hover,
+    .navbar .nav-link:hover {
+        color: #f472b6;
+    }
+}
+
+.navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.brand-logo {
+    height: 36px;
+    width: auto;
+    filter: drop-shadow(0 0 6px rgba(236, 72, 153, 0.45));
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #1f2937;
+}
+
+@include color-mode(dark) {
+    .brand-name {
+        color: $stella-link;
+        text-shadow: 0 0 10px rgba(236, 72, 153, 0.8);
+        transition: text-shadow 0.3s ease;
+    }
+
+    .navbar-brand:hover .brand-name {
+        color: $stella-link;
+        text-shadow: 0 0 15px rgba(96, 165, 250, 0.9);
+    }
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+}
+
+// Sit the menu links on the brand name's baseline rather than centring their
+// smaller text box against it
+@include media-breakpoint-up(lg) {
+    .navbar-nav .nav-link {
+        position: relative;
+        top: 0.2rem;
+    }
+}
+
+// ---------------------------------------------------------------- sidebar
+
+.docs-sidebar .section-nav,
+.offcanvas .section-nav {
+    padding-top: 1.5rem;
+
+    > ul > li {
+        margin-bottom: 0.25rem;
+    }
+
+    a,
+    summary {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 0;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        color: #4b5563;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition:
+            background-color 0.2s,
+            color 0.2s;
+    }
+
+    summary {
+        cursor: pointer;
+        list-style: none;
+        font-weight: 600;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+    }
+
+    a:hover,
+    summary:hover {
+        background-color: #f3f4f6;
+        color: #374151;
+    }
+
+    li.active > a {
+        background-color: #e5e7eb;
+        color: #111827;
+    }
+
+    // Sub-items, like the app's "Importing / Playlists" under "Library"
+    ul.list-nested {
+        border-left: 0;
+        margin: 0.25rem 0 0.5rem 1.5rem;
+
+        li {
+            margin: 0.125rem 0;
+        }
+
+        li a {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.95rem;
+        }
+    }
+
+    .nav-icon {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 1.5rem;
+        stroke-width: 1.5;
+    }
+
+    ul.list-nested .nav-icon {
+        width: 1rem;
+        height: 1rem;
+        stroke-width: 2;
+    }
+
+    @each $name, $color in $icon-colors {
+        .nav-icon-#{$name} {
+            color: $color;
+        }
+    }
+}
+
+@include color-mode(dark) {
+    .docs-sidebar .section-nav,
+    .offcanvas .section-nav {
+        a,
+        summary {
+            color: $gray-400-tw;
+        }
+
+        a:hover,
+        summary:hover {
+            background-color: $neutral-800-tw;
+            color: #f472b6;
+        }
+
+        li.active > a {
+            background-color: $neutral-800-tw;
+            color: #f9a8d4;
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
+        }
+    }
+}
+
+// "On this page"
+.page-links {
+    h3 {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $gray-500-tw;
+    }
+
+    li:not(:first-child) {
+        border-top: 0;
+    }
+
+    a {
+        border-left: 2px solid transparent;
+        padding-left: 0.75rem;
+        margin-left: -0.75rem;
+    }
+
+    a.active {
+        border-left-color: $stella-accent;
+    }
+}
+
+@include color-mode(dark) {
+    .page-links a {
+        color: $gray-400-tw;
+    }
+
+    .page-links a:hover,
+    .page-links a.active {
+        color: #f9a8d4;
+    }
+
+    .page-links li:not(:first-child) {
+        border-top: 0;
+    }
+}
+
+// ---------------------------------------------------------------- content
+
+.docs-content {
+    font-size: 1rem;
+    line-height: 1.7;
+
+    h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        margin-top: 2.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid $card-border-light;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+        margin-top: 1.75rem;
+    }
+
+    h4 {
+        font-size: 1.05rem;
+    }
+
+    h1 + p,
+    > .lead {
+        color: $gray-500-tw;
+    }
+
+    img {
+        border-radius: 0.75rem;
+        border: 1px solid $card-border-light;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        border-collapse: separate;
+        border-spacing: 0;
+        border: 1px solid $card-border-light;
+        border-radius: 0.75rem;
+        margin: 1.5rem 0;
+
+        th,
+        td {
+            padding: 0.6rem 1rem;
+            border: 0;
+            border-bottom: 1px solid $card-border-light;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    }
+
+    blockquote {
+        padding: 0.75rem 1rem;
+        border-left: 3px solid $stella-accent;
+        border-radius: 0 0.5rem 0.5rem 0;
+        background: rgba(236, 72, 153, 0.08);
+    }
+}
+
+@include color-mode(dark) {
+    .docs-content {
+        h2 {
+            border-top-color: $card-border-dark;
+        }
+
+        h1 + p,
+        > .lead {
+            color: $gray-400-tw;
+        }
+
+        img {
+            border-color: $card-border-dark;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        table {
+            border-color: $card-border-dark;
+            background: $card-bg-dark;
+
+            th {
+                color: $gray-400-tw;
+                background: rgba(17, 24, 39, 0.6);
+            }
+
+            th,
+            td {
+                border-bottom-color: $card-border-dark;
+            }
+
+            tr:hover td {
+                background: rgba(38, 38, 38, 0.4);
+            }
+        }
+    }
+}
+
+// Inline code: the app's dark pill look
+:not(pre) > code {
+    padding: 0.15em 0.4em;
+    border-radius: 0.375rem;
+    font-size: 0.875em;
+}
+
+@include color-mode(dark) {
+    :not(pre) > code {
+        background: $gray-800-tw;
+        color: #e5e7eb;
+        border: 1px solid #374151;
+    }
+}
+
+// Code blocks: app card styling
+.expressive-code {
+    --ec-brdRad: 0.75rem;
+    --ec-brdCol: #{$card-border-light};
+}
+
+@include color-mode(dark) {
+    .expressive-code {
+        --ec-codeBg: rgba(17, 24, 39, 0.7);
+        --ec-brdCol: #{$card-border-dark};
+        --ec-frm-edActTabBg: rgba(17, 24, 39, 0.9);
+        --ec-frm-edTabBarBg: rgba(3, 7, 18, 0.9);
+        --ec-frm-trmTtbBg: rgba(3, 7, 18, 0.9);
+        --ec-frm-trmBg: rgba(17, 24, 39, 0.7);
+        --ec-frm-edBg: rgba(17, 24, 39, 0.7);
+    }
+
+    .expressive-code pre {
+        backdrop-filter: blur(4px);
+    }
+}
+
+// Callouts
+.callout {
+    border-radius: 0.75rem;
+}
+
+// Prev / next links at the bottom of a page
+.page-nav .card,
+.docs-navigation a {
+    border-radius: 0.75rem;
+}
+
+@include color-mode(dark) {
+    .page-nav .card {
+        background: $card-bg-dark;
+        border: 1px solid $card-border-dark;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background: $card-bg-dark-hover;
+        }
+    }
+}
+
+// ---------------------------------------------------------------- footer
+
+@include color-mode(dark) {
+    .footer {
+        background: rgba(0, 0, 0, 0.6);
+        border-top: 1px solid $card-border-dark;
+    }
+}
+
+// ---------------------------------------------------------------- shared components
+
+// Translucent card, as on the app's dashboard
+.stella-card {
+    position: relative;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid $card-border-light;
+    background: $card-bg-light;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition:
+        background-color 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+    color: inherit;
+    text-decoration: none;
+
+    h3 {
+        font-size: 1.15rem;
+        margin: 1rem 0 0.4rem;
+    }
+
+    p {
+        margin: 0;
+        color: $gray-500-tw;
+    }
+}
+
+a.stella-card:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: inherit;
+}
+
+@include color-mode(dark) {
+    .stella-card {
+        background: $card-bg-dark;
+        border-color: $card-border-dark;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+
+        p {
+            color: $gray-400-tw;
+        }
+    }
+
+    a.stella-card:hover {
+        background: $card-bg-dark-hover;
+        border-color: rgba(236, 72, 153, 0.5);
+    }
+}
+
+// Gradient icon tile (app dashboard stats: from-cyan-500 to-blue-600, etc.)
+.stella-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    color: #fff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+
+    svg {
+        width: 1.6rem;
+        height: 1.6rem;
+        stroke-width: 1.75;
+    }
+}
+
+.stella-tile-blue {
+    background: linear-gradient(to bottom right, #06b6d4, #2563eb);
+}
+.stella-tile-purple {
+    background: linear-gradient(to bottom right, #a855f7, #7c3aed);
+}
+.stella-tile-indigo {
+    background: linear-gradient(to bottom right, #6366f1, #9333ea);
+}
+.stella-tile-pink {
+    background: linear-gradient(to bottom right, #ec4899, #e11d48);
+}
+.stella-tile-green {
+    background: linear-gradient(to bottom right, #10b981, #0d9488);
+}
+.stella-tile-orange {
+    background: linear-gradient(to bottom right, #f59e0b, #ea580c);
+}
+
+// Buttons like the app's: soft tinted fill, matching border
+.btn-stella {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.4rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: 1px solid;
+    backdrop-filter: blur(4px);
+    transition:
+        background-color 0.2s,
+        box-shadow 0.2s;
+
+    svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.btn-stella-pink {
+    color: #9d174d;
+    background: rgba(252, 231, 243, 0.8);
+    border-color: rgba(251, 207, 232, 0.8);
+
+    &:hover {
+        color: #9d174d;
+        background: rgba(251, 207, 232, 0.9);
+    }
+}
+
+.btn-stella-gray {
+    color: #374151;
+    background: rgba(243, 244, 246, 0.8);
+    border-color: rgba(229, 231, 235, 0.8);
+
+    &:hover {
+        color: #111827;
+        background: #e5e7eb;
+    }
+}
+
+@include color-mode(dark) {
+    .btn-stella-pink {
+        color: #fbcfe8;
+        background: rgba(131, 24, 67, 0.3);
+        border-color: rgba(190, 24, 93, 0.5);
+
+        &:hover {
+            color: #fce7f3;
+            background: rgba(157, 23, 77, 0.4);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.35);
+        }
+    }
+
+    .btn-stella-gray {
+        color: #e5e7eb;
+        background: rgba(38, 38, 38, 0.6);
+        border-color: #404040;
+
+        &:hover {
+            color: #fff;
+            background: $neutral-800-tw;
+        }
+    }
+}
+
+// ---------------------------------------------------------------- homepage
+
+.stella-hero {
+    --hero-h: 15rem;
+    min-height: var(--hero-h);
+    padding: 2rem 0 1.5rem;
+    text-align: center;
+
+    .hero-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+    }
+
+    .hero-logo {
+        height: clamp(3.5rem, 7vw, 5.5rem);
+        width: auto;
+        filter: drop-shadow(0 0 12px rgba(236, 72, 153, 0.55));
+    }
+
+    h1 {
+        margin: 0;
+        font-size: clamp(2.5rem, 6vw, 4.25rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1;
+    }
+
+    .hero-lead {
+        font-size: 1.2rem;
+        color: $gray-500-tw;
+        max-width: 36rem;
+        margin: 0.75rem auto 1.25rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+    }
+}
+
+@include color-mode(dark) {
+    .stella-hero {
+        h1 {
+            color: $stella-link;
+            text-shadow:
+                0 0 10px rgba(236, 72, 153, 0.8),
+                0 0 30px rgba(236, 72, 153, 0.35);
+        }
+
+        .hero-lead {
+            color: $gray-400-tw;
+        }
+    }
+}
+
+.stella-section-title {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 1.9rem;
+        font-weight: 700;
+    }
+
+    p {
+        color: $gray-500-tw;
+        margin: 0;
+    }
+}
+
+.stella-features {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+}
+
+// ---------------------------------------------------------------- search
+
+#searchModal {
+    .modal-content {
+        border-radius: 0.75rem;
+    }
+
+    .search-text {
+        font-size: 1rem;
+        padding: 0.6rem 0.9rem;
+        border-radius: 0.5rem;
+    }
+
+    .search-result {
+        h2 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .content {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            // Keep each hit to a short preview
+            max-height: 4.5em;
+            overflow: hidden;
+            mask-image: linear-gradient(to bottom, #000 60%, transparent);
+
+            ul,
+            ol,
+            p {
+                margin-bottom: 0.25rem;
+            }
+        }
+
+        .card {
+            padding: 0.25rem 0;
+            border-radius: 0.5rem;
+        }
+    }
+
+    .modal-footer {
+        font-size: 0.8rem;
+    }
+}
+
+@include color-mode(dark) {
+    #searchModal {
+        .modal-content {
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid $card-border-dark;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        .search-text {
+            background: $gray-900-tw;
+            border-color: #374151;
+            color: #e5e7eb;
+
+            &:focus {
+                border-color: $stella-accent;
+                box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.25);
+            }
+        }
+
+        .search-result .card {
+            background: $card-bg-dark;
+            border: 1px solid $card-border-dark;
+        }
+
+        .search-result:hover .card,
+        .search-result.selected .card {
+            background: $neutral-800-tw;
+            border-color: rgba(236, 72, 153, 0.5);
+
+            h2 {
+                color: #f9a8d4;
+            }
+        }
+    }
+}

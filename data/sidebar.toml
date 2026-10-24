@@ -1,0 +1,13 @@
+# Docs sidebar icons, keyed by the page path under /docs/.
+# icon: a Tabler outline icon name (node_modules/@tabler/icons/icons/outline).
+# color: blue, cyan, purple, pink, green or orange.
+# Pages without an entry get no icon.
+
+"self-host" = { icon = "server" }
+"config" = { icon = "settings" }
+"auth" = { icon = "users" }
+"cards" = { icon = "cards", color = "pink" }
+"reviewing" = { icon = "brain", color = "purple" }
+"import-export" = { icon = "file-zip", color = "orange" }
+"mcp" = { icon = "plug-connected", color = "cyan" }
+"device-sync" = { icon = "device-tablet", color = "green" }

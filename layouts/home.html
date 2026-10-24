@@ -1,0 +1,53 @@
+{{ define "main" }}
+{{- $github := "https://github.com/contre95/stella" }}
+<section class="stella-hero container-lg">
+  <div class="hero-title">
+    <img class="hero-logo" src="/logo.png" alt="" width="88" height="88">
+    <h1>{{ .Title }}</h1>
+  </div>
+  <p class="hero-lead">{{ .Params.lead | safeHTML }}</p>
+  <div class="hero-actions">
+    <a class="btn-stella btn-stella-pink" href="{{ "docs/self-host/" | relURL }}">
+      {{ partial "inline-svg" (dict "src" "outline/book-2" "class" "svg-inline-custom") }} Read the docs
+    </a>
+    <a class="btn-stella btn-stella-gray" href="{{ $github }}">
+      {{ partial "inline-svg" (dict "src" "outline/brand-github" "class" "svg-inline-custom") }} GitHub
+    </a>
+  </div>
+</section>
+{{ end }}
+
+{{/* Outside the page container so the cards can use the full width */}}
+{{ define "sidebar-prefooter" }}
+{{- $features := slice
+  (dict "icon" "brain" "tile" "purple" "title" "SM2 scheduling" "url" "docs/reviewing/"
+    "text" "A faithful Go port of Mnemosyne's SM2 algorithm decides what you review and when.")
+  (dict "icon" "cards" "tile" "pink" "title" "Rich cards" "url" "docs/cards/"
+    "text" "Markdown with colors, furigana, text-to-speech, KaTeX math, images and audio.")
+  (dict "icon" "plug-connected" "tile" "blue" "title" "MCP server" "url" "docs/mcp/"
+    "text" "Let Claude or any MCP client create and organize your decks for you.")
+  (dict "icon" "users" "tile" "indigo" "title" "Single or multi-user" "url" "docs/auth/"
+    "text" "No login for a lone self-hoster, or OIDC login so friends and family get their own decks.")
+  (dict "icon" "file-zip" "tile" "orange" "title" "Import & export" "url" "docs/import-export/"
+    "text" "Move decks and groups around as zip archives, review history included.")
+  (dict "icon" "server" "tile" "green" "title" "Self-hosted" "url" "docs/self-host/"
+    "text" "One container, a SQLite database and a YAML config. Your cards stay yours.")
+}}
+<section class="stella-features px-3">
+  <div class="stella-section-title">
+    <h2>Spaced repetition, on your own server</h2>
+    <p>Everything you need to learn and keep what you learned.</p>
+  </div>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {{- range $features }}
+    <div class="col">
+      <a class="stella-card d-block" href="{{ .url | relURL }}">
+        <span class="stella-tile stella-tile-{{ .tile }}">{{ partial "inline-svg" (dict "src" (printf "outline/%s" .icon) "class" "svg-inline-custom") }}</span>
+        <h3>{{ .title }}</h3>
+        <p>{{ .text }}</p>
+      </a>
+    </div>
+    {{- end }}
+  </div>
+</section>
+{{ end }}
