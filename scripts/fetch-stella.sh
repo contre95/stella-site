@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Put a stella checkout at .stella/, which the docs (Hugo mounts) are built from.
+# Put a stella checkout at .stella/, which the docs (Hugo mounts) and the
+# demo (demo/build.sh) are built from.
 #
 #   STELLA_DIR=../stella scripts/fetch-stella.sh   # symlink a local working copy
 #   STELLA_REF=v1.0.1 scripts/fetch-stella.sh      # clone a specific tag/branch

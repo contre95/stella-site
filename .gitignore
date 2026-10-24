@@ -4,6 +4,8 @@ node_modules
 public
 resources
 
-# stella checkout the docs are built from (scripts/fetch-stella.sh)
+# stella checkout the docs and demo are built from (scripts/fetch-stella.sh)
 .stella
 .stella-ref
+# demo build output (demo/build.sh)
+dist-demo

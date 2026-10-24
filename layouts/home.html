@@ -1,4 +1,5 @@
 {{ define "main" }}
+{{- $demo := "https://stella.contre.io/" }}
 {{- $github := "https://github.com/contre95/stella" }}
 <section class="stella-hero container-lg">
   <div class="hero-title">
@@ -10,6 +11,9 @@
     <a class="btn-stella btn-stella-pink" href="{{ "docs/self-host/" | relURL }}">
       {{ partial "inline-svg" (dict "src" "outline/book-2" "class" "svg-inline-custom") }} Read the docs
     </a>
+    <a class="btn-stella btn-stella-green" href="{{ $demo }}">
+      {{ partial "inline-svg" (dict "src" "outline/player-play" "class" "svg-inline-custom") }} Try the demo
+    </a>
     <a class="btn-stella btn-stella-gray" href="{{ $github }}">
       {{ partial "inline-svg" (dict "src" "outline/brand-github" "class" "svg-inline-custom") }} GitHub
     </a>
@@ -17,7 +21,7 @@
 </section>
 {{ end }}
 
-{{/* Outside the page container so the cards can use the full width */}}
+{{/* Outside the page container so the demo and cards can use the full width */}}
 {{ define "sidebar-prefooter" }}
 {{- $features := slice
   (dict "icon" "brain" "tile" "purple" "title" "SM2 scheduling" "url" "docs/reviewing/"
@@ -33,21 +37,77 @@
   (dict "icon" "server" "tile" "green" "title" "Self-hosted" "url" "docs/self-host/"
     "text" "One container, a SQLite database and a YAML config. Your cards stay yours.")
 }}
-<section class="stella-features px-3">
-  <div class="stella-section-title">
-    <h2>Spaced repetition, on your own server</h2>
-    <p>Everything you need to learn and keep what you learned.</p>
-  </div>
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    {{- range $features }}
-    <div class="col">
-      <a class="stella-card d-block" href="{{ .url | relURL }}">
-        <span class="stella-tile stella-tile-{{ .tile }}">{{ partial "inline-svg" (dict "src" (printf "outline/%s" .icon) "class" "svg-inline-custom") }}</span>
-        <h3>{{ .title }}</h3>
-        <p>{{ .text }}</p>
-      </a>
+<section class="stella-showcase px-3" id="showcase">
+  <div class="stella-showcase-demo">
+    <div class="stella-shot" id="demo-frame">
+      <div class="stella-shot-viewport">
+        <iframe src="https://stella.contre.io/" title="Stella demo"></iframe>
+      </div>
     </div>
-    {{- end }}
+  </div>
+  <div class="stella-features">
+    <div class="stella-section-title">
+      <h2>Spaced repetition, on your own server</h2>
+      <p>Everything you need to learn and keep what you learned.</p>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {{- range $features }}
+      <div class="col">
+        <a class="stella-card d-block" href="{{ .url | relURL }}">
+          <span class="stella-tile stella-tile-{{ .tile }}">{{ partial "inline-svg" (dict "src" (printf "outline/%s" .icon) "class" "svg-inline-custom") }}</span>
+          <h3>{{ .title }}</h3>
+          <p>{{ .text }}</p>
+        </a>
+      </div>
+      {{- end }}
+    </div>
   </div>
 </section>
+<script>
+  // Render the demo at a desktop size and scale it to fit the space left on screen
+  // (its sidebar breaks at short heights). Phones get the app's own mobile layout.
+  (() => {
+    const W = 1440, H = 900, MOBILE = 768;
+    const showcase = document.getElementById('showcase');
+    const features = showcase.querySelector('.stella-features');
+    const side = window.matchMedia('(min-width: 1400px)'); // cards beside the demo (see _custom.scss)
+    const frame = document.getElementById('demo-frame');
+    const viewport = frame.firstElementChild;
+    const iframe = viewport.firstElementChild;
+    const fit = () => {
+      if (window.innerWidth < MOBILE) {
+        frame.classList.remove('is-scaled');
+        viewport.style.width = viewport.style.height = iframe.style.transform = '';
+        fitCards();
+        return;
+      }
+      frame.classList.add('is-scaled');
+      const pad = frame.offsetWidth - frame.clientWidth + 16;
+      const room = side.matches
+        ? showcase.clientWidth - features.offsetWidth - parseFloat(getComputedStyle(showcase).columnGap)
+          - parseFloat(getComputedStyle(showcase).paddingLeft) * 2
+        : frame.parentElement.clientWidth;
+      const maxW = room - pad;
+      const maxH = window.innerHeight - frame.getBoundingClientRect().top - window.scrollY - pad - 16;
+      const scale = Math.min(maxW / W, Math.max(maxH, 360) / H, 1);
+      viewport.style.width = W * scale + 'px';
+      viewport.style.height = H * scale + 'px';
+      iframe.style.transform = `scale(${scale})`;
+      fitCards();
+    };
+    // Beside the demo, the card column takes the frame's height; when the cards
+    // don't fit it, their text is scaled down until they do
+    const fitCards = () => {
+      features.style.removeProperty('--card-scale');
+      features.style.height = side.matches && frame.classList.contains('is-scaled') ? frame.offsetHeight + 'px' : '';
+      if (!features.style.height) return;
+      const cards = [...features.querySelectorAll('.stella-card')];
+      for (let s = 0.95; s >= 0.7 && cards.some((c) => c.scrollHeight > c.clientHeight); s -= 0.05) {
+        features.style.setProperty('--card-scale', s);
+      }
+    };
+    fit();
+    window.addEventListener('resize', fit);
+  })();
+</script>
 {{ end }}

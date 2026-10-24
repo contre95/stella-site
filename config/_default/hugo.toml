@@ -1,5 +1,5 @@
 title = "Stella"
-baseurl = "https://stella.contre.io"
+baseurl = "https://stella-docs.contre.io"
 disableAliases = true
 disableHugoGeneratorInject = true
 # disableKinds = ["taxonomy", "term"]

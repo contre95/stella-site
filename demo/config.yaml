@@ -1,0 +1,26 @@
+# Stella static demo configuration.
+# Placeholders filled in by demo/build.sh: @WORK@ (stripped from the output) and @PORT@.
+dbPath: @WORK@/stella.db
+imagePath: @WORK@/images
+# demo/gen simulates the study history in UTC.
+timezone: UTC
+server:
+  port: @PORT@
+  appName: Stella
+  bodyLimit: 10485760
+auth:
+  enabled: false
+mcp:
+  # Only used by demo/seed.py to set groups and tags; nothing in the UI links to it.
+  enabled: true
+logger:
+  level: info
+  format: text
+review:
+  dayStartsAt: 3
+  nonMemorisedCardsInHand: 10
+  maxScheduledIntervalDays: 0
+  randomiseScheduledCards: false
+  randomiseNewCards: false
+cards:
+  autoplayAudio: true

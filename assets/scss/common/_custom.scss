@@ -571,6 +571,17 @@ a.stella-card:hover {
     }
 }
 
+.btn-stella-green {
+    color: #166534;
+    background: rgba(220, 252, 231, 0.8);
+    border-color: rgba(187, 247, 208, 0.5);
+
+    &:hover {
+        color: #166534;
+        background: rgba(187, 247, 208, 0.8);
+    }
+}
+
 .btn-stella-gray {
     color: #374151;
     background: rgba(243, 244, 246, 0.8);
@@ -595,6 +606,18 @@ a.stella-card:hover {
         }
     }
 
+    .btn-stella-green {
+        color: #bbf7d0;
+        background: rgba(20, 83, 45, 0.3);
+        border-color: rgba(21, 128, 61, 0.5);
+
+        &:hover {
+            color: #dcfce7;
+            background: rgba(22, 101, 52, 0.3);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+    }
+
     .btn-stella-gray {
         color: #e5e7eb;
         background: rgba(38, 38, 38, 0.6);
@@ -609,6 +632,8 @@ a.stella-card:hover {
 
 // ---------------------------------------------------------------- homepage
 
+// The hero and the demo below it are sized to fit one screen together:
+// header (~4.25rem) + hero (--hero-h) + the demo frame.
 .stella-hero {
     --hero-h: 15rem;
     min-height: var(--hero-h);
@@ -666,6 +691,51 @@ a.stella-card:hover {
     }
 }
 
+.stella-shot {
+    margin: 0 auto 4rem;
+    max-width: 1400px;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border: 1px solid $card-border-light;
+    background: $card-bg-light;
+
+    // Phones: the app's own mobile layout at the frame's real size
+    .stella-shot-viewport {
+        overflow: hidden;
+        border-radius: 0.6rem;
+    }
+
+    iframe {
+        display: block;
+        width: 100%;
+        height: 75vh;
+        border: 0;
+        background: #000;
+    }
+
+    // Wider screens: a 1440x900 desktop render scaled to fit (see layouts/home.html)
+    &.is-scaled {
+        width: fit-content;
+        max-width: none;
+
+        iframe {
+            width: 1440px;
+            height: 900px;
+            transform-origin: 0 0;
+        }
+    }
+}
+
+@include color-mode(dark) {
+    .stella-shot {
+        border-color: $card-border-dark;
+        background: $card-bg-dark;
+        box-shadow:
+            0 0 0 1px rgba(236, 72, 153, 0.15),
+            0 30px 80px -20px rgba(236, 72, 153, 0.35);
+    }
+}
+
 .stella-section-title {
     text-align: center;
     margin-bottom: 2rem;
@@ -681,10 +751,87 @@ a.stella-card:hover {
     }
 }
 
+.stella-showcase {
+    max-width: 1840px;
+    margin: 0 auto;
+}
+
 .stella-features {
     max-width: 1320px;
     margin: 0 auto;
     padding-bottom: 4rem;
+}
+
+// Wide screens: the feature cards stack beside the demo as compact rows
+// (the demo's width is computed around them in layouts/home.html)
+@include media-breakpoint-up(xxl) {
+    .stella-showcase {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding-bottom: 4rem;
+
+        .stella-shot {
+            margin: 0;
+        }
+
+        .stella-features {
+            flex: 0 0 26rem;
+            margin: 0;
+            padding-bottom: 0;
+
+            .stella-section-title {
+                display: none;
+            }
+
+            // Cards share the column's height (set to the demo's in layouts/home.html)
+            .row {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                gap: 1rem;
+                height: 100%;
+                margin: 0;
+
+                > .col {
+                    flex: 1 1 0;
+                    min-height: 0;
+                    width: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+        }
+
+        // --card-scale shrinks the cards to fit the demo's height (layouts/home.html)
+        .stella-card {
+            --s: var(--card-scale, 1);
+            display: grid !important;
+            grid-template-columns: auto 1fr;
+            align-content: center;
+            column-gap: 1.1rem;
+            padding: calc(1.15rem * var(--s)) 1.35rem;
+            overflow: hidden;
+
+            .stella-tile {
+                grid-row: span 2;
+                align-self: center;
+                width: calc(2.85rem * var(--s));
+                height: calc(2.85rem * var(--s));
+            }
+
+            h3 {
+                font-size: calc(1.15rem * var(--s));
+                margin: 0 0 0.25rem;
+            }
+
+            p {
+                font-size: calc(0.95rem * var(--s));
+                line-height: 1.45;
+            }
+        }
+    }
 }
 
 // ---------------------------------------------------------------- search

@@ -1,13 +1,14 @@
 name: Site
-# Builds the docs (Hugo, pages from stella's docs/ folder) from the latest stella
-# release and publishes them to a branch. A git-connected Cloudflare Pages project
-# deploys that branch:
+# Builds the docs (Hugo, pages from stella's docs/ folder) and the read-only
+# demo (demo/build.sh) from the latest stella release, and publishes each to
+# its own branch. Git-connected Cloudflare Pages projects deploy those branches:
 #
-#   build/docs -> stella-docs (stella.contre.io)
+#   build/docs -> stella-docs (stella-docs.contre.io)
+#   build/demo -> stella-demo (stella.contre.io)
 #
-# - push to main / manual run: always rebuilds.
-# - daily schedule: rebuilds only when the docs aren't on the latest release yet
-#   (the build branch has a version.txt with the stella tag it was built from).
+# - push to main / manual run: always rebuilds both.
+# - daily schedule: rebuilds only what isn't on the latest release yet
+#   (each build branch has a version.txt with the stella tag it was built from).
 on:
   push:
     branches: [main]
@@ -21,7 +22,7 @@ on:
     - cron: "0 5 * * *"
 
 permissions:
-  contents: write # push the build branch
+  contents: write # push the build branches
 
 concurrency:
   group: site
@@ -33,6 +34,7 @@ jobs:
     outputs:
       ref: ${{ steps.resolve.outputs.ref }}
       docs: ${{ steps.resolve.outputs.docs }}
+      demo: ${{ steps.resolve.outputs.demo }}
     steps:
       - name: Resolve stella ref
         id: resolve
@@ -47,13 +49,15 @@ jobs:
           fi
           [ -n "$REF" ] || { echo "no stella release found"; exit 1; }
           echo "ref=$REF" >>"$GITHUB_OUTPUT"
-          build=true live=""
-          if [ "$EVENT" = schedule ]; then
-            live=$(curl -fsS "https://raw.githubusercontent.com/$REPO/build/docs/version.txt" 2>/dev/null || true)
-            [ "$live" = "$REF" ] && build=false
-          fi
-          echo "docs: build=$build (published: ${live:-none}, latest: $REF)"
-          echo "docs=$build" >>"$GITHUB_OUTPUT"
+          for name in docs demo; do
+            build=true live=""
+            if [ "$EVENT" = schedule ]; then
+              live=$(curl -fsS "https://raw.githubusercontent.com/$REPO/build/$name/version.txt" 2>/dev/null || true)
+              [ "$live" = "$REF" ] && build=false
+            fi
+            echo "$name: build=$build (published: ${live:-none}, latest: $REF)"
+            echo "$name=$build" >>"$GITHUB_OUTPUT"
+          done
 
   docs:
     needs: resolve
@@ -84,3 +88,32 @@ jobs:
           REF: ${{ needs.resolve.outputs.ref }}
         run: |
           scripts/publish-branch.sh public build/docs "docs: stella $REF (site ${GITHUB_SHA::7})"
+
+  demo:
+    needs: resolve
+    if: needs.resolve.outputs.demo == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch stella
+        env:
+          STELLA_REF: ${{ needs.resolve.outputs.ref }}
+        run: scripts/fetch-stella.sh
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: .stella/go.mod
+          cache: false
+      - name: Build demo
+        env:
+          IMAGE_TAG: ${{ needs.resolve.outputs.ref }}
+        run: |
+          demo/build.sh dist-demo
+          cp .stella-ref dist-demo/version.txt
+          # The demo is served on stella.contre.io; send doc links to the docs domain.
+          echo "/docs/* https://stella-docs.contre.io/docs/:splat 301" >dist-demo/_redirects
+      - name: Publish to build/demo
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: ${{ needs.resolve.outputs.ref }}
+        run: |
+          scripts/publish-branch.sh dist-demo build/demo "demo: stella $REF (site ${GITHUB_SHA::7})"

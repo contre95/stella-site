@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Publish a built folder as the only commit of a branch, which a git-connected
 # Cloudflare Pages project deploys as-is. The branch is force-pushed, so it never
-# accumulates history.
+# accumulates history (or old copies of the demo).
 #
 # Usage: GH_TOKEN=... scripts/publish-branch.sh <dir> <branch> <message>
 # Uses GITHUB_REPOSITORY (owner/repo), as set in GitHub Actions.
