@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{- $demo := "https://stella.contre.io/" }}
+{{- $demo := "https://stella-demo.contre.io/" }}
 {{- $github := "https://github.com/contre95/stella" }}
 <section class="stella-hero container-lg">
   <div class="hero-title">
@@ -23,6 +23,7 @@
 
 {{/* Outside the page container so the demo and cards can use the full width */}}
 {{ define "sidebar-prefooter" }}
+{{- $demo := "https://stella-demo.contre.io/" }}
 {{- $features := slice
   (dict "icon" "brain" "tile" "purple" "title" "SM2 scheduling" "url" "docs/reviewing/"
     "text" "A faithful Go port of Mnemosyne's SM2 algorithm decides what you review and when.")
@@ -41,7 +42,7 @@
   <div class="stella-showcase-demo">
     <div class="stella-shot" id="demo-frame">
       <div class="stella-shot-viewport">
-        <iframe src="https://stella.contre.io/" title="Stella demo"></iframe>
+        <iframe src="{{ $demo }}" title="Stella demo"></iframe>
       </div>
     </div>
   </div>
