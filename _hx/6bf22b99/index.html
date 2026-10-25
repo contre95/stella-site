@@ -1,0 +1,37 @@
+<div id="contenido" class="flex flex-col items-center justify-center py-24 text-center">
+  <div class="mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-pink-600 shadow-xl shadow-pink-500/30">
+    <span class="text-4xl text-white">✦</span>
+  </div>
+  <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">All done!</h1>
+  <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+    Your review queue is empty. Come back later or add more cards.
+  </p>
+  <div class="mt-7 flex gap-3">
+    
+    <a
+      href="/review?learnahead=1&amp;decks=7a7cf061-4588-4224-a140-2b2079d7e6d7"
+      hx-get="/review?learnahead=1&amp;decks=7a7cf061-4588-4224-a140-2b2079d7e6d7"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      class="btn-ghost rounded-xl px-4 py-2 text-sm font-medium"
+    >Learn ahead</a>
+    
+    <a
+      href="/cards"
+      hx-get="/cards"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      class="btn-ghost rounded-xl px-4 py-2 text-sm font-medium"
+    >Add cards</a>
+    <a
+      href="/"
+      hx-get="/"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      class="btn-primary rounded-xl px-4 py-2 text-sm font-semibold"
+    >Dashboard</a>
+  </div>
+</div>

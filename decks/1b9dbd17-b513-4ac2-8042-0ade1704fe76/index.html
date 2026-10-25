@@ -1,0 +1,2720 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f7f2fb" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#07070b" media="(prefers-color-scheme: dark)" />
+  <title>Spanish phrases · Stella</title>
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="/css/app.css" />
+  <script>
+    (function() {
+      var t = localStorage.getItem("theme");
+      if (t === "dark") document.documentElement.classList.add("dark");
+      if (t === "eink") document.documentElement.classList.add("eink");
+    })();
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+    }
+  </script>
+  <script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    (function () {
+      var PLAY_ICON  = '<svg viewBox="0 0 10 10" fill="currentColor" style="width:15px;height:15px;margin-left:2px"><path d="M2 1.5v7l6-3.5z"/></svg>';
+      var PAUSE_ICON = '<svg viewBox="0 0 10 10" fill="currentColor" style="width:15px;height:15px"><rect x="1.5" y="1" width="2.5" height="8" rx="0.8"/><rect x="6" y="1" width="2.5" height="8" rx="0.8"/></svg>';
+
+      window.stellaInitAudioPlayer = function (audioEl, idPrefix, suffix, opts) {
+        opts = opts || {};
+        var btn     = document.getElementById(idPrefix + 'play-btn-' + suffix);
+        var track   = document.getElementById(idPrefix + 'track-' + suffix);
+        var fill    = document.getElementById(idPrefix + 'fill-' + suffix);
+        var cur     = document.getElementById(idPrefix + 'cur-' + suffix);
+        var dur     = document.getElementById(idPrefix + 'dur-' + suffix);
+        var wrapper = document.getElementById(idPrefix + 'player-' + suffix);
+        if (!btn || !track) return;
+
+        if (opts.stopTouchPropagation) {
+          wrapper.addEventListener('touchstart', function (e) { e.stopPropagation(); }, { passive: true });
+          wrapper.addEventListener('touchend', function (e) { e.stopPropagation(); });
+        }
+
+        function fmt(s) {
+          if (!isFinite(s) || isNaN(s)) return '-:--';
+          var m = Math.floor(s / 60), sec = Math.floor(s % 60);
+          return m + ':' + (sec < 10 ? '0' : '') + sec;
+        }
+        function sync() {
+          var pct = audioEl.duration ? (audioEl.currentTime / audioEl.duration) * 100 : 0;
+          fill.style.width = pct + '%';
+          if (cur) cur.textContent = fmt(audioEl.currentTime);
+          if (dur) dur.textContent = fmt(audioEl.duration);
+          btn.innerHTML = audioEl.paused ? PLAY_ICON : PAUSE_ICON;
+          wrapper.classList.toggle('playing', !audioEl.paused);
+        }
+
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (audioEl.paused) audioEl.play().catch(function () {});
+          else audioEl.pause();
+        });
+        track.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (!audioEl.duration) return;
+          var rect = track.getBoundingClientRect();
+          audioEl.currentTime = ((e.clientX - rect.left) / rect.width) * audioEl.duration;
+        });
+        audioEl.addEventListener('timeupdate', sync);
+        audioEl.addEventListener('durationchange', sync);
+        audioEl.addEventListener('play', sync);
+        audioEl.addEventListener('pause', sync);
+        audioEl.addEventListener('ended', function () { audioEl.currentTime = 0; sync(); });
+        sync();
+      };
+    })();
+  </script>
+  <script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    window.stellaFitCardText = function (scrollEl, contentEl) {
+      if (!scrollEl || !contentEl) return;
+      contentEl.style.fontSize = '';
+      var base = parseFloat(getComputedStyle(contentEl).fontSize) || 16;
+      var isShort = contentEl.textContent.trim().length <= 3;
+      var MAX_PX = 48; 
+      var lo = 14, hi = isShort ? Math.min(base * 2, MAX_PX) : base;
+
+      function fits(px) {
+        contentEl.style.fontSize = px + 'px';
+        return scrollEl.scrollHeight <= scrollEl.clientHeight + 1;
+      }
+
+      if (fits(hi)) { contentEl.style.fontSize = hi + 'px'; return; }
+      if (!fits(lo)) { contentEl.style.fontSize = lo + 'px'; return; }
+      for (var i = 0; i < 8; i++) {
+        var mid = (lo + hi) / 2;
+        if (fits(mid)) lo = mid; else hi = mid;
+      }
+      contentEl.style.fontSize = lo + 'px';
+    };
+  </script>
+  <script src="/static-demo.js"></script>
+</head>
+
+  <body class="h-full text-gray-800 antialiased dark:text-gray-100">
+    <div class="app-bg"></div>
+    <div class="flex h-full">
+      <aside class="glass-nav hidden w-60 shrink-0 flex-col border-r lg:flex">
+  
+  <a
+    href="/"
+    hx-get="/"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    _="on click remove .nav-active from .nav-link then add .nav-active to #nav-dashboard"
+    class="flex items-center gap-2.5 px-5 py-5"
+  >
+    <img src="/logo.png" alt="Stella" class="h-14 w-14 rounded-xl object-contain" />
+    <div>
+      <span class="text-2xl font-bold tracking-tight bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent">Stella</span>
+      <div hx-get="/sidebar-stats" hx-trigger="load" hx-target="this" hx-swap="innerHTML" hx-push-url="false"></div>
+    </div>
+  </a>
+
+  
+  <nav class="flex-1 px-3 py-4 space-y-1">
+    <a
+      id="nav-dashboard"
+      href="/"
+      hx-get="/"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <img src="/icons/dash.svg" alt="" class="nav-icon h-5 w-5 shrink-0" />
+      Dashboard
+    </a>
+    <a
+      href="/review/pick"
+      hx-get="/review/pick"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <img src="/icons/study.svg" alt="" class="nav-icon h-5 w-5 shrink-0" />
+      Study
+    </a>
+    <a
+      href="/decks"
+      hx-get="/decks"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <img src="/icons/decks.svg" alt="" class="nav-icon h-5 w-5 shrink-0" />
+      Decks
+    </a>
+    <a
+      href="/cards"
+      hx-get="/cards"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <img src="/icons/cards.svg" alt="" class="nav-icon h-5 w-5 shrink-0" />
+      Cards
+    </a>
+    <a
+      href="/settings/tokens"
+      hx-get="/settings/tokens"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <svg class="nav-icon h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      Settings
+    </a>
+    <a
+      href="/about"
+      hx-get="/about"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <svg class="nav-icon h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      About
+    </a>
+  </nav>
+
+  <a href="https://github.com/contre95/stella" target="_blank" rel="noopener" class="px-5 py-4 text-xs text-center text-gradient hover:opacity-80 transition-opacity">v0.0.2</a>
+</aside>
+
+<script>
+  function updateNavActive() {
+    var path = window.location.pathname;
+    document.querySelectorAll('.nav-link').forEach(function(el) {
+      var href = el.getAttribute('href');
+      var active = (href === '/' && path === '/') ||
+                   (href !== '/' && (path === href || path.startsWith(href + '/') || (href === '/review/pick' && path.startsWith('/review'))));
+      el.classList.toggle('nav-active', active);
+    });
+  }
+  document.addEventListener('htmx:afterSettle', updateNavActive);
+  document.addEventListener('DOMContentLoaded', updateNavActive);
+</script>
+
+      <div class="flex min-w-0 flex-1 flex-col">
+        <header class="glass-nav flex items-center justify-between border-b px-4 py-3 sm:px-6">
+  
+  <a
+    href="/"
+    hx-get="/"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    _="on click remove .nav-active from .nav-link then add .nav-active to #nav-dashboard"
+    class="flex items-center gap-2 lg:hidden"
+  >
+    <img src="/logo.png" alt="Stella" class="h-12 w-12 rounded-lg object-contain" />
+    <div>
+      <span class="text-xl font-bold bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent">Stella</span>
+      <div hx-get="/sidebar-stats" hx-trigger="load" hx-target="this" hx-swap="innerHTML" hx-push-url="false"></div>
+    </div>
+  </a>
+
+  <div class="ml-auto flex items-center gap-2">
+    <button
+      type="button"
+      _="on click
+           if document.documentElement.classList.contains('dark')
+             remove .dark from document.documentElement
+             add .eink to document.documentElement
+             call localStorage.setItem('theme', 'eink')
+           else if document.documentElement.classList.contains('eink')
+             remove .eink from document.documentElement
+             call localStorage.setItem('theme', 'light')
+           else
+             add .dark to document.documentElement
+             call localStorage.setItem('theme', 'dark')
+           end"
+      class="btn-ghost rounded-xl p-1.5"
+      title="Toggle theme"
+    >
+      
+      <svg class="theme-icon-moon h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+      </svg>
+      
+      <svg class="theme-icon-eink-indicator h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      
+      <svg class="theme-icon-sun h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+      </svg>
+    </button>
+    
+  </div>
+</header>
+
+        <main class="flex flex-1 flex-col overflow-y-auto p-4 pb-[calc(4.5rem_+_env(safe-area-inset-bottom,0px))] lg:p-8 lg:pb-[calc(2rem_+_env(safe-area-inset-bottom,0px))]">
+          <div id="contenido" class="flex flex-1 flex-col min-h-0">
+            
+              <div id="contenido">
+  <div class="mb-6">
+    <a
+      href="/decks"
+      hx-get="/decks"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      class="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      Decks
+    </a>
+
+    <div class="mt-3 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <form
+          hx-post="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/image"
+          hx-target="#contenido" hx-sync="#contenido:replace"
+          hx-swap="outerHTML"
+          hx-encoding="multipart/form-data"
+          class="shrink-0"
+        >
+          <label class="group relative block cursor-pointer" title="Change deck picture">
+            
+              <img
+                src="/_res/374397c9.png"
+                alt=""
+                class="h-16 w-12 rounded-xl object-cover"
+                style="box-shadow:0 6px 16px -6px #fb923c88; transform:rotate(-4deg);"
+              />
+            
+            <span class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-xl bg-black/40 opacity-0 transition-opacity group-hover:opacity-100" style="transform:rotate(-4deg);">
+              <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              </svg>
+            </span>
+            <input
+              type="file"
+              name="image"
+              accept=".jpg,.jpeg,.png,.gif,.webp"
+              class="hidden"
+              _="on change call me.form.requestSubmit()"
+            />
+            <span class="sr-only">Change deck picture</span>
+          </label>
+          
+        </form>
+        <div>
+          <span id="deck-name-view" class="flex items-center gap-1.5">
+            <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Spanish phrases</h1>
+            <button
+              type="button"
+              _="on click add .hidden to #deck-name-view then remove .hidden from #deck-name-edit then call #deck-name-input.focus()"
+              class="rounded p-1 text-gray-400 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              title="Rename deck"
+            >
+              
+<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </span>
+          <form
+            id="deck-name-edit"
+            hx-put="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/name"
+            hx-target="#contenido" hx-sync="#contenido:replace"
+            hx-swap="outerHTML"
+            class="hidden flex flex-col gap-1"
+          >
+            <div class="flex items-center gap-1.5">
+              <input
+                id="deck-name-input"
+                name="name"
+                value="Spanish phrases"
+                maxlength="32"
+                class="glass-input rounded-lg px-2 py-0.5 text-2xl font-bold w-36 text-gray-900 dark:text-white"
+              />
+              <button type="submit" class="rounded p-1 text-gray-400 hover:text-green-600 transition-colors dark:hover:text-green-400" title="Save">
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+</svg>
+
+              </button>
+              <button
+                type="button"
+                _="on click add .hidden to #deck-name-edit then remove .hidden from #deck-name-view"
+                class="rounded p-1 text-gray-400 hover:text-red-500 transition-colors dark:hover:text-red-400"
+                title="Cancel"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+</svg>
+
+              </button>
+            </div>
+            
+          </form>
+          <div class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+            <span>10 cards</span>
+            <span id="deck-desc-view" class="inline-flex items-center gap-1">
+               · <span>Phrases for getting around.</span>
+              <button
+                type="button"
+                _="on click add .hidden to #deck-desc-view then remove .hidden from #deck-desc-edit then call #deck-desc-input.focus()"
+                class="rounded p-0.5 text-gray-300 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+                title="Edit description"
+              >
+                
+<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+            </span>
+            <form
+              id="deck-desc-edit"
+              hx-put="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/description"
+              hx-target="#contenido" hx-sync="#contenido:replace"
+              hx-swap="outerHTML"
+              class="hidden mt-1 flex items-center gap-1.5"
+            >
+              <input
+                id="deck-desc-input"
+                name="description"
+                value="Phrases for getting around."
+                placeholder="Add a description…"
+                class="glass-input rounded-lg px-2 py-0.5 text-sm w-64"
+              />
+              <button type="submit" class="rounded p-1 text-gray-400 hover:text-green-600 transition-colors dark:hover:text-green-400" title="Save">
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+</svg>
+
+              </button>
+              <button
+                type="button"
+                _="on click add .hidden to #deck-desc-edit then remove .hidden from #deck-desc-view"
+                class="rounded p-1 text-gray-400 hover:text-red-500 transition-colors dark:hover:text-red-400"
+                title="Cancel"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+</svg>
+
+              </button>
+            </form>
+          </div>
+          <div class="mt-2 flex flex-wrap items-center gap-1.5">
+            
+              <span class="inline-flex items-center justify-center gap-1 rounded-full py-1 pl-2.5 pr-1.5 text-xs font-semibold glass text-gray-500 dark:text-gray-400">
+                <span class="py-1"># audio</span>
+                <button
+                  hx-delete="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/tags/e82fbae5-7239-4a93-888f-11146cbdeba1"
+                  hx-target="#contenido" hx-sync="#contenido:replace"
+                  hx-swap="outerHTML"
+                  class="inline-flex h-4 w-4 items-center justify-center rounded-full text-sm leading-none text-gray-400 transition-colors hover:bg-red-500/15 hover:text-red-500 dark:hover:text-red-400"
+                  title="Remove tag from deck"
+                >&times;</button>
+              </span>
+            
+            <form
+              hx-post="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/tags"
+              hx-target="#contenido" hx-sync="#contenido:replace"
+              hx-swap="outerHTML"
+            >
+              <input
+                name="name"
+                list="all-tags"
+                required
+                maxlength="32"
+                placeholder="+ tag"
+                value=""
+                class="glass-input w-24 rounded-full px-2.5 py-1 text-xs placeholder:text-gray-400 dark:placeholder:text-gray-500"
+              />
+              
+              <datalist id="all-tags">
+                <option value="audio"></option><option value="beginner"></option><option value="math"></option><option value="visual"></option>
+              </datalist>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        
+          <form
+            hx-post="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/group?source=deck_page"
+            hx-target="#contenido" hx-sync="#contenido:replace"
+            hx-swap="outerHTML"
+            class="flex items-center gap-2"
+          >
+            <select
+              name="group_id"
+              _="on change call me.form.requestSubmit()"
+              class="glass-input rounded-xl px-3 py-2 text-sm"
+              title="Assign to group"
+            >
+              <option value="">No group</option>
+              
+                <option value="39793524-0894-4d10-ae50-49af21205e11" >Geography</option>
+              
+                <option value="5be969c8-13d6-4663-b079-6ddee7fb2cb6" >Japanese</option>
+              
+                <option value="727efe3f-6860-41ec-98b7-5df912fcb19c" >Science</option>
+              
+                <option value="e1e8001c-cbcc-4ed0-a2a9-c36945354629" selected>Spanish</option>
+              
+            </select>
+          </form>
+        
+        <button
+          hx-post="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/toggle-study?source=deck_page"
+          hx-target="#contenido" hx-sync="#contenido:replace"
+          hx-swap="outerHTML"
+          title="Exclude from global study"
+          class="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors text-pink-600 bg-pink-500/10 hover:bg-pink-500/20 dark:text-pink-400"
+        >
+          <svg class="h-4 w-4" fill="#F09C9D" viewBox="0 -32 576 576" xmlns="http://www.w3.org/2000/svg"><path d="M208 0c-29.9 0-54.7 20.5-61.8 48.2-.8 0-1.4-.2-2.2-.2-35.3 0-64 28.7-64 64 0 4.8.6 9.5 1.7 14C52.5 138 32 166.6 32 200c0 12.6 3.2 24.3 8.3 34.9C16.3 248.7 0 274.3 0 304c0 33.3 20.4 61.9 49.4 73.9-.9 4.6-1.4 9.3-1.4 14.1 0 39.8 32.2 72 72 72 4.1 0 8.1-.5 12-1.2 9.6 28.5 36.2 49.2 68 49.2 39.8 0 72-32.2 72-72V64c0-35.3-28.7-64-64-64zm368 304c0-29.7-16.3-55.3-40.3-69.1 5.2-10.6 8.3-22.3 8.3-34.9 0-33.4-20.5-62-49.7-74 1-4.5 1.7-9.2 1.7-14 0-35.3-28.7-64-64-64-.8 0-1.5.2-2.2.2C422.7 20.5 397.9 0 368 0c-35.3 0-64 28.6-64 64v376c0 39.8 32.2 72 72 72 31.8 0 58.4-20.7 68-49.2 3.9.7 7.9 1.2 12 1.2 39.8 0 72-32.2 72-72 0-4.8-.5-9.5-1.4-14.1 29-12 49.4-40.6 49.4-73.9z"/></svg>
+          In study
+        </button>
+        
+          <a
+            href="/review?decks=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+            hx-get="/review?decks=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+            hx-target="#contenido" hx-sync="#contenido:replace"
+            hx-swap="outerHTML"
+            hx-push-url="true"
+            class="btn-primary rounded-xl px-4 py-2 text-sm font-semibold"
+          >Study</a>
+        
+        
+          <button
+            type="button"
+            _="on click
+                 repeat for card in document.querySelectorAll('#deck-card-grid .fact-card')
+                   call window.stellaToggleFlip(card)
+                   wait 45ms
+                 end"
+            class="rounded-lg p-2 text-gray-400 hover:bg-white/60 hover:text-gray-700 transition-colors dark:hover:bg-white/10 dark:hover:text-gray-200"
+            title="Flip all cards"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </button>
+        
+        
+          <button
+            hx-post="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/reset"
+            hx-target="#contenido" hx-sync="#contenido:replace"
+            hx-swap="outerHTML"
+            hx-confirm="Reset all cards in this deck to unseen?"
+            class="rounded-lg p-2 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+            title="Reset all cards to unseen"
+          >
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          </button>
+        
+        <a
+          href="/_res/b0a071dd.zip"
+          class="rounded-lg p-2 text-gray-400 hover:bg-white/60 hover:text-gray-700 transition-colors dark:hover:bg-white/10 dark:hover:text-gray-200"
+          title="Export deck"
+        >
+          
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+</svg>
+
+        </a>
+        <button
+          hx-delete="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+          hx-swap="none"
+          hx-confirm="This will permanently delete the deck and all its cards."
+          _="on htmx:afterRequest(detail) if detail.successful go to url '/decks'"
+          class="rounded-lg p-2 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+          title="Delete deck"
+        >
+          
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="deck-facts">
+<details class="add-card-panel glass mb-5 rounded-2xl" >
+  <summary class="flex cursor-pointer select-none list-none items-center gap-2.5 rounded-2xl px-5 py-3.5 text-sm font-semibold text-gray-700 transition-colors hover:text-pink-600 dark:text-gray-200 dark:hover:text-pink-400">
+    <svg class="add-card-plus h-4 w-4 shrink-0 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    </svg>
+    Add card
+  </summary>
+  <form
+    hx-post="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76/cards"
+    hx-target="closest details"
+    hx-swap="outerHTML"
+    hx-encoding="multipart/form-data"
+    class="border-t border-gray-200/60 px-5 pb-5 pt-4 dark:border-white/10"
+  >
+    <div class="grid gap-4 sm:grid-cols-2">
+      <label class="block">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front</span>
+        <textarea
+          name="front"
+          required
+          rows="2"
+          placeholder="Question / prompt — Markdown works: # Title, **bold**, - list"
+          class="glass-input mt-1.5 w-full rounded-xl px-3 py-2 text-sm"
+        ></textarea>
+        
+      </label>
+      <label class="block">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back</span>
+        <textarea
+          name="back"
+          rows="2"
+          placeholder="Answer"
+          class="glass-input mt-1.5 w-full rounded-xl px-3 py-2 text-sm"
+        ></textarea>
+      </label>
+      <div class="block">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front image <span class="font-normal normal-case">(optional)</span></span>
+        <div class="image-paste-widget">
+          <input
+            type="file"
+            name="image_front"
+            accept=".jpg,.jpeg,.png,.gif,.webp"
+            class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+          />
+          <div class="paste-ui"></div>
+        </div>
+        
+      </div>
+      <div class="block">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back image <span class="font-normal normal-case">(optional)</span></span>
+        <div class="image-paste-widget">
+          <input
+            type="file"
+            name="image_back"
+            accept=".jpg,.jpeg,.png,.gif,.webp"
+            class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+          />
+          <div class="paste-ui"></div>
+        </div>
+        
+      </div>
+      <div class="block">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front audio <span class="font-normal normal-case">(optional)</span></span>
+        <div class="audio-rec-widget" data-for="audio_front">
+          <input
+            type="file"
+            name="audio_front"
+            accept=".mp3,.ogg,.wav,.m4a,.webm,.aac,.flac"
+            class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+          />
+          <div class="rec-ui"></div>
+        </div>
+        
+      </div>
+      <div class="block">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back audio <span class="font-normal normal-case">(optional)</span></span>
+        <div class="audio-rec-widget" data-for="audio_back">
+          <input
+            type="file"
+            name="audio_back"
+            accept=".mp3,.ogg,.wav,.m4a,.webm,.aac,.flac"
+            class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+          />
+          <div class="rec-ui"></div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="mt-4 flex items-center justify-between">
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          name="reverse"
+          
+          class="h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500 dark:border-gray-600"
+        />
+        <span class="text-sm text-gray-600 dark:text-gray-300">Also add reverse card</span>
+      </label>
+      <button
+        type="submit"
+        class="btn-primary inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold"
+      >
+        Add card
+        <svg class="htmx-indicator h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+      </button>
+    </div>
+  </form>
+</details>
+
+<style>
+  .add-card-panel summary::-webkit-details-marker { display: none; }
+  .add-card-plus { transition: transform 0.2s ease; }
+  .add-card-panel[open] .add-card-plus { transform: rotate(45deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .add-card-plus { transition: none; }
+  }
+</style>
+
+
+<div id="deck-card-grid">
+  <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: Hasta mañana.">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="tomorrow"></i><i class="in 5 days"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>Hasta mañana.</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="tomorrow"></i><i class="in 5 days"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">See you tomorrow.</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → tomorrow
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 5 days
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/2ab6b4f0-9574-4c7f-9da7-3f174d0418d2/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/2ab6b4f0-9574-4c7f-9da7-3f174d0418d2/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/2ab6b4f0-9574-4c7f-9da7-3f174d0418d2/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/2ab6b4f0-9574-4c7f-9da7-3f174d0418d2?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: ¿Me puedes ayudar?">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="in 15 days"></i><i class="in 5 days"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>¿Me puedes ayudar?</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="in 15 days"></i><i class="in 5 days"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">Can you help me?</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 15 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 5 days
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/9894b49d-0489-4381-8dda-7df2ac7e15f8/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/9894b49d-0489-4381-8dda-7df2ac7e15f8/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/9894b49d-0489-4381-8dda-7df2ac7e15f8/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/9894b49d-0489-4381-8dda-7df2ac7e15f8?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: Mucho gusto.">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="in 17 days"></i><i class="in 4 days"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>Mucho gusto.</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="in 17 days"></i><i class="in 4 days"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">Nice to meet you.</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 17 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 4 days
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/1d472fe4-20eb-437a-8d58-9168793019f7/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/1d472fe4-20eb-437a-8d58-9168793019f7/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/1d472fe4-20eb-437a-8d58-9168793019f7/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/1d472fe4-20eb-437a-8d58-9168793019f7?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: ¿Qué hora es?">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="in 17 days"></i><i class="in 3 days"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>¿Qué hora es?</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="in 17 days"></i><i class="in 3 days"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">What time is it?</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 17 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 3 days
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/668e67f4-10c8-4e06-bfaa-cd1e88aeb476/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/668e67f4-10c8-4e06-bfaa-cd1e88aeb476/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/668e67f4-10c8-4e06-bfaa-cd1e88aeb476/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/668e67f4-10c8-4e06-bfaa-cd1e88aeb476?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: Me llamo Ana.">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="in 14 days"></i><i class="in 2 days"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>Me llamo Ana.</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="in 14 days"></i><i class="in 2 days"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">My name is Ana.</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 14 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 2 days
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/02bf0d1c-4a7d-4ca6-89da-cad69c73d4e8/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/02bf0d1c-4a7d-4ca6-89da-cad69c73d4e8/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/02bf0d1c-4a7d-4ca6-89da-cad69c73d4e8/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/02bf0d1c-4a7d-4ca6-89da-cad69c73d4e8?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: ¿Hablas inglés?">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="today"></i><i class="in 2 days"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>¿Hablas inglés?</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="today"></i><i class="in 2 days"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">Do you speak English?</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → today
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 2 days
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/d5c7db3c-e43b-4b81-bb79-076c505fe032/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/d5c7db3c-e43b-4b81-bb79-076c505fe032/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/d5c7db3c-e43b-4b81-bb79-076c505fe032/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/d5c7db3c-e43b-4b81-bb79-076c505fe032?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: No entiendo.">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="in 15 days"></i><i class="in 3 days"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>No entiendo.</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="in 15 days"></i><i class="in 3 days"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">I don't understand.</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 15 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 3 days
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/8bf0aac3-fd54-42aa-a7a0-703671de4b9d/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/8bf0aac3-fd54-42aa-a7a0-703671de4b9d/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/8bf0aac3-fd54-42aa-a7a0-703671de4b9d/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/8bf0aac3-fd54-42aa-a7a0-703671de4b9d?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: La cuenta, por favor.">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="in 11 days"></i><i class="today"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>La cuenta, por favor.</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="in 11 days"></i><i class="today"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">The check, please.</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 11 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← today
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/7b7f3b97-fd1a-4fc1-9766-c56103bb6a60/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/7b7f3b97-fd1a-4fc1-9766-c56103bb6a60/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/7b7f3b97-fd1a-4fc1-9766-c56103bb6a60/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/7b7f3b97-fd1a-4fc1-9766-c56103bb6a60?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: ¿Cuánto cuesta?">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="in 3 days"></i><i class="in 2 days"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>¿Cuánto cuesta?</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="in 3 days"></i><i class="in 2 days"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">How much is it?</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 3 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 2 days
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/e94c0d08-4dfa-4f0d-8f99-fce556bd9922/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/e94c0d08-4dfa-4f0d-8f99-fce556bd9922/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/e94c0d08-4dfa-4f0d-8f99-fce556bd9922/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/e94c0d08-4dfa-4f0d-8f99-fce556bd9922?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+      <div class="fact-card aspect-[5/7]" tabindex="0" role="button" aria-pressed="false" aria-label="Flip card: ¿Dónde está la estación?">
+        <div class="fact-card-inner">
+
+          
+          <div class="fact-face rounded-2xl p-3">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="fact-pip" aria-hidden="true">
+              <i class="in 13 days"></i><i class="tomorrow"></i>
+            </span>
+            <span class="fact-indicators">
+              <span class="fact-ind" aria-label="Has image" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="fact-ind" aria-label="Has audio" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="fact-ind fact-ind-rev" aria-label="Has reverse" title="Has reverse">↔</span>
+            </span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                <div class="md-content w-full break-words text-sm font-semibold leading-snug text-gray-900 dark:text-gray-100"
+                   _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p>¿Dónde está la estación?</p>
+</div>
+                
+              </div>
+            </div>
+            <span class="fact-pip fact-pip-br" aria-hidden="true">
+              <i class="in 13 days"></i><i class="tomorrow"></i>
+            </span>
+            <svg class="relative mx-auto h-3 w-3 shrink-0 text-gray-400/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+            </svg>
+          </div>
+
+          
+          <div class="fact-face fact-face-back rounded-2xl p-3" style="border-color:#fb923c45">
+            <img src="/_res/374397c9.png" alt="" class="fact-face-bg" aria-hidden="true" />
+            <span class="relative shrink-0 text-center text-[10px] font-semibold uppercase tracking-widest" style="color:#fb923c">Back</span>
+            <div class="fact-scroll-wrap relative flex min-h-0 w-full flex-1 flex-col overflow-y-auto overscroll-contain px-2 text-center">
+              <div class="m-auto flex w-full flex-col items-center gap-2">
+                
+                
+                  <div class="md-content w-full break-words text-sm leading-snug text-gray-600 dark:text-gray-300"
+                     _="on load js(me) window.stellaFitCardText(me.closest('.fact-scroll-wrap'), me) end"><p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">Where is the station?</span></span></p>
+</div>
+                
+                
+              </div>
+            </div>
+            <div class="relative flex shrink-0 flex-wrap items-center justify-center gap-1">
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 13 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← tomorrow
+                </span>
+              
+            </div>
+            <div class="relative mt-1.5 flex shrink-0 items-center justify-center gap-1">
+              <button
+                hx-get="/cards/3ce2027c-210e-4d49-85f4-6091769a58a7/preview"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Preview in review mode"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
+                hx-get="/cards/3ce2027c-210e-4d49-85f4-6091769a58a7/edit?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="body"
+                hx-swap="beforeend"
+                title="Edit card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+              </button>
+              <button
+                hx-post="/cards/3ce2027c-210e-4d49-85f4-6091769a58a7/reset?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Reset this card to unseen?"
+                title="Reset to unseen"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-amber-500/10 hover:text-amber-600 transition-colors dark:hover:text-amber-400"
+              >
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.99 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </button>
+              <button
+                hx-delete="/cards/3ce2027c-210e-4d49-85f4-6091769a58a7?deck=1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+                hx-target="#deck-card-grid"
+                hx-swap="innerHTML"
+                hx-confirm="Delete this fact and its cards?"
+                title="Delete card"
+                class="rounded-lg p-1.5 text-gray-400 hover:bg-red-500/10 hover:text-red-600 transition-colors dark:hover:text-red-400"
+              >
+                
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+</svg>
+
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    
+  </div>
+  <style>
+    .fact-card {
+      position: relative;
+      perspective: 1200px;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+    }
+    .fact-card:hover { transform: translateY(-3px); }
+    .fact-card:focus-visible {
+      outline: 2px solid #ec4899;
+      outline-offset: 3px;
+      border-radius: 1rem;
+    }
+    .fact-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.3, 0.7, 0.3, 1);
+    }
+    .fact-card.is-flipped .fact-card-inner { transform: rotateY(180deg); }
+    .fact-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+       
+      background: #fdfcff;
+      border: 1px solid rgba(17, 24, 39, 0.08);
+      box-shadow: 0 8px 32px rgba(24, 16, 48, 0.08);
+    }
+    .dark .fact-face {
+      background: #191822;
+      border-color: rgba(255, 255, 255, 0.09);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    }
+    .fact-face-back { transform: rotateY(180deg); }
+    .fact-scroll-wrap {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(120, 120, 120, 0.35) transparent;
+    }
+    .fact-scroll-wrap::-webkit-scrollbar { width: 4px; }
+    .fact-scroll-wrap::-webkit-scrollbar-thumb { border-radius: 9999px; background: rgba(120, 120, 120, 0.35); }
+    .fact-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
+    .fact-face-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      filter: grayscale(1);
+      opacity: 0.13;
+    }
+    .dark .fact-face-bg { opacity: 0.1; }
+    @media (prefers-reduced-motion: reduce) {
+      .fact-card, .fact-card-inner { transition: none; }
+    }
+    .fact-pip {
+      position: absolute;
+      top: 0.625rem;
+      left: 0.625rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      pointer-events: none;
+    }
+    .fact-pip i {
+      display: block;
+      width: 5px;
+      height: 5px;
+      transform: rotate(45deg);
+      background: #ec4899;
+    }
+    .fact-pip i.unseen { background: #9ca3af; }
+    .fact-pip i.learning { background: #f59e0b; }
+    .fact-pip-br { top: auto; left: auto; bottom: 0.625rem; right: 0.625rem; }
+    .fact-indicators {
+      position: absolute;
+      top: 0.45rem;
+      right: 0.45rem;
+      display: flex;
+      gap: 3px;
+      pointer-events: none;
+    }
+    .fact-ind {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 700;
+      line-height: 1;
+      border-radius: 999px;
+      padding: 2px 5px;
+      color: rgba(156, 163, 175, 0.6);
+      background: rgba(156, 163, 175, 0.08);
+    }
+    .fact-ind svg { width: 9px; height: 9px; stroke: currentColor; }
+    .fact-ind-img  { color: #ca8a04; background: rgba(234, 179,   8, 0.12); }
+    .fact-ind-aud  { color: #3b82f6; background: rgba( 59, 130, 246, 0.12); }
+    .fact-ind-rev  { color: #7c3aed; background: rgba(124,  58, 237, 0.12); }
+    .dark .fact-ind { color: rgba(75, 85, 99, 0.7); }
+    .dark .fact-ind-img { color: #facc15; background: rgba(234, 179,   8, 0.18); }
+    .dark .fact-ind-aud { color: #60a5fa; background: rgba( 59, 130, 246, 0.18); }
+    .dark .fact-ind-rev { color: #a78bfa; background: rgba(124,  58, 237, 0.18); }
+  </style>
+  <script>
+    if (!window.stellaFactFlip) {
+      window.stellaFactFlip = true;
+      function toggleFlip(card) {
+        card.classList.toggle("is-flipped");
+        card.setAttribute("aria-pressed", card.classList.contains("is-flipped"));
+      }
+      window.stellaToggleFlip = toggleFlip;
+      document.addEventListener("click", function (e) {
+        var card = e.target.closest && e.target.closest(".fact-card");
+        if (!card) return;
+        if (e.target.closest("button, a, audio, input")) return;
+        var sel = window.getSelection();
+        if (sel && sel.toString()) return;
+        toggleFlip(card);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        var card = e.target.closest && e.target.closest(".fact-card");
+        if (!card || e.target !== card) return;
+        e.preventDefault();
+        toggleFlip(card);
+      });
+    }
+  </script>
+
+
+</div>
+</div>
+</div>
+
+            
+          </div>
+        </main>
+      </div>
+    </div>
+    
+<nav id="mobile-nav" class="glass-nav fixed bottom-0 left-0 right-0 z-50 flex border-t lg:hidden"
+     style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+  <a
+    href="/"
+    hx-get="/"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    class="nav-link flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+  >
+    <img src="/icons/dash.svg" alt="" class="nav-icon h-6 w-6" />
+    Home
+  </a>
+  <a
+    href="/review/pick"
+    hx-get="/review/pick"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    class="nav-link flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+  >
+    <img src="/icons/study.svg" alt="" class="nav-icon h-6 w-6" />
+    Study
+  </a>
+  <a
+    href="/decks"
+    hx-get="/decks"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    class="nav-link flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+  >
+    <img src="/icons/decks.svg" alt="" class="nav-icon h-6 w-6" />
+    Decks
+  </a>
+  <a
+    href="/cards"
+    hx-get="/cards"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    class="nav-link flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+  >
+    <img src="/icons/cards.svg" alt="" class="nav-icon h-6 w-6" />
+    Cards
+  </a>
+</nav>
+
+    
+<div
+  id="toast-container"
+  hx-swap-oob="beforeend"
+  class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"
+></div>
+<script>
+  
+  
+  
+  window.swalGlass = Swal.mixin({ buttonsStyling: true });
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  document.body.addEventListener('htmx:beforeSwap', function (evt) {
+    if (evt.detail.xhr.status === 422) {
+      evt.detail.shouldSwap = true;
+      evt.detail.isError = false;
+    }
+  });
+
+  
+  window.humanBytes = function (n) {
+    if (n < 1024) return n + ' B';
+    var units = ['KB', 'MB', 'GB', 'TB'], v = n, i = -1;
+    do { v /= 1024; i++; } while (v >= 1024 && i < units.length - 1);
+    return Math.round(v) + ' ' + units[i];
+  };
+
+  
+  
+  
+  
+  window.pushToast = function (kind, msg) {
+    var container = document.getElementById('toast-container');
+    if (!container) return;
+    var style = { ok: ['border-l-emerald-500', '3s'], err: ['border-l-red-500', '5s'], info: ['border-l-pink-500', '4s'] }[kind] || ['border-l-pink-500', '4s'];
+    var div = document.createElement('div');
+    div.className = 'glass flex items-center gap-2 rounded-xl border-l-4 ' + style[0] + ' px-4 py-2.5 text-sm font-medium text-gray-800 shadow-xl dark:text-gray-100';
+    div.setAttribute('_', 'on load wait ' + style[1] + ' then transition opacity to 0 then remove me');
+    div.textContent = msg;
+    container.appendChild(div);
+    if (window._hyperscript) _hyperscript.processNode(div);
+  };
+
+  
+  
+  function setInputFile(input, file) {
+    var dt = new DataTransfer();
+    dt.items.add(file);
+    input.files = dt.files;
+  }
+
+  
+  
+  function exceedsMaxBytes(form, size, label) {
+    var max = parseInt(form.dataset.maxBytes, 10);
+    if (max && size > max) {
+      pushToast('err', 'That ' + label + ' is too large. Maximum upload size is ' + humanBytes(max) + '.');
+      return true;
+    }
+    return false;
+  }
+
+  
+  
+  
+  function initOnSwap(selector, init) {
+    function run() { document.querySelectorAll(selector).forEach(init); }
+    document.addEventListener('DOMContentLoaded', run);
+    document.addEventListener('htmx:afterSwap', run);
+  }
+
+  
+  
+  
+  
+  window.guardImportSize = function (evt, inputId, formId) {
+    var form = document.getElementById(formId);
+    var file = document.getElementById(inputId).files[0];
+    if (file && exceedsMaxBytes(form, file.size, 'file')) {
+      evt.preventDefault();
+    }
+  };
+
+  
+  
+  window.importDeckFromClipboard = async function (inputId, formId) {
+    var text;
+    try {
+      text = await navigator.clipboard.readText();
+    } catch (err) {
+      pushToast('err', 'Could not read the clipboard: ' + err.message);
+      return;
+    }
+    try {
+      JSON.parse(text);
+    } catch (err) {
+      pushToast('err', 'Clipboard contents are not valid JSON.');
+      return;
+    }
+    var form = document.getElementById(formId);
+    if (exceedsMaxBytes(form, new Blob([text]).size, 'deck')) {
+      return;
+    }
+    setInputFile(document.getElementById(inputId), new File([text], 'clipboard-deck.json', { type: 'application/json' }));
+    form.requestSubmit();
+  };
+
+  
+  document.addEventListener('htmx:confirm', function(e) {
+    if (!e.detail.question) return;
+    e.preventDefault();
+    swalGlass.fire({
+      title: 'Are you sure?',
+      text: e.detail.question,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel',
+    }).then(function(r) { if (r.isConfirmed) e.detail.issueRequest(true); });
+  });
+
+  
+  
+  
+  
+  
+  document.body.addEventListener('htmx:responseError', function (e) {
+    var xhr = e.detail.xhr;
+    var tmp = document.createElement('div');
+    tmp.innerHTML = xhr.responseText || '';
+    var bubble = tmp.querySelector('#toast-container > div');
+    if (bubble) {
+      pushToast('err', bubble.textContent.trim());
+    } else if (xhr.status === 413) {
+      pushToast('err', 'That file is too large to import.');
+    } else {
+      pushToast('err', 'Something went wrong. Please try again.');
+    }
+  });
+  document.body.addEventListener('htmx:sendError', function () {
+    pushToast('err', 'Network error — please check your connection and try again.');
+  });
+
+  
+  var _swipeMD = null;
+  window.clSnapRow = function(node, dx) {
+    var REVEAL = 72;
+    if (Math.abs(dx) < 40) { node.style.transform = ''; node.style.transition = 'transform 0.2s ease'; return; }
+    var snap = dx > 0 ? REVEAL : -REVEAL;
+    node.style.transition = 'transform 0.2s ease';
+    node.style.transform = 'translateX(' + snap + 'px)';
+  };
+  window.clMouseDown = function(e, node) {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    _swipeMD = { node: node, startX: e.clientX, moved: false };
+    node.style.transition = 'none';
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'grabbing';
+  };
+  document.addEventListener('mousemove', function(e) {
+    if (!_swipeMD) return;
+    var dx = e.clientX - _swipeMD.startX;
+    if (Math.abs(dx) > 4) _swipeMD.moved = true;
+    if (_swipeMD.moved) _swipeMD.node.style.transform = 'translateX(' + dx + 'px)';
+  });
+  document.addEventListener('mouseup', function(e) {
+    if (!_swipeMD) return;
+    var node = _swipeMD.node;
+    var dx = e.clientX - _swipeMD.startX;
+    var moved = _swipeMD.moved;
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
+    _swipeMD = null;
+    if (moved) clSnapRow(node, dx);
+  });
+
+  
+  (function () {
+    var player = new Audio();
+    var active = null;
+    function resetBtn(btn) {
+      if (!btn) return;
+      btn.classList.remove('playing');
+      btn.style.setProperty('--p', '0%');
+      btn.setAttribute('aria-label', 'Play audio');
+    }
+    player.addEventListener('timeupdate', function () {
+      if (active && player.duration) {
+        active.style.setProperty('--p', (player.currentTime / player.duration) * 100 + '%');
+      }
+    });
+    player.addEventListener('ended', function () {
+      resetBtn(active);
+      active = null;
+    });
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.audio-chip, .audio-pill');
+      if (!btn) return;
+      if (btn === active) {
+        if (player.paused) {
+          player.play();
+          btn.classList.add('playing');
+          btn.setAttribute('aria-label', 'Pause audio');
+        } else {
+          player.pause();
+          btn.classList.remove('playing');
+          btn.setAttribute('aria-label', 'Play audio');
+        }
+        return;
+      }
+      resetBtn(active);
+      active = btn;
+      player.src = btn.dataset.audio;
+      player.play();
+      btn.classList.add('playing');
+      btn.setAttribute('aria-label', 'Pause audio');
+    });
+    
+    document.body.addEventListener('htmx:afterSwap', function () {
+      if (active && !document.contains(active)) {
+        player.pause();
+        active = null;
+      }
+    });
+  })();
+
+  
+  (function () {
+    if (!window.speechSynthesis) return;
+    var current = null; 
+
+    
+    
+    
+    function spokenText(textEl) {
+      var clone = textEl.cloneNode(true);
+      clone.querySelectorAll('ruby').forEach(function (ruby) {
+        var rt = ruby.querySelector('rt');
+        ruby.replaceWith(rt ? rt.textContent : ruby.textContent);
+      });
+      return clone.textContent;
+    }
+
+    function stop() {
+      speechSynthesis.cancel();
+      if (current) current.classList.remove('speaking');
+      current = null;
+    }
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.tts-btn');
+      if (!btn) return;
+      var wasCurrent = btn === current;
+      stop();
+      if (wasCurrent) return; 
+
+      var wrap = btn.closest('.tts-wrap');
+      var utter = new SpeechSynthesisUtterance(spokenText(wrap.querySelector('.tts-text')));
+      utter.lang = wrap.dataset.ttsLang === 'ja' ? 'ja-JP' : 'en-US';
+      utter.onend = utter.onerror = function () { if (current === btn) stop(); };
+      current = btn;
+      btn.classList.add('speaking');
+      speechSynthesis.speak(utter);
+    });
+
+    
+    document.body.addEventListener('htmx:afterSwap', stop);
+  })();
+
+  
+  (function () {
+    var MAX_SEC = 15;
+    function fmt(s) { return Math.floor(s/60)+':'+('0'+Math.floor(s%60)).slice(-2); }
+
+    function initWidget(widget) {
+      if (widget._arInit) return;
+      widget._arInit = true;
+
+      var fileInput = widget.querySelector('input[type=file]');
+      var ui = widget.querySelector('.rec-ui');
+      var mr = null, chunks = [], blobUrl = null, elapsed = 0, ticker = null, fillEl = null;
+
+      function btnCls(v) {
+        var b = 'cursor-pointer rounded-lg border-0 px-3 py-1 text-xs font-semibold ';
+        if (v==='rec')  return b+'bg-pink-500/15 text-pink-700 hover:bg-pink-500/25 dark:text-pink-300';
+        if (v==='stop') return b+'bg-red-500/20 text-red-700 hover:bg-red-500/30 dark:text-red-300';
+        if (v==='re')   return b+'bg-gray-200/60 text-gray-600 hover:bg-gray-300/60 dark:bg-white/10 dark:text-gray-300';
+        return b;
+      }
+
+      function renderIdle() {
+        fileInput.hidden = false;
+        ui.innerHTML = '';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mt-1 text-xs font-medium text-pink-600 hover:text-pink-700 dark:text-pink-400 cursor-pointer';
+        btn.textContent = 'Or record audio (max 15s)';
+        btn.onclick = startRec;
+        ui.appendChild(btn);
+      }
+
+      function renderRecording() {
+        fileInput.hidden = true;
+        ui.innerHTML = '';
+        var row = document.createElement('div');
+        row.className = 'mt-1.5 flex items-center gap-2';
+
+        var stop = document.createElement('button');
+        stop.type = 'button'; stop.textContent = '■ Stop'; stop.className = btnCls('stop');
+        stop.onclick = stopRec;
+
+        var timerEl = document.createElement('span');
+        timerEl.className = 'text-xs tabular-nums text-gray-500 dark:text-gray-400';
+        timerEl.textContent = fmt(0)+' / '+fmt(MAX_SEC);
+
+        var bar = document.createElement('div');
+        bar.className = 'h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-white/10 overflow-hidden';
+        fillEl = document.createElement('div');
+        fillEl.className = 'h-full bg-pink-500';
+        fillEl.style.width = '0%';
+        bar.appendChild(fillEl);
+
+        row.appendChild(stop); row.appendChild(timerEl); row.appendChild(bar);
+        ui.appendChild(row);
+
+        ticker = setInterval(function() {
+          elapsed++;
+          timerEl.textContent = fmt(elapsed)+' / '+fmt(MAX_SEC);
+          if (fillEl) fillEl.style.width = (elapsed/MAX_SEC*100)+'%';
+          if (elapsed >= MAX_SEC) stopRec();
+        }, 1000);
+      }
+
+      function renderDone() {
+        fileInput.hidden = true;
+        ui.innerHTML = '';
+        var row = document.createElement('div');
+        row.className = 'mt-1.5 flex items-center gap-2 flex-wrap';
+
+        var audio = document.createElement('audio');
+        audio.src = blobUrl; audio.controls = true;
+        audio.style.cssText = 'height:28px;flex:1;min-width:0';
+
+        var reBtn = document.createElement('button');
+        reBtn.type = 'button'; reBtn.textContent = '↺ Re-record'; reBtn.className = btnCls('re');
+        reBtn.onclick = doReset;
+
+        row.appendChild(audio); row.appendChild(reBtn);
+        ui.appendChild(row);
+      }
+
+      function startRec() {
+        
+        Promise.resolve()
+          .then(function() { return navigator.mediaDevices.getUserMedia({audio:true}); })
+          .then(function(stream) {
+            chunks = []; elapsed = 0; fillEl = null;
+            mr = new MediaRecorder(stream);
+            mr.ondataavailable = function(e) { if (e.data.size>0) chunks.push(e.data); };
+            mr.onstop = function() {
+              stream.getTracks().forEach(function(t){t.stop();});
+              clearInterval(ticker);
+              var blob = new Blob(chunks, {type: mr.mimeType||'audio/webm'});
+              if (blobUrl) URL.revokeObjectURL(blobUrl);
+              blobUrl = URL.createObjectURL(blob);
+              setInputFile(fileInput, new File([blob], 'recording.webm', {type: blob.type}));
+              renderDone();
+            };
+            mr.start();
+            renderRecording();
+          })
+          .catch(function(err) {
+            alert('Could not start recording: ' + (err && err.message ? err.message : err));
+          });
+      }
+
+      function stopRec() {
+        clearInterval(ticker);
+        if (mr && mr.state !== 'inactive') mr.stop();
+      }
+
+      function doReset() {
+        stopRec();
+        if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+        chunks = []; elapsed = 0; mr = null; fillEl = null;
+        try { fileInput.value = ''; } catch(e) {}
+        renderIdle();
+      }
+
+      var form = widget.closest('form');
+      if (form) form.addEventListener('reset', doReset);
+
+      renderIdle();
+    }
+
+    initOnSwap('.audio-rec-widget', initWidget);
+  })();
+
+  
+  
+  
+  (function () {
+    function renderAll() {
+      if (typeof katex === 'undefined') return;
+      var rendered = false;
+      document.querySelectorAll('.katex-math[data-tex]:not([data-rendered])').forEach(function (el) {
+        el.dataset.rendered = '1';
+        rendered = true;
+        try {
+          katex.render(el.dataset.tex, el, { displayMode: el.dataset.texDisplay === '1', throwOnError: false });
+        } catch (e) {}
+      });
+      
+      
+      if (rendered && window.stellaRefitReviewCard) window.stellaRefitReviewCard();
+    }
+    document.addEventListener('DOMContentLoaded', renderAll);
+    document.addEventListener('htmx:afterSwap', renderAll);
+  })();
+
+  
+  
+  (function () {
+    function extFor(type) {
+      if (type === 'image/jpeg') return '.jpg';
+      if (type === 'image/gif')  return '.gif';
+      if (type === 'image/webp') return '.webp';
+      return '.png';
+    }
+
+    function imageFromClipboardEvent(e) {
+      var items = (e.clipboardData && e.clipboardData.items) || [];
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].kind === 'file' && items[i].type.indexOf('image/') === 0) {
+          return items[i].getAsFile();
+        }
+      }
+      return null;
+    }
+
+    function initWidget(widget) {
+      if (widget._ipInit) return;
+      widget._ipInit = true;
+
+      var fileInput = widget.querySelector('input[type=file]');
+      var ui = widget.querySelector('.paste-ui');
+      var previewUrl = null;
+
+      function setFile(blob) {
+        var type = blob.type || 'image/png';
+        var name = blob.name || 'pasted-' + Date.now() + extFor(type);
+        setInputFile(fileInput, new File([blob], name, {type: type}));
+        renderPreview();
+      }
+      widget._ipSetFile = setFile;
+
+      function renderIdle() {
+        fileInput.hidden = false;
+        if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+        ui.innerHTML = '';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mt-1 text-xs font-medium text-pink-600 hover:text-pink-700 dark:text-pink-400 cursor-pointer';
+        btn.textContent = 'Or paste from clipboard';
+        btn.onclick = pasteFromClipboard;
+        ui.appendChild(btn);
+      }
+
+      function renderArmed() {
+        fileInput.hidden = false;
+        ui.innerHTML = '';
+        var zone = document.createElement('div');
+        zone.tabIndex = 0;
+        zone.className = 'mt-1.5 rounded-xl border border-dashed border-pink-400/60 px-3 py-2 text-center text-xs text-pink-600 outline-none focus:ring-2 focus:ring-pink-500/40 dark:text-pink-300';
+        zone.textContent = 'Press Ctrl+V to paste — Esc to cancel';
+        zone.onkeydown = function (e) { if (e.key === 'Escape') renderIdle(); };
+        zone.onblur = function () {
+          
+          setTimeout(function () { if (!fileInput.files.length && document.contains(zone)) renderIdle(); }, 200);
+        };
+        ui.appendChild(zone);
+        zone.focus();
+      }
+
+      function renderPreview() {
+        var f = fileInput.files && fileInput.files[0];
+        if (!f) { renderIdle(); return; }
+        fileInput.hidden = true;
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        previewUrl = URL.createObjectURL(f);
+        ui.innerHTML = '';
+        var row = document.createElement('div');
+        row.className = 'mt-1.5 flex items-center gap-2';
+        var img = document.createElement('img');
+        img.src = previewUrl;
+        img.className = 'h-12 w-12 rounded-lg object-cover ring-1 ring-black/10 dark:ring-white/10';
+        var name = document.createElement('span');
+        name.className = 'min-w-0 flex-1 truncate text-xs text-gray-500 dark:text-gray-400';
+        name.textContent = f.name;
+        var clear = document.createElement('button');
+        clear.type = 'button';
+        clear.textContent = '✕ Clear';
+        clear.className = 'cursor-pointer rounded-lg border-0 bg-gray-200/60 px-3 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-300/60 dark:bg-white/10 dark:text-gray-300';
+        clear.onclick = doReset;
+        row.appendChild(img); row.appendChild(name); row.appendChild(clear);
+        ui.appendChild(row);
+      }
+
+      function pasteFromClipboard() {
+        
+        
+        
+        Promise.resolve()
+          .then(function () { return navigator.clipboard.read(); })
+          .then(function (items) {
+            for (var i = 0; i < items.length; i++) {
+              var types = items[i].types || [];
+              for (var j = 0; j < types.length; j++) {
+                if (types[j].indexOf('image/') === 0) {
+                  return items[i].getType(types[j]).then(setFile);
+                }
+              }
+            }
+            renderArmed();
+          })
+          .catch(renderArmed);
+      }
+
+      function doReset() {
+        if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+        try { fileInput.value = ''; } catch (e) {}
+        renderIdle();
+      }
+
+      
+      widget.addEventListener('paste', function (e) {
+        var f = imageFromClipboardEvent(e);
+        if (f) { e.preventDefault(); setFile(f); }
+      });
+      
+      fileInput.addEventListener('change', renderPreview);
+
+      var form = widget.closest('form');
+      if (form) form.addEventListener('reset', function () { setTimeout(doReset, 0); });
+
+      renderIdle();
+    }
+
+    
+    
+    document.addEventListener('paste', function (e) {
+      var t = e.target;
+      if (!t || (t.name !== 'front' && t.name !== 'back')) return;
+      var f = imageFromClipboardEvent(e);
+      if (!f) return;
+      var form = t.closest('form');
+      var input = form && form.querySelector('input[name=image_' + t.name + ']');
+      var widget = input && input.closest('.image-paste-widget');
+      if (widget && widget._ipSetFile) {
+        e.preventDefault();
+        widget._ipSetFile(f);
+      }
+    });
+
+    initOnSwap('.image-paste-widget', initWidget);
+  })();
+</script>
+
+  </body>
+</html>

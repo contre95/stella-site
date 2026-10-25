@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#f7f2fb" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#07070b" media="(prefers-color-scheme: dark)" />
+  <title>Review · Stella</title>
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+  <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="/css/app.css" />
+  <script>
+    (function() {
+      var t = localStorage.getItem("theme");
+      if (t === "dark") document.documentElement.classList.add("dark");
+      if (t === "eink") document.documentElement.classList.add("eink");
+    })();
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+    }
+  </script>
+  <script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    (function () {
+      var PLAY_ICON  = '<svg viewBox="0 0 10 10" fill="currentColor" style="width:15px;height:15px;margin-left:2px"><path d="M2 1.5v7l6-3.5z"/></svg>';
+      var PAUSE_ICON = '<svg viewBox="0 0 10 10" fill="currentColor" style="width:15px;height:15px"><rect x="1.5" y="1" width="2.5" height="8" rx="0.8"/><rect x="6" y="1" width="2.5" height="8" rx="0.8"/></svg>';
+
+      window.stellaInitAudioPlayer = function (audioEl, idPrefix, suffix, opts) {
+        opts = opts || {};
+        var btn     = document.getElementById(idPrefix + 'play-btn-' + suffix);
+        var track   = document.getElementById(idPrefix + 'track-' + suffix);
+        var fill    = document.getElementById(idPrefix + 'fill-' + suffix);
+        var cur     = document.getElementById(idPrefix + 'cur-' + suffix);
+        var dur     = document.getElementById(idPrefix + 'dur-' + suffix);
+        var wrapper = document.getElementById(idPrefix + 'player-' + suffix);
+        if (!btn || !track) return;
+
+        if (opts.stopTouchPropagation) {
+          wrapper.addEventListener('touchstart', function (e) { e.stopPropagation(); }, { passive: true });
+          wrapper.addEventListener('touchend', function (e) { e.stopPropagation(); });
+        }
+
+        function fmt(s) {
+          if (!isFinite(s) || isNaN(s)) return '-:--';
+          var m = Math.floor(s / 60), sec = Math.floor(s % 60);
+          return m + ':' + (sec < 10 ? '0' : '') + sec;
+        }
+        function sync() {
+          var pct = audioEl.duration ? (audioEl.currentTime / audioEl.duration) * 100 : 0;
+          fill.style.width = pct + '%';
+          if (cur) cur.textContent = fmt(audioEl.currentTime);
+          if (dur) dur.textContent = fmt(audioEl.duration);
+          btn.innerHTML = audioEl.paused ? PLAY_ICON : PAUSE_ICON;
+          wrapper.classList.toggle('playing', !audioEl.paused);
+        }
+
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (audioEl.paused) audioEl.play().catch(function () {});
+          else audioEl.pause();
+        });
+        track.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (!audioEl.duration) return;
+          var rect = track.getBoundingClientRect();
+          audioEl.currentTime = ((e.clientX - rect.left) / rect.width) * audioEl.duration;
+        });
+        audioEl.addEventListener('timeupdate', sync);
+        audioEl.addEventListener('durationchange', sync);
+        audioEl.addEventListener('play', sync);
+        audioEl.addEventListener('pause', sync);
+        audioEl.addEventListener('ended', function () { audioEl.currentTime = 0; sync(); });
+        sync();
+      };
+    })();
+  </script>
+  <script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    window.stellaFitCardText = function (scrollEl, contentEl) {
+      if (!scrollEl || !contentEl) return;
+      contentEl.style.fontSize = '';
+      var base = parseFloat(getComputedStyle(contentEl).fontSize) || 16;
+      var isShort = contentEl.textContent.trim().length <= 3;
+      var MAX_PX = 48; 
+      var lo = 14, hi = isShort ? Math.min(base * 2, MAX_PX) : base;
+
+      function fits(px) {
+        contentEl.style.fontSize = px + 'px';
+        return scrollEl.scrollHeight <= scrollEl.clientHeight + 1;
+      }
+
+      if (fits(hi)) { contentEl.style.fontSize = hi + 'px'; return; }
+      if (!fits(lo)) { contentEl.style.fontSize = lo + 'px'; return; }
+      for (var i = 0; i < 8; i++) {
+        var mid = (lo + hi) / 2;
+        if (fits(mid)) lo = mid; else hi = mid;
+      }
+      contentEl.style.fontSize = lo + 'px';
+    };
+  </script>
+  <script src="/static-demo.js"></script>
+</head>
+
+  <body class="h-full text-gray-800 antialiased dark:text-gray-100">
+    <div class="app-bg"></div>
+    <div class="flex h-full">
+      <aside class="glass-nav hidden w-60 shrink-0 flex-col border-r lg:flex">
+  
+  <a
+    href="/"
+    hx-get="/"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    _="on click remove .nav-active from .nav-link then add .nav-active to #nav-dashboard"
+    class="flex items-center gap-2.5 px-5 py-5"
+  >
+    <img src="/logo.png" alt="Stella" class="h-14 w-14 rounded-xl object-contain" />
+    <div>
+      <span class="text-2xl font-bold tracking-tight bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent">Stella</span>
+      <div hx-get="/sidebar-stats" hx-trigger="load" hx-target="this" hx-swap="innerHTML" hx-push-url="false"></div>
+    </div>
+  </a>
+
+  
+  <nav class="flex-1 px-3 py-4 space-y-1">
+    <a
+      id="nav-dashboard"
+      href="/"
+      hx-get="/"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <img src="/icons/dash.svg" alt="" class="nav-icon h-5 w-5 shrink-0" />
+      Dashboard
+    </a>
+    <a
+      href="/review/pick"
+      hx-get="/review/pick"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link nav-active flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <img src="/icons/study.svg" alt="" class="nav-icon h-5 w-5 shrink-0" />
+      Study
+    </a>
+    <a
+      href="/decks"
+      hx-get="/decks"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <img src="/icons/decks.svg" alt="" class="nav-icon h-5 w-5 shrink-0" />
+      Decks
+    </a>
+    <a
+      href="/cards"
+      hx-get="/cards"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <img src="/icons/cards.svg" alt="" class="nav-icon h-5 w-5 shrink-0" />
+      Cards
+    </a>
+    <a
+      href="/settings/tokens"
+      hx-get="/settings/tokens"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <svg class="nav-icon h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      Settings
+    </a>
+    <a
+      href="/about"
+      hx-get="/about"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      _="on click remove .nav-active from .nav-link then add .nav-active to me"
+      class="nav-link  flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-white/60 hover:text-gray-900 transition-colors dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-gray-100"
+    >
+      <svg class="nav-icon h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      About
+    </a>
+  </nav>
+
+  <a href="https://github.com/contre95/stella" target="_blank" rel="noopener" class="px-5 py-4 text-xs text-center text-gradient hover:opacity-80 transition-opacity">v0.0.2</a>
+</aside>
+
+<script>
+  function updateNavActive() {
+    var path = window.location.pathname;
+    document.querySelectorAll('.nav-link').forEach(function(el) {
+      var href = el.getAttribute('href');
+      var active = (href === '/' && path === '/') ||
+                   (href !== '/' && (path === href || path.startsWith(href + '/') || (href === '/review/pick' && path.startsWith('/review'))));
+      el.classList.toggle('nav-active', active);
+    });
+  }
+  document.addEventListener('htmx:afterSettle', updateNavActive);
+  document.addEventListener('DOMContentLoaded', updateNavActive);
+</script>
+
+      <div class="flex min-w-0 flex-1 flex-col">
+        <header class="glass-nav flex items-center justify-between border-b px-4 py-3 sm:px-6">
+  
+  <a
+    href="/"
+    hx-get="/"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    _="on click remove .nav-active from .nav-link then add .nav-active to #nav-dashboard"
+    class="flex items-center gap-2 lg:hidden"
+  >
+    <img src="/logo.png" alt="Stella" class="h-12 w-12 rounded-lg object-contain" />
+    <div>
+      <span class="text-xl font-bold bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent">Stella</span>
+      <div hx-get="/sidebar-stats" hx-trigger="load" hx-target="this" hx-swap="innerHTML" hx-push-url="false"></div>
+    </div>
+  </a>
+
+  <div class="ml-auto flex items-center gap-2">
+    <button
+      type="button"
+      _="on click
+           if document.documentElement.classList.contains('dark')
+             remove .dark from document.documentElement
+             add .eink to document.documentElement
+             call localStorage.setItem('theme', 'eink')
+           else if document.documentElement.classList.contains('eink')
+             remove .eink from document.documentElement
+             call localStorage.setItem('theme', 'light')
+           else
+             add .dark to document.documentElement
+             call localStorage.setItem('theme', 'dark')
+           end"
+      class="btn-ghost rounded-xl p-1.5"
+      title="Toggle theme"
+    >
+      
+      <svg class="theme-icon-moon h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+      </svg>
+      
+      <svg class="theme-icon-eink-indicator h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      
+      <svg class="theme-icon-sun h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+      </svg>
+    </button>
+    
+  </div>
+</header>
+
+        <main class="flex flex-1 flex-col overflow-y-auto p-4 pb-[calc(4.5rem_+_env(safe-area-inset-bottom,0px))] lg:p-8 lg:pb-[calc(2rem_+_env(safe-area-inset-bottom,0px))]">
+          <div id="contenido" class="flex flex-1 flex-col min-h-0">
+            
+              <div id="contenido" class="flex flex-1 flex-col min-h-0">
+  <div id="review-card-wrap" class="flex flex-1 flex-col min-h-0 select-none">
+
+  
+  <div class="mb-3 flex shrink-0 items-center justify-between">
+    <span class="flex items-center gap-1.5 text-sm text-gray-400 dark:text-gray-500">
+      <svg viewBox="-3.8 -3.8 45.60 45.60" class="h-4 w-4 shrink-0" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M1075.82857,431.195122 L1092.28571,431.195122 C1093.24511,431.195122 1094.03194,431.944117 1094.10822,432.896752 L1094.11429,433.04878 L1094.11429,457.146341 C1094.11429,458.118901 1093.37543,458.916524 1092.43569,458.993855 L1092.28571,459 L1075.82857,459 C1074.86917,459 1074.08235,458.251005 1074.00606,457.29837 L1074,457.146341 L1074,433.04878 C1074,432.076221 1074.73886,431.278598 1075.6786,431.201267 L1075.82857,431.195122 L1092.28571,431.195122 Z M1091.37143,455.292683 L1089.54286,455.292683 C1089.03791,455.292683 1088.62857,455.707639 1088.62857,456.219512 C1088.62857,456.694823 1088.98152,457.086568 1089.43623,457.140106 L1089.54286,457.146341 L1091.37143,457.146341 C1091.87637,457.146341 1092.28571,456.731386 1092.28571,456.219512 C1092.28571,455.707639 1091.87637,455.292683 1091.37143,455.292683 Z M1102.34286,421 C1104.36264,421 1106,422.659822 1106,424.707317 L1106,448.804878 C1106,450.852373 1104.36264,452.512195 1102.34286,452.512195 L1095.94246,452.512 L1095.94286,433.04878 C1095.94286,431.067334 1094.40943,429.448952 1092.47994,429.346602 L1092.28571,429.341463 L1082.22846,429.341 L1082.22857,424.707317 C1082.22857,422.659822 1083.86593,421 1085.88571,421 L1102.34286,421 Z M1086.05344,440.463415 C1085.45815,440.463415 1084.88108,440.640782 1084.39083,440.966741 L1084.21119,441.095885 L1084.05714,441.223746 C1083.50627,440.735085 1082.79712,440.463415 1082.06038,440.463415 C1081.25617,440.463415 1080.48485,440.787117 1079.91637,441.363404 C1079.34789,441.93969 1079.02857,442.721596 1079.02857,443.536846 C1079.02857,444.279753 1079.29389,444.995021 1079.77147,445.552286 L1079.90694,445.700252 L1083.39256,449.441469 C1083.56488,449.626659 1083.80567,449.731707 1084.05714,449.731707 C1084.2667,449.731707 1084.46884,449.658757 1084.63024,449.527144 L1084.72193,449.441251 L1088.21456,445.6922 C1088.76981,445.125089 1089.08571,444.347508 1089.08571,443.536846 C1089.08571,442.721814 1088.76608,441.939843 1088.19745,441.363404 C1087.62885,440.787001 1086.85796,440.463415 1086.05344,440.463415 Z M1086.05344,442.316702 C1086.37267,442.316702 1086.679,442.445343 1086.90481,442.674253 C1087.13028,442.903164 1087.25705,443.213421 1087.25705,443.536846 C1087.25705,443.767864 1087.19237,443.992164 1087.07315,444.184989 L1086.99516,444.296709 L1086.8954,444.40898 L1084.05713,447.455146 L1081.21766,444.407946 L1081.12406,444.301978 C1080.95023,444.081822 1080.85724,443.814417 1080.85724,443.536846 C1080.85724,443.213014 1080.98381,442.903018 1081.20948,442.674253 C1081.43539,442.445239 1081.74129,442.316702 1082.06038,442.316702 C1082.334,442.316702 1082.59804,442.411199 1082.80974,442.582208 L1082.91104,442.674006 L1083.41059,443.180418 L1083.49666,443.25747 C1083.82251,443.514309 1084.28051,443.516457 1084.6089,443.264169 L1084.70327,443.18085 L1085.20269,442.674099 L1085.30413,442.582283 C1085.51609,442.411237 1085.78017,442.316702 1086.05344,442.316702 Z M1078.57143,433.04878 L1076.74286,433.04878 C1076.23791,433.04878 1075.82857,433.463736 1075.82857,433.97561 C1075.82857,434.450921 1076.18152,434.842665 1076.63623,434.896204 L1076.74286,434.902439 L1078.57143,434.902439 C1079.07637,434.902439 1079.48571,434.487483 1079.48571,433.97561 C1079.48571,433.463736 1079.07637,433.04878 1078.57143,433.04878 Z" transform="translate(-1074, -421)"/></svg>
+      11 remaining
+    </span>
+    <div class="ml-auto flex items-center gap-3">
+    
+      <span class="due-badge rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+        bg-pink-500/15 text-pink-600 ring-pink-500/30 dark:text-pink-400">
+        Today
+      </span>
+    
+    
+      <a href="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+         hx-get="/decks/1b9dbd17-b513-4ac2-8042-0ade1704fe76"
+         hx-target="#contenido" hx-sync="#contenido:replace"
+         hx-swap="outerHTML"
+         hx-push-url="true"
+         class="deck-badge rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+         style="background-color:#fb923c18; color:#fb923c; box-shadow:inset 0 0 0 1px #fb923c33;">
+        <span class="deck-badge-inner">Spanish phrases</span>
+      </a>
+    
+    <a
+      href="/"
+      hx-get="/"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+      class="text-sm text-gray-400 hover:text-pink-600 transition-colors dark:hover:text-pink-400"
+    >✕ End</a>
+    </div>
+  </div>
+
+  
+  <div id="card-outer" class="relative mx-auto w-full max-w-4xl flex-1 min-h-0" style="min-height: 240px;">
+
+    
+    <div id="drag-label-again" class="pointer-events-none absolute left-4 top-6 z-20 opacity-0" style="transition: opacity 0.08s;">
+      <span class="inline-block -rotate-12 rounded-xl border-4 border-red-500 px-4 py-1 text-lg font-black uppercase tracking-widest text-red-500">Fail · 0</span>
+    </div>
+    <div id="drag-label-good" class="pointer-events-none absolute right-4 top-6 z-20 opacity-0" style="transition: opacity 0.08s;">
+      <span class="inline-block rotate-12 rounded-xl border-4 border-emerald-500 px-4 py-1 text-lg font-black uppercase tracking-widest text-emerald-500">Good · 4</span>
+    </div>
+    <div id="drag-label-up" class="pointer-events-none absolute left-1/2 top-6 z-20 -translate-x-1/2 opacity-0" style="transition: opacity 0.08s;">
+      <span class="inline-block rounded-xl border-4 border-orange-500 px-4 py-1 text-lg font-black uppercase tracking-widest text-orange-500">Wrong · 2</span>
+    </div>
+    <div id="drag-label-dn" class="pointer-events-none absolute bottom-6 left-1/2 z-20 -translate-x-1/2 opacity-0" style="transition: opacity 0.08s;">
+      <span class="inline-block rounded-xl border-4 border-pink-500 px-4 py-1 text-lg font-black uppercase tracking-widest text-pink-500">Perfect · 5</span>
+    </div>
+
+    
+    
+    
+    
+
+    
+    <div
+      id="flip-card"
+      class="absolute inset-0 cursor-pointer"
+      style="will-change: transform;"
+    >
+      
+      <div
+        id="card-front"
+        class="absolute inset-0 flex flex-col items-center justify-center text-center overflow-hidden rounded-2xl glass-strong"
+        style="transition: opacity 0.32s ease;"
+      >
+        
+        <img src="/_res/374397c9.png" alt="" class="pointer-events-none absolute inset-0 h-full w-full object-cover grayscale blur-xl opacity-[0.13] dark:opacity-10" aria-hidden="true" />
+        
+        
+        <span class="absolute top-4 left-1/2 -translate-x-1/2 z-20 text-xs font-semibold uppercase tracking-widest text-pink-500/80 dark:text-pink-300/70">
+          Reverse
+        </span>
+        
+        <div class="face-fade face-fade-top absolute inset-x-0 top-0 h-14 rounded-t-2xl bg-gradient-to-b from-white/85 via-white/40 to-transparent dark:from-[#17161e]/85 dark:via-[#17161e]/40"></div>
+        
+        
+        <div id="card-scroll-front" class="relative z-10 flex w-full flex-1 min-h-0 flex-col overflow-y-auto overscroll-contain">
+          <div id="content-wrap-front" class="m-auto flex w-full flex-col items-center gap-3 px-5 pt-16 pb-6 sm:px-8 sm:pt-20 sm:pb-8">
+            
+            <div id="face-content-front" class="md-content w-full text-center font-medium leading-relaxed text-gray-800 dark:text-gray-100"
+               _="on load js(me) window.stellaFitCardText(document.getElementById('card-scroll-front'), me) end">
+              <p><span class="tts-wrap" data-tts-lang="en"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">The check, please.</span></span></p>
+
+            </div>
+          </div>
+        </div>
+        
+        <button
+          type="button"
+          id="copy-front-btn"
+          title="Copy text"
+          class="absolute bottom-4 right-4 z-20 rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-500 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+          _="on click
+               halt the event
+               set clone to #face-content-front.cloneNode(true)
+               repeat for r in clone.querySelectorAll('rt, rp') remove r end
+               set text to clone.textContent.trim()
+               if text is not ''
+                 call navigator.clipboard.writeText(text)
+                 add .hidden to <.copy-icon/> in me
+                 remove .hidden from <.check-icon/> in me
+                 wait 1.2s
+                 remove .hidden from <.copy-icon/> in me
+                 add .hidden to <.check-icon/> in me
+               end
+             end"
+        >
+          <svg class="copy-icon h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          
+<svg class="check-icon hidden h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+</svg>
+
+        </button>
+      </div>
+
+      
+      <div
+        id="card-back"
+        class="absolute inset-0 flex flex-col items-center justify-center text-center overflow-hidden rounded-2xl glass-strong"
+        style="display: none; opacity: 0; pointer-events: none;"
+      >
+        
+        <img src="/_res/374397c9.png" alt="" class="pointer-events-none absolute inset-0 h-full w-full object-cover grayscale blur-xl opacity-[0.13] dark:opacity-10" aria-hidden="true" />
+        
+        
+        <span class="absolute top-4 left-1/2 -translate-x-1/2 z-20 text-xs font-semibold uppercase tracking-widest text-emerald-500/80 dark:text-emerald-300/70">Answer</span>
+        
+        <div class="face-fade face-fade-top absolute inset-x-0 top-0 h-14 rounded-t-2xl bg-gradient-to-b from-white/85 via-white/40 to-transparent dark:from-[#17161e]/85 dark:via-[#17161e]/40"></div>
+        
+        
+        <div id="card-scroll-back" class="relative z-10 flex w-full flex-1 min-h-0 flex-col overflow-y-auto overscroll-contain">
+          <div id="content-wrap-back" class="m-auto flex w-full flex-col items-center gap-3 px-5 pt-16 pb-20 sm:px-8 sm:pt-20 sm:pb-24">
+            
+            <div id="face-content-back" class="md-content w-full text-justify font-medium leading-relaxed text-gray-900 dark:text-white">
+              <p>La cuenta, por favor.</p>
+
+            </div>
+          </div>
+        </div>
+        
+        <div class="face-fade face-fade-bottom absolute inset-x-0 bottom-0 h-16 rounded-b-2xl bg-gradient-to-t from-white/85 via-white/40 to-transparent dark:from-[#17161e]/85 dark:via-[#17161e]/40"></div>
+        <button
+          type="button"
+          id="edit-card-btn"
+          hx-get="/cards/7b7f3b97-fd1a-4fc1-9766-c56103bb6a60/edit?cardId=c5a69300-f475-4c25-973a-1590c86fe43b&decks="
+          hx-target="body"
+          hx-swap="beforeend"
+          _="on click call event.stopPropagation()"
+          title="Edit card"
+          class="absolute bottom-4 left-4 z-20 rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-500 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+        >
+          
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+        </button>
+        <button
+          type="button"
+          id="copy-back-btn"
+          title="Copy text"
+          class="absolute bottom-4 right-4 z-20 rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-500 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+          _="on click
+               halt the event
+               set clone to #face-content-back.cloneNode(true)
+               repeat for r in clone.querySelectorAll('rt, rp') remove r end
+               set text to clone.textContent.trim()
+               if text is not ''
+                 call navigator.clipboard.writeText(text)
+                 add .hidden to <.copy-icon/> in me
+                 remove .hidden from <.check-icon/> in me
+                 wait 1.2s
+                 remove .hidden from <.copy-icon/> in me
+                 add .hidden to <.check-icon/> in me
+               end
+             end"
+        >
+          <svg class="copy-icon h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+          
+<svg class="check-icon hidden h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+</svg>
+
+        </button>
+        <button
+          id="show-question-btn"
+          class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 text-base font-medium text-gray-400 hover:text-pink-500 transition-colors dark:text-gray-500 dark:hover:text-pink-400 whitespace-nowrap"
+        >Show question</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="mx-auto w-full max-w-4xl mt-3 shrink-0" style="min-height: 56px;">
+    
+    <button id="tap-to-reveal-btn"
+      class="w-full rounded-2xl py-4 text-sm font-bold transition-colors bg-white/60 text-gray-600 ring-1 ring-inset ring-gray-300/50 hover:bg-white/80 dark:bg-white/10 dark:text-gray-300 dark:ring-white/10 dark:hover:bg-white/20 cursor-pointer"
+      style="min-height: 56px;">Show Answer</button>
+
+    
+    
+    <p id="grade-help" class="hidden mb-1.5 text-center text-sm text-gray-400 dark:text-gray-500">
+      Not sure how to grade? <a href="https://mnemosyne-proj.org/help/getting-started.php" target="_blank" rel="noopener noreferrer" class="underline hover:text-pink-500 dark:hover:text-pink-400 transition-colors">Learn about grades</a>
+    </p>
+    <div id="grade-buttons" class="hidden grid grid-cols-6 gap-1.5 sm:gap-2 transition duration-300">
+    <button
+      data-grade="0" data-url="/review/c5a69300-f475-4c25-973a-1590c86fe43b/grade?decks="
+      title="Complete blackout — no recall at all · again now"
+      class="cursor-pointer rounded-2xl py-2 transition-colors bg-red-500/25 text-red-600 ring-1 ring-inset ring-red-500/40 hover:bg-red-500/40 active:bg-red-500/50 dark:text-red-400 dark:ring-red-400/40 dark:hover:bg-red-500/35"
+      style="min-height: 56px;"
+    ><span class="block text-lg font-black leading-none">0</span><span class="mt-1 block text-[10px] font-semibold uppercase tracking-wide opacity-80">Blackout</span></button>
+    <button
+      data-grade="1" data-url="/review/c5a69300-f475-4c25-973a-1590c86fe43b/grade?decks="
+      title="Complete failure — the answer only felt familiar · again now"
+      class="cursor-pointer rounded-2xl py-2 transition-colors bg-rose-500/25 text-rose-600 ring-1 ring-inset ring-rose-500/40 hover:bg-rose-500/40 active:bg-rose-500/50 dark:text-rose-400 dark:ring-rose-400/40 dark:hover:bg-rose-500/35"
+      style="min-height: 56px;"
+    ><span class="block text-lg font-black leading-none">1</span><span class="mt-1 block text-[10px] font-semibold uppercase tracking-wide opacity-80">Fail</span></button>
+    <button
+      data-grade="2" data-url="/review/c5a69300-f475-4c25-973a-1590c86fe43b/grade?decks="
+      title="Incorrect, but you knew it was wrong · in 14 days"
+      class="cursor-pointer rounded-2xl py-2 transition-colors bg-orange-500/25 text-orange-600 ring-1 ring-inset ring-orange-500/40 hover:bg-orange-500/40 active:bg-orange-500/50 dark:text-orange-400 dark:ring-orange-400/40 dark:hover:bg-orange-500/35"
+      style="min-height: 56px;"
+    ><span class="block text-lg font-black leading-none">2</span><span class="mt-1 block text-[10px] font-semibold uppercase tracking-wide opacity-80">Wrong</span></button>
+    <button
+      data-grade="3" data-url="/review/c5a69300-f475-4c25-973a-1590c86fe43b/grade?decks="
+      title="Correct, but difficult to remember · in 14 days"
+      class="cursor-pointer rounded-2xl py-2 transition-colors bg-amber-500/25 text-amber-600 ring-1 ring-inset ring-amber-500/40 hover:bg-amber-500/40 active:bg-amber-500/50 dark:text-amber-400 dark:ring-amber-400/40 dark:hover:bg-amber-500/35"
+      style="min-height: 56px;"
+    ><span class="block text-lg font-black leading-none">3</span><span class="mt-1 block text-[10px] font-semibold uppercase tracking-wide opacity-80">Hard</span></button>
+    <button
+      data-grade="4" data-url="/review/c5a69300-f475-4c25-973a-1590c86fe43b/grade?decks="
+      title="Correct with slight hesitation · in 15 days"
+      class="cursor-pointer rounded-2xl py-2 transition-colors bg-emerald-500/25 text-emerald-600 ring-1 ring-inset ring-emerald-500/40 hover:bg-emerald-500/40 active:bg-emerald-500/50 dark:text-emerald-400 dark:ring-emerald-400/40 dark:hover:bg-emerald-500/35"
+      style="min-height: 56px;"
+    ><span class="block text-lg font-black leading-none">4</span><span class="mt-1 block text-[10px] font-semibold uppercase tracking-wide opacity-80">Good</span></button>
+    <button
+      data-grade="5" data-url="/review/c5a69300-f475-4c25-973a-1590c86fe43b/grade?decks="
+      title="Perfect recall · in 15 days"
+      class="cursor-pointer rounded-2xl py-2 transition-colors bg-pink-500/25 text-pink-600 ring-1 ring-inset ring-pink-500/40 hover:bg-pink-500/40 active:bg-pink-500/50 dark:text-pink-400 dark:ring-pink-400/40 dark:hover:bg-pink-500/35"
+      style="min-height: 56px;"
+    ><span class="block text-lg font-black leading-none">5</span><span class="mt-1 block text-[10px] font-semibold uppercase tracking-wide opacity-80">Perfect</span></button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var wrap        = document.getElementById('review-card-wrap');
+    var cardOuter   = document.getElementById('card-outer');
+    var flipCard    = document.getElementById('flip-card');
+    var cardFront   = document.getElementById('card-front');
+    var cardBack    = document.getElementById('card-back');
+    var gradeBtn    = document.getElementById('grade-buttons');
+    var gradeHelp   = document.getElementById('grade-help');
+    var tapBtn      = document.getElementById('tap-to-reveal-btn');
+    var showQBtn    = document.getElementById('show-question-btn'); 
+    var copyFrontBtn = document.getElementById('copy-front-btn');
+    var copyBackBtn  = document.getElementById('copy-back-btn');
+    var lblAgain    = document.getElementById('drag-label-again');
+    var lblGood     = document.getElementById('drag-label-good');
+    var lblUp       = document.getElementById('drag-label-up');
+    var lblDn       = document.getElementById('drag-label-dn');
+    var revealed    = false;
+    var dragging    = false;
+    var startX = 0, startY = 0, curDX = 0, curDY = 0;
+    var audioFront  = document.getElementById('audio-front');
+    var audioBack   = document.getElementById('audio-back');
+
+    if (audioFront) window.stellaInitAudioPlayer(audioFront, '', 'front', { stopTouchPropagation: true });
+    if (audioBack)  window.stellaInitAudioPlayer(audioBack,  '', 'back',  { stopTouchPropagation: true });
+
+    var autoplayAudio =  true ;
+    if (autoplayAudio && audioFront) audioFront.play().catch(function(){});
+
+     
+    var showingBack = false;
+
+    function showBack() {
+      if (showingBack) return;
+      showingBack = true;
+      resetZoomInstant();
+      if (audioFront) { audioFront.pause(); audioFront.currentTime = 0; }
+      cardFront.style.transition    = 'opacity 0.32s ease';
+      cardFront.style.opacity       = '0';
+      cardFront.style.pointerEvents = 'none';
+      cardBack.style.display        = 'flex';
+      void cardBack.offsetHeight;
+      
+      
+      
+      window.stellaFitCardText(document.getElementById('card-scroll-back'), document.getElementById('face-content-back'));
+      cardBack.style.transition     = 'opacity 0.32s ease';
+      cardBack.style.opacity        = '1';
+      cardBack.style.pointerEvents  = 'auto';
+      if (autoplayAudio && audioBack) audioBack.play().catch(function(){});
+    }
+
+    function showFront() {
+      if (!showingBack) return;
+      showingBack = false;
+      resetZoomInstant();
+      if (audioBack) { audioBack.pause(); audioBack.currentTime = 0; }
+      cardBack.style.transition     = 'opacity 0.32s ease';
+      cardBack.style.opacity        = '0';
+      cardBack.style.pointerEvents  = 'none';
+      cardFront.style.transition    = 'opacity 0.32s ease';
+      cardFront.style.opacity       = '1';
+      cardFront.style.pointerEvents = 'auto';
+      if (autoplayAudio && audioFront) audioFront.play().catch(function(){});
+    }
+
+    
+    
+    
+    
+    window.stellaRefitReviewCard = function () {
+      window.stellaFitCardText(document.getElementById('card-scroll-front'), document.getElementById('face-content-front'));
+      if (showingBack) {
+        window.stellaFitCardText(document.getElementById('card-scroll-back'), document.getElementById('face-content-back'));
+      }
+    };
+    
+    
+    var reviewResizeTimer;
+    window.onresize = function () {
+      clearTimeout(reviewResizeTimer);
+      reviewResizeTimer = setTimeout(window.stellaRefitReviewCard, 150);
+    };
+
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+      showBack();
+      flipCard.style.cursor = 'default';
+      tapBtn.classList.add('hidden');
+      gradeHelp.classList.remove('hidden');
+      gradeBtn.classList.remove('hidden');
+    }
+
+    flipCard.addEventListener('click', function () {
+      if (dragging) return;
+      if (!revealed) { reveal(); return; }
+      
+      
+      
+      if (!showingBack) showBack();
+    });
+    tapBtn.addEventListener('click', reveal);
+
+     
+    
+
+    [document.getElementById('card-scroll-front'),
+     document.getElementById('card-scroll-back')].forEach(function (el) {
+      if (!el) return;
+      function guard(e) {
+        if (e.touches.length > 1) return; 
+        if (el.scrollHeight > el.clientHeight + 1) e.stopPropagation();
+      }
+      el.addEventListener('touchstart', guard, { passive: true });
+      el.addEventListener('touchmove',  guard, { passive: true });
+    });
+
+     
+    
+
+    var ZOOM_MIN = 1, ZOOM_MAX = 3;
+    var isPinchGesture  = false;
+    var zoomScale = 1, zoomX = 0, zoomY = 0;
+    var pinchStartDist = 0, pinchStartScale = 1;
+    var panStartX = 0, panStartY = 0, panOriginX = 0, panOriginY = 0;
+    var lastTouchCount = 0;
+
+    function zoomTarget() {
+      return document.getElementById(showingBack ? 'content-wrap-back' : 'content-wrap-front');
+    }
+
+    function touchDist(t0, t1) {
+      var dx = t1.clientX - t0.clientX, dy = t1.clientY - t0.clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    function touchMid(t0, t1) {
+      return { x: (t0.clientX + t1.clientX) / 2, y: (t0.clientY + t1.clientY) / 2 };
+    }
+
+    function clampPan(el) {
+      var maxX = (el.offsetWidth  * (zoomScale - 1)) / 2;
+      var maxY = (el.offsetHeight * (zoomScale - 1)) / 2;
+      zoomX = Math.max(-maxX, Math.min(maxX, zoomX));
+      zoomY = Math.max(-maxY, Math.min(maxY, zoomY));
+    }
+
+    function applyZoom(el) {
+      el.style.transform = zoomScale === 1
+        ? ''
+        : 'translate(' + zoomX + 'px, ' + zoomY + 'px) scale(' + zoomScale + ')';
+    }
+
+    function resetZoomInstant() {
+      zoomScale = 1; zoomX = 0; zoomY = 0;
+      ['content-wrap-front', 'content-wrap-back'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.style.transition = '';
+        el.style.transform  = '';
+      });
+    }
+
+    function resetPinchBaseline(touches) {
+      if (touches.length >= 2) {
+        pinchStartDist  = touchDist(touches[0], touches[1]);
+        pinchStartScale = zoomScale;
+        var mid = touchMid(touches[0], touches[1]);
+        panStartX = mid.x; panStartY = mid.y;
+      } else if (touches.length === 1) {
+        panStartX = touches[0].clientX; panStartY = touches[0].clientY;
+      }
+      panOriginX = zoomX; panOriginY = zoomY;
+      lastTouchCount = touches.length;
+    }
+
+    function endPinchGesture() {
+      isPinchGesture = false;
+      var el = zoomTarget();
+      if (zoomScale <= 1.02) { zoomScale = 1; zoomX = 0; zoomY = 0; }
+      else { clampPan(el); }
+      el.style.transition = 'transform 0.2s ease';
+      applyZoom(el);
+      setTimeout(function () { el.style.transition = ''; }, 210);
+    }
+
+     
+    var touchStartTarget = null;
+
+    cardOuter.addEventListener('touchstart', function (e) {
+      if (e.touches.length >= 2 || isPinchGesture) {
+        if (!isPinchGesture) {
+          
+          dragging = false;
+          setLabels(0, 0, 0, 0);
+          flipCard.style.transition = 'transform 0.15s ease';
+          flipCard.style.transform  = '';
+        }
+        isPinchGesture = true;
+        zoomTarget().style.transition = 'none';
+        resetPinchBaseline(e.touches);
+        return;
+      }
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      touchStartTarget = e.target;
+      dragging = false;
+      curDX = 0; curDY = 0;
+    }, { passive: true });
+
+    cardOuter.addEventListener('touchmove', function (e) {
+      if (isPinchGesture) {
+        e.preventDefault();
+        var el = zoomTarget();
+        if (e.touches.length !== lastTouchCount) resetPinchBaseline(e.touches);
+        if (e.touches.length >= 2) {
+          var d = touchDist(e.touches[0], e.touches[1]);
+          zoomScale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, pinchStartScale * (d / pinchStartDist)));
+          var mid = touchMid(e.touches[0], e.touches[1]);
+          zoomX = panOriginX + (mid.x - panStartX);
+          zoomY = panOriginY + (mid.y - panStartY);
+        } else if (e.touches.length === 1 && zoomScale > 1.001) {
+          zoomX = panOriginX + (e.touches[0].clientX - panStartX);
+          zoomY = panOriginY + (e.touches[0].clientY - panStartY);
+        }
+        clampPan(el);
+        applyZoom(el);
+        return;
+      }
+
+      var dx = e.touches[0].clientX - startX;
+      var dy = e.touches[0].clientY - startY;
+
+      if (!dragging && Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      dragging = true;
+      curDX = dx; curDY = dy;
+
+      e.preventDefault();
+
+      if (!revealed) return;
+
+      var rot = dx * 0.05;
+      flipCard.style.transition = 'none';
+      flipCard.style.transform  = 'translateX(' + dx + 'px) rotate(' + rot + 'deg)';
+
+      var SHOW = 50, FULL = 120;
+      if (dx < -SHOW) {
+        setLabels(Math.min(1, (-dx - SHOW) / FULL), 0, 0, 0);
+      } else if (dx > SHOW) {
+        setLabels(0, Math.min(1, (dx - SHOW) / FULL), 0, 0);
+      } else if (dy < -SHOW) {
+        setLabels(0, 0, Math.min(1, (-dy - SHOW) / FULL), 0);
+      } else if (dy > SHOW) {
+        setLabels(0, 0, 0, Math.min(1, (dy - SHOW) / FULL));
+      } else {
+        setLabels(0, 0, 0, 0);
+      }
+    }, { passive: false });
+
+    cardOuter.addEventListener('touchend', function (e) {
+      if (isPinchGesture) {
+        e.preventDefault();
+        if (e.touches.length >= 1) {
+          resetPinchBaseline(e.touches);
+          return;
+        }
+        endPinchGesture();
+        return;
+      }
+
+      var dx = curDX, dy = curDY;
+
+      if (!dragging || (Math.abs(dx) < 10 && Math.abs(dy) < 10)) {
+        dragging = false;
+        if ((copyFrontBtn && copyFrontBtn.contains(touchStartTarget)) ||
+            (copyBackBtn && copyBackBtn.contains(touchStartTarget))) {
+          
+          return;
+        }
+        if (!revealed) {
+          reveal();
+          e.preventDefault();
+        } else if (showQBtn.contains(touchStartTarget)) {
+          
+          showFront();
+          e.preventDefault();
+        } else if (!showingBack) {
+          
+          showBack();
+          e.preventDefault();
+        }
+        return;
+      }
+      dragging = false;
+      setLabels(0, 0, 0, 0);
+
+      if (!revealed) {
+        snapBack();
+        return;
+      }
+
+      var THRESHOLD = 90;
+      if (Math.abs(dx) >= Math.abs(dy)) {
+        if      (dx < -THRESHOLD) { flyOut(-1,  0); gradeCard(0); e.preventDefault(); return; }
+        else if (dx >  THRESHOLD) { flyOut( 1,  0); gradeCard(4); e.preventDefault(); return; }
+      } else {
+        if      (dy < -THRESHOLD) { flyOut( 0, -1); gradeCard(2); e.preventDefault(); return; }
+        else if (dy >  THRESHOLD) { flyOut( 0,  1); gradeCard(5); e.preventDefault(); return; }
+      }
+
+      snapBack();
+    }, { passive: false });
+
+    cardOuter.addEventListener('touchcancel', function () {
+      if (isPinchGesture) {
+        endPinchGesture();
+        return;
+      }
+      if (dragging) {
+        dragging = false;
+        setLabels(0, 0, 0, 0);
+        snapBack();
+      }
+    });
+
+     
+    function setLabels(a, g, u, d) {
+      lblAgain.style.opacity = a;
+      lblGood.style.opacity  = g;
+      lblUp.style.opacity    = u;
+      lblDn.style.opacity    = d;
+    }
+
+    function snapBack() {
+      flipCard.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      flipCard.style.transform  = '';
+    }
+
+    function flyOut(dirX, dirY) {
+      flipCard.style.transition = 'transform 0.22s ease-in, opacity 0.22s ease-in';
+      flipCard.style.transform  =
+        'translateX(' + (dirX * 600) + 'px) ' +
+        'translateY(' + (dirY * 400) + 'px) ' +
+        'rotate('     + (dirX *  30) + 'deg)';
+      flipCard.style.opacity = '0';
+    }
+
+    function gradeCard(g) {
+      setTimeout(function () {
+        var btn = wrap.querySelector('[data-grade="' + g + '"]');
+        if (btn) {
+          htmx.ajax('POST', btn.dataset.url, {
+            target: '#review-card-wrap',
+            swap: 'outerHTML',
+            values: {grade: g.toString()}
+          });
+        }
+      }, 230);
+    }
+
+    var GRADE_DIRS = {0: [-1,0], 1: [-1,0], 2: [0,-1], 3: [0,-1], 4: [1,0], 5: [0,1]};
+
+    gradeBtn.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-grade]');
+      if (!btn || !revealed) return;
+      e.preventDefault();
+      var g = parseInt(btn.dataset.grade);
+      var dir = GRADE_DIRS[g];
+      if (dir) flyOut(dir[0], dir[1]);
+      gradeCard(g);
+    });
+
+     
+    
+    
+    document.onkeydown = function (e) {
+      if (!document.getElementById('review-card-wrap')) {
+        document.onkeydown = null;
+        return;
+      }
+      var t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if (!revealed && (e.key === ' ' || e.key === 'Enter')) {
+        e.preventDefault();
+        reveal();
+        return;
+      }
+      if (revealed && e.key >= '0' && e.key <= '5') {
+        e.preventDefault();
+        var g = parseInt(e.key);
+        flyOut(GRADE_DIRS[g][0], GRADE_DIRS[g][1]);
+        gradeCard(g);
+      }
+    };
+
+     
+    showQBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      showFront();
+    });
+
+     
+    
+  })();
+  </script>
+</div>
+
+</div>
+
+            
+          </div>
+        </main>
+      </div>
+    </div>
+    
+<nav id="mobile-nav" class="glass-nav fixed bottom-0 left-0 right-0 z-50 flex border-t lg:hidden"
+     style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+  <a
+    href="/"
+    hx-get="/"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    class="nav-link flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+  >
+    <img src="/icons/dash.svg" alt="" class="nav-icon h-6 w-6" />
+    Home
+  </a>
+  <a
+    href="/review/pick"
+    hx-get="/review/pick"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    class="nav-link flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+  >
+    <img src="/icons/study.svg" alt="" class="nav-icon h-6 w-6" />
+    Study
+  </a>
+  <a
+    href="/decks"
+    hx-get="/decks"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    class="nav-link flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+  >
+    <img src="/icons/decks.svg" alt="" class="nav-icon h-6 w-6" />
+    Decks
+  </a>
+  <a
+    href="/cards"
+    hx-get="/cards"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    hx-push-url="true"
+    class="nav-link flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium text-gray-400 hover:text-pink-600 transition-colors dark:text-gray-500 dark:hover:text-pink-400"
+  >
+    <img src="/icons/cards.svg" alt="" class="nav-icon h-6 w-6" />
+    Cards
+  </a>
+</nav>
+
+    
+<div
+  id="toast-container"
+  hx-swap-oob="beforeend"
+  class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"
+></div>
+<script>
+  
+  
+  
+  window.swalGlass = Swal.mixin({ buttonsStyling: true });
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  document.body.addEventListener('htmx:beforeSwap', function (evt) {
+    if (evt.detail.xhr.status === 422) {
+      evt.detail.shouldSwap = true;
+      evt.detail.isError = false;
+    }
+  });
+
+  
+  window.humanBytes = function (n) {
+    if (n < 1024) return n + ' B';
+    var units = ['KB', 'MB', 'GB', 'TB'], v = n, i = -1;
+    do { v /= 1024; i++; } while (v >= 1024 && i < units.length - 1);
+    return Math.round(v) + ' ' + units[i];
+  };
+
+  
+  
+  
+  
+  window.pushToast = function (kind, msg) {
+    var container = document.getElementById('toast-container');
+    if (!container) return;
+    var style = { ok: ['border-l-emerald-500', '3s'], err: ['border-l-red-500', '5s'], info: ['border-l-pink-500', '4s'] }[kind] || ['border-l-pink-500', '4s'];
+    var div = document.createElement('div');
+    div.className = 'glass flex items-center gap-2 rounded-xl border-l-4 ' + style[0] + ' px-4 py-2.5 text-sm font-medium text-gray-800 shadow-xl dark:text-gray-100';
+    div.setAttribute('_', 'on load wait ' + style[1] + ' then transition opacity to 0 then remove me');
+    div.textContent = msg;
+    container.appendChild(div);
+    if (window._hyperscript) _hyperscript.processNode(div);
+  };
+
+  
+  
+  function setInputFile(input, file) {
+    var dt = new DataTransfer();
+    dt.items.add(file);
+    input.files = dt.files;
+  }
+
+  
+  
+  function exceedsMaxBytes(form, size, label) {
+    var max = parseInt(form.dataset.maxBytes, 10);
+    if (max && size > max) {
+      pushToast('err', 'That ' + label + ' is too large. Maximum upload size is ' + humanBytes(max) + '.');
+      return true;
+    }
+    return false;
+  }
+
+  
+  
+  
+  function initOnSwap(selector, init) {
+    function run() { document.querySelectorAll(selector).forEach(init); }
+    document.addEventListener('DOMContentLoaded', run);
+    document.addEventListener('htmx:afterSwap', run);
+  }
+
+  
+  
+  
+  
+  window.guardImportSize = function (evt, inputId, formId) {
+    var form = document.getElementById(formId);
+    var file = document.getElementById(inputId).files[0];
+    if (file && exceedsMaxBytes(form, file.size, 'file')) {
+      evt.preventDefault();
+    }
+  };
+
+  
+  
+  window.importDeckFromClipboard = async function (inputId, formId) {
+    var text;
+    try {
+      text = await navigator.clipboard.readText();
+    } catch (err) {
+      pushToast('err', 'Could not read the clipboard: ' + err.message);
+      return;
+    }
+    try {
+      JSON.parse(text);
+    } catch (err) {
+      pushToast('err', 'Clipboard contents are not valid JSON.');
+      return;
+    }
+    var form = document.getElementById(formId);
+    if (exceedsMaxBytes(form, new Blob([text]).size, 'deck')) {
+      return;
+    }
+    setInputFile(document.getElementById(inputId), new File([text], 'clipboard-deck.json', { type: 'application/json' }));
+    form.requestSubmit();
+  };
+
+  
+  document.addEventListener('htmx:confirm', function(e) {
+    if (!e.detail.question) return;
+    e.preventDefault();
+    swalGlass.fire({
+      title: 'Are you sure?',
+      text: e.detail.question,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel',
+    }).then(function(r) { if (r.isConfirmed) e.detail.issueRequest(true); });
+  });
+
+  
+  
+  
+  
+  
+  document.body.addEventListener('htmx:responseError', function (e) {
+    var xhr = e.detail.xhr;
+    var tmp = document.createElement('div');
+    tmp.innerHTML = xhr.responseText || '';
+    var bubble = tmp.querySelector('#toast-container > div');
+    if (bubble) {
+      pushToast('err', bubble.textContent.trim());
+    } else if (xhr.status === 413) {
+      pushToast('err', 'That file is too large to import.');
+    } else {
+      pushToast('err', 'Something went wrong. Please try again.');
+    }
+  });
+  document.body.addEventListener('htmx:sendError', function () {
+    pushToast('err', 'Network error — please check your connection and try again.');
+  });
+
+  
+  var _swipeMD = null;
+  window.clSnapRow = function(node, dx) {
+    var REVEAL = 72;
+    if (Math.abs(dx) < 40) { node.style.transform = ''; node.style.transition = 'transform 0.2s ease'; return; }
+    var snap = dx > 0 ? REVEAL : -REVEAL;
+    node.style.transition = 'transform 0.2s ease';
+    node.style.transform = 'translateX(' + snap + 'px)';
+  };
+  window.clMouseDown = function(e, node) {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    _swipeMD = { node: node, startX: e.clientX, moved: false };
+    node.style.transition = 'none';
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'grabbing';
+  };
+  document.addEventListener('mousemove', function(e) {
+    if (!_swipeMD) return;
+    var dx = e.clientX - _swipeMD.startX;
+    if (Math.abs(dx) > 4) _swipeMD.moved = true;
+    if (_swipeMD.moved) _swipeMD.node.style.transform = 'translateX(' + dx + 'px)';
+  });
+  document.addEventListener('mouseup', function(e) {
+    if (!_swipeMD) return;
+    var node = _swipeMD.node;
+    var dx = e.clientX - _swipeMD.startX;
+    var moved = _swipeMD.moved;
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
+    _swipeMD = null;
+    if (moved) clSnapRow(node, dx);
+  });
+
+  
+  (function () {
+    var player = new Audio();
+    var active = null;
+    function resetBtn(btn) {
+      if (!btn) return;
+      btn.classList.remove('playing');
+      btn.style.setProperty('--p', '0%');
+      btn.setAttribute('aria-label', 'Play audio');
+    }
+    player.addEventListener('timeupdate', function () {
+      if (active && player.duration) {
+        active.style.setProperty('--p', (player.currentTime / player.duration) * 100 + '%');
+      }
+    });
+    player.addEventListener('ended', function () {
+      resetBtn(active);
+      active = null;
+    });
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.audio-chip, .audio-pill');
+      if (!btn) return;
+      if (btn === active) {
+        if (player.paused) {
+          player.play();
+          btn.classList.add('playing');
+          btn.setAttribute('aria-label', 'Pause audio');
+        } else {
+          player.pause();
+          btn.classList.remove('playing');
+          btn.setAttribute('aria-label', 'Play audio');
+        }
+        return;
+      }
+      resetBtn(active);
+      active = btn;
+      player.src = btn.dataset.audio;
+      player.play();
+      btn.classList.add('playing');
+      btn.setAttribute('aria-label', 'Pause audio');
+    });
+    
+    document.body.addEventListener('htmx:afterSwap', function () {
+      if (active && !document.contains(active)) {
+        player.pause();
+        active = null;
+      }
+    });
+  })();
+
+  
+  (function () {
+    if (!window.speechSynthesis) return;
+    var current = null; 
+
+    
+    
+    
+    function spokenText(textEl) {
+      var clone = textEl.cloneNode(true);
+      clone.querySelectorAll('ruby').forEach(function (ruby) {
+        var rt = ruby.querySelector('rt');
+        ruby.replaceWith(rt ? rt.textContent : ruby.textContent);
+      });
+      return clone.textContent;
+    }
+
+    function stop() {
+      speechSynthesis.cancel();
+      if (current) current.classList.remove('speaking');
+      current = null;
+    }
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('.tts-btn');
+      if (!btn) return;
+      var wasCurrent = btn === current;
+      stop();
+      if (wasCurrent) return; 
+
+      var wrap = btn.closest('.tts-wrap');
+      var utter = new SpeechSynthesisUtterance(spokenText(wrap.querySelector('.tts-text')));
+      utter.lang = wrap.dataset.ttsLang === 'ja' ? 'ja-JP' : 'en-US';
+      utter.onend = utter.onerror = function () { if (current === btn) stop(); };
+      current = btn;
+      btn.classList.add('speaking');
+      speechSynthesis.speak(utter);
+    });
+
+    
+    document.body.addEventListener('htmx:afterSwap', stop);
+  })();
+
+  
+  (function () {
+    var MAX_SEC = 15;
+    function fmt(s) { return Math.floor(s/60)+':'+('0'+Math.floor(s%60)).slice(-2); }
+
+    function initWidget(widget) {
+      if (widget._arInit) return;
+      widget._arInit = true;
+
+      var fileInput = widget.querySelector('input[type=file]');
+      var ui = widget.querySelector('.rec-ui');
+      var mr = null, chunks = [], blobUrl = null, elapsed = 0, ticker = null, fillEl = null;
+
+      function btnCls(v) {
+        var b = 'cursor-pointer rounded-lg border-0 px-3 py-1 text-xs font-semibold ';
+        if (v==='rec')  return b+'bg-pink-500/15 text-pink-700 hover:bg-pink-500/25 dark:text-pink-300';
+        if (v==='stop') return b+'bg-red-500/20 text-red-700 hover:bg-red-500/30 dark:text-red-300';
+        if (v==='re')   return b+'bg-gray-200/60 text-gray-600 hover:bg-gray-300/60 dark:bg-white/10 dark:text-gray-300';
+        return b;
+      }
+
+      function renderIdle() {
+        fileInput.hidden = false;
+        ui.innerHTML = '';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mt-1 text-xs font-medium text-pink-600 hover:text-pink-700 dark:text-pink-400 cursor-pointer';
+        btn.textContent = 'Or record audio (max 15s)';
+        btn.onclick = startRec;
+        ui.appendChild(btn);
+      }
+
+      function renderRecording() {
+        fileInput.hidden = true;
+        ui.innerHTML = '';
+        var row = document.createElement('div');
+        row.className = 'mt-1.5 flex items-center gap-2';
+
+        var stop = document.createElement('button');
+        stop.type = 'button'; stop.textContent = '■ Stop'; stop.className = btnCls('stop');
+        stop.onclick = stopRec;
+
+        var timerEl = document.createElement('span');
+        timerEl.className = 'text-xs tabular-nums text-gray-500 dark:text-gray-400';
+        timerEl.textContent = fmt(0)+' / '+fmt(MAX_SEC);
+
+        var bar = document.createElement('div');
+        bar.className = 'h-1.5 flex-1 rounded-full bg-gray-200 dark:bg-white/10 overflow-hidden';
+        fillEl = document.createElement('div');
+        fillEl.className = 'h-full bg-pink-500';
+        fillEl.style.width = '0%';
+        bar.appendChild(fillEl);
+
+        row.appendChild(stop); row.appendChild(timerEl); row.appendChild(bar);
+        ui.appendChild(row);
+
+        ticker = setInterval(function() {
+          elapsed++;
+          timerEl.textContent = fmt(elapsed)+' / '+fmt(MAX_SEC);
+          if (fillEl) fillEl.style.width = (elapsed/MAX_SEC*100)+'%';
+          if (elapsed >= MAX_SEC) stopRec();
+        }, 1000);
+      }
+
+      function renderDone() {
+        fileInput.hidden = true;
+        ui.innerHTML = '';
+        var row = document.createElement('div');
+        row.className = 'mt-1.5 flex items-center gap-2 flex-wrap';
+
+        var audio = document.createElement('audio');
+        audio.src = blobUrl; audio.controls = true;
+        audio.style.cssText = 'height:28px;flex:1;min-width:0';
+
+        var reBtn = document.createElement('button');
+        reBtn.type = 'button'; reBtn.textContent = '↺ Re-record'; reBtn.className = btnCls('re');
+        reBtn.onclick = doReset;
+
+        row.appendChild(audio); row.appendChild(reBtn);
+        ui.appendChild(row);
+      }
+
+      function startRec() {
+        
+        Promise.resolve()
+          .then(function() { return navigator.mediaDevices.getUserMedia({audio:true}); })
+          .then(function(stream) {
+            chunks = []; elapsed = 0; fillEl = null;
+            mr = new MediaRecorder(stream);
+            mr.ondataavailable = function(e) { if (e.data.size>0) chunks.push(e.data); };
+            mr.onstop = function() {
+              stream.getTracks().forEach(function(t){t.stop();});
+              clearInterval(ticker);
+              var blob = new Blob(chunks, {type: mr.mimeType||'audio/webm'});
+              if (blobUrl) URL.revokeObjectURL(blobUrl);
+              blobUrl = URL.createObjectURL(blob);
+              setInputFile(fileInput, new File([blob], 'recording.webm', {type: blob.type}));
+              renderDone();
+            };
+            mr.start();
+            renderRecording();
+          })
+          .catch(function(err) {
+            alert('Could not start recording: ' + (err && err.message ? err.message : err));
+          });
+      }
+
+      function stopRec() {
+        clearInterval(ticker);
+        if (mr && mr.state !== 'inactive') mr.stop();
+      }
+
+      function doReset() {
+        stopRec();
+        if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+        chunks = []; elapsed = 0; mr = null; fillEl = null;
+        try { fileInput.value = ''; } catch(e) {}
+        renderIdle();
+      }
+
+      var form = widget.closest('form');
+      if (form) form.addEventListener('reset', doReset);
+
+      renderIdle();
+    }
+
+    initOnSwap('.audio-rec-widget', initWidget);
+  })();
+
+  
+  
+  
+  (function () {
+    function renderAll() {
+      if (typeof katex === 'undefined') return;
+      var rendered = false;
+      document.querySelectorAll('.katex-math[data-tex]:not([data-rendered])').forEach(function (el) {
+        el.dataset.rendered = '1';
+        rendered = true;
+        try {
+          katex.render(el.dataset.tex, el, { displayMode: el.dataset.texDisplay === '1', throwOnError: false });
+        } catch (e) {}
+      });
+      
+      
+      if (rendered && window.stellaRefitReviewCard) window.stellaRefitReviewCard();
+    }
+    document.addEventListener('DOMContentLoaded', renderAll);
+    document.addEventListener('htmx:afterSwap', renderAll);
+  })();
+
+  
+  
+  (function () {
+    function extFor(type) {
+      if (type === 'image/jpeg') return '.jpg';
+      if (type === 'image/gif')  return '.gif';
+      if (type === 'image/webp') return '.webp';
+      return '.png';
+    }
+
+    function imageFromClipboardEvent(e) {
+      var items = (e.clipboardData && e.clipboardData.items) || [];
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].kind === 'file' && items[i].type.indexOf('image/') === 0) {
+          return items[i].getAsFile();
+        }
+      }
+      return null;
+    }
+
+    function initWidget(widget) {
+      if (widget._ipInit) return;
+      widget._ipInit = true;
+
+      var fileInput = widget.querySelector('input[type=file]');
+      var ui = widget.querySelector('.paste-ui');
+      var previewUrl = null;
+
+      function setFile(blob) {
+        var type = blob.type || 'image/png';
+        var name = blob.name || 'pasted-' + Date.now() + extFor(type);
+        setInputFile(fileInput, new File([blob], name, {type: type}));
+        renderPreview();
+      }
+      widget._ipSetFile = setFile;
+
+      function renderIdle() {
+        fileInput.hidden = false;
+        if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+        ui.innerHTML = '';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mt-1 text-xs font-medium text-pink-600 hover:text-pink-700 dark:text-pink-400 cursor-pointer';
+        btn.textContent = 'Or paste from clipboard';
+        btn.onclick = pasteFromClipboard;
+        ui.appendChild(btn);
+      }
+
+      function renderArmed() {
+        fileInput.hidden = false;
+        ui.innerHTML = '';
+        var zone = document.createElement('div');
+        zone.tabIndex = 0;
+        zone.className = 'mt-1.5 rounded-xl border border-dashed border-pink-400/60 px-3 py-2 text-center text-xs text-pink-600 outline-none focus:ring-2 focus:ring-pink-500/40 dark:text-pink-300';
+        zone.textContent = 'Press Ctrl+V to paste — Esc to cancel';
+        zone.onkeydown = function (e) { if (e.key === 'Escape') renderIdle(); };
+        zone.onblur = function () {
+          
+          setTimeout(function () { if (!fileInput.files.length && document.contains(zone)) renderIdle(); }, 200);
+        };
+        ui.appendChild(zone);
+        zone.focus();
+      }
+
+      function renderPreview() {
+        var f = fileInput.files && fileInput.files[0];
+        if (!f) { renderIdle(); return; }
+        fileInput.hidden = true;
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        previewUrl = URL.createObjectURL(f);
+        ui.innerHTML = '';
+        var row = document.createElement('div');
+        row.className = 'mt-1.5 flex items-center gap-2';
+        var img = document.createElement('img');
+        img.src = previewUrl;
+        img.className = 'h-12 w-12 rounded-lg object-cover ring-1 ring-black/10 dark:ring-white/10';
+        var name = document.createElement('span');
+        name.className = 'min-w-0 flex-1 truncate text-xs text-gray-500 dark:text-gray-400';
+        name.textContent = f.name;
+        var clear = document.createElement('button');
+        clear.type = 'button';
+        clear.textContent = '✕ Clear';
+        clear.className = 'cursor-pointer rounded-lg border-0 bg-gray-200/60 px-3 py-1 text-xs font-semibold text-gray-600 hover:bg-gray-300/60 dark:bg-white/10 dark:text-gray-300';
+        clear.onclick = doReset;
+        row.appendChild(img); row.appendChild(name); row.appendChild(clear);
+        ui.appendChild(row);
+      }
+
+      function pasteFromClipboard() {
+        
+        
+        
+        Promise.resolve()
+          .then(function () { return navigator.clipboard.read(); })
+          .then(function (items) {
+            for (var i = 0; i < items.length; i++) {
+              var types = items[i].types || [];
+              for (var j = 0; j < types.length; j++) {
+                if (types[j].indexOf('image/') === 0) {
+                  return items[i].getType(types[j]).then(setFile);
+                }
+              }
+            }
+            renderArmed();
+          })
+          .catch(renderArmed);
+      }
+
+      function doReset() {
+        if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+        try { fileInput.value = ''; } catch (e) {}
+        renderIdle();
+      }
+
+      
+      widget.addEventListener('paste', function (e) {
+        var f = imageFromClipboardEvent(e);
+        if (f) { e.preventDefault(); setFile(f); }
+      });
+      
+      fileInput.addEventListener('change', renderPreview);
+
+      var form = widget.closest('form');
+      if (form) form.addEventListener('reset', function () { setTimeout(doReset, 0); });
+
+      renderIdle();
+    }
+
+    
+    
+    document.addEventListener('paste', function (e) {
+      var t = e.target;
+      if (!t || (t.name !== 'front' && t.name !== 'back')) return;
+      var f = imageFromClipboardEvent(e);
+      if (!f) return;
+      var form = t.closest('form');
+      var input = form && form.querySelector('input[name=image_' + t.name + ']');
+      var widget = input && input.closest('.image-paste-widget');
+      if (widget && widget._ipSetFile) {
+        e.preventDefault();
+        widget._ipSetFile(f);
+      }
+    });
+
+    initOnSwap('.image-paste-widget', initWidget);
+  })();
+</script>
+
+  </body>
+</html>

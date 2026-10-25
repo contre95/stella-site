@@ -1,0 +1,186 @@
+<div
+  id="card-edit-modal"
+  class="fixed inset-0 z-50 flex items-center justify-center p-4"
+  _="on keyup[key=='Escape'] from window remove me"
+>
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" _="on click remove #card-edit-modal"></div>
+
+  <div class="glass-strong relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl p-5 sm:p-6">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <h2 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">Edit card</h2>
+        <p class="mt-0.5 mb-4 text-xs text-gray-500 dark:text-gray-400">
+          Content only — scheduling and review history stay untouched.
+        </p>
+      </div>
+      
+        <form
+          hx-post="/cards/defe8c31-82ac-49c6-8a5e-35211bf3c9c1/move"
+          
+          hx-target="#card-list"
+          hx-swap="innerHTML"
+          _="on htmx:afterRequest(detail) if detail.successful remove #card-edit-modal"
+          
+          hx-params="deckId"
+          class="shrink-0 text-right"
+        >
+          <label class="block">
+            <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Deck</span>
+            <select
+              name="deckId"
+              _="on change call me.form.requestSubmit()"
+              title="Move to a different deck — scheduling and review history are kept"
+              class="glass-input mt-1.5 rounded-xl px-3 py-1.5 text-sm"
+            >
+              
+                <option value="6ad631e9-0913-4df0-9d67-115c24a7de51" selected>European capitals</option>
+              
+                <option value="5f47a7a0-06e1-4efe-904a-86e03eeaf9bd" >Flags</option>
+              
+                <option value="5efb07ce-78dc-433b-bb44-e5f111c1db8b" >Hiragana</option>
+              
+                <option value="543b5551-c07f-4e05-b235-c80e9436761a" >Japanese words</option>
+              
+                <option value="7a7cf061-4588-4224-a140-2b2079d7e6d7" >Kanji: first steps</option>
+              
+                <option value="663db165-9a01-4874-9420-064e5120b7e4" >Calculus</option>
+              
+                <option value="8de18812-e9b7-4b74-8a2e-a66849c9d212" >Physics</option>
+              
+                <option value="b5170ef4-38bd-4114-9865-9868eb24085a" >Spanish colors</option>
+              
+                <option value="1b9dbd17-b513-4ac2-8042-0ade1704fe76" >Spanish phrases</option>
+              
+                <option value="159e8a61-41bc-4475-9658-69e1c080f96f" >Welcome to Stella</option>
+              
+            </select>
+          </label>
+        </form>
+      
+    </div>
+
+    
+<form
+  id="card-edit-form"
+  hx-put="/cards/defe8c31-82ac-49c6-8a5e-35211bf3c9c1"
+  
+  hx-target="#card-list"
+  hx-swap="innerHTML"
+  hx-encoding="multipart/form-data"
+  _="on htmx:afterRequest(detail) if detail.xhr.status < 300 remove #card-edit-modal"
+  
+>
+  <div class="grid gap-4 sm:grid-cols-2">
+  <label class="block">
+    <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front</span>
+    <textarea
+      name="front"
+      required
+      placeholder="Question / prompt — Markdown works: # Title, **bold**, - list, $x^2$ for math"
+      class="glass-input mt-1.5 min-h-[4.5rem] max-h-56 w-full resize-none overflow-y-auto rounded-xl px-3 py-2 text-sm"
+      _="on load or input set my.style.height to 'auto' then set my.style.height to my.scrollHeight + 'px'"
+    >Denmark</textarea>
+    
+  </label>
+
+  <label class="block">
+    <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back</span>
+    <textarea
+      name="back"
+      placeholder="Answer"
+      class="glass-input mt-1.5 min-h-[4.5rem] max-h-56 w-full resize-none overflow-y-auto rounded-xl px-3 py-2 text-sm"
+      _="on load or input set my.style.height to 'auto' then set my.style.height to my.scrollHeight + 'px'"
+    >Copenhagen</textarea>
+  </label>
+
+  <div class="block">
+    <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front image</span>
+    
+    <div class="image-paste-widget">
+      <input
+        type="file"
+        name="image_front"
+        accept=".jpg,.jpeg,.png,.gif,.webp"
+        class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+      />
+      <div class="paste-ui"></div>
+    </div>
+    
+  </div>
+
+  <div class="block">
+    <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back image</span>
+    
+    <div class="image-paste-widget">
+      <input
+        type="file"
+        name="image_back"
+        accept=".jpg,.jpeg,.png,.gif,.webp"
+        class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+      />
+      <div class="paste-ui"></div>
+    </div>
+    
+  </div>
+
+  <div class="block">
+    <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front audio</span>
+    
+    <div class="audio-rec-widget" data-for="audio_front">
+      <input
+        type="file"
+        name="audio_front"
+        accept=".mp3,.ogg,.wav,.m4a,.webm,.aac,.flac"
+        class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+      />
+      <div class="rec-ui"></div>
+    </div>
+    
+  </div>
+
+  <div class="block">
+    <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back audio</span>
+    
+    <div class="audio-rec-widget" data-for="audio_back">
+      <input
+        type="file"
+        name="audio_back"
+        accept=".mp3,.ogg,.wav,.m4a,.webm,.aac,.flac"
+        class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+      />
+      <div class="rec-ui"></div>
+    </div>
+    
+  </div>
+  </div>
+
+  <div class="mt-5 flex items-center justify-between">
+    <label class="flex items-center gap-2">
+      <input
+        type="checkbox"
+        name="reverse"
+        checked
+        class="h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500 dark:border-gray-600"
+      />
+      <span class="text-sm text-gray-600 dark:text-gray-300">Reverse card</span>
+    </label>
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        _="on click remove #card-edit-modal"
+        class="btn-ghost rounded-xl px-4 py-2 text-sm font-semibold"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn-primary rounded-xl px-4 py-2 text-sm font-semibold"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+
+  </div>
+</div>

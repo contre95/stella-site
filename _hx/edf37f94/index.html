@@ -1,0 +1,2448 @@
+<div id="contenido">
+  <div class="mb-6 flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Dashboard</h1>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Your spaced-repetition overview.</p>
+    </div>
+    
+    <select
+      name="decks"
+      aria-label="Filter dashboard by group"
+      class="glass rounded-xl border-0 py-2 pl-3 pr-8 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500 dark:text-gray-200"
+      hx-get="/"
+      hx-trigger="change"
+      hx-target="#contenido" hx-sync="#contenido:replace"
+      hx-swap="outerHTML"
+      hx-push-url="true"
+    >
+      <option value="" >All Groups</option>
+      
+      <option value="6ad631e9-0913-4df0-9d67-115c24a7de51,5f47a7a0-06e1-4efe-904a-86e03eeaf9bd" selected>Geography</option>
+      
+      <option value="5efb07ce-78dc-433b-bb44-e5f111c1db8b,543b5551-c07f-4e05-b235-c80e9436761a,7a7cf061-4588-4224-a140-2b2079d7e6d7" >Japanese</option>
+      
+      <option value="663db165-9a01-4874-9420-064e5120b7e4,8de18812-e9b7-4b74-8a2e-a66849c9d212" >Science</option>
+      
+      <option value="b5170ef4-38bd-4114-9865-9868eb24085a,1b9dbd17-b513-4ac2-8042-0ade1704fe76" >Spanish</option>
+      
+    </select>
+    
+  </div>
+
+  
+  <dl class="grid grid-cols-2 gap-2 sm:gap-4 sm:grid-cols-3">
+    
+    <div class="glass lift col-span-2 flex flex-col items-center justify-center gap-1.5 rounded-2xl p-4 text-center sm:col-span-1 sm:p-5">
+      <span class="text-5xl leading-none" role="img" aria-label="Brain">🧠</span>
+      <p class="text-sm font-bold text-gray-800 dark:text-white">All caught up!</p>
+      <p class="text-xs text-gray-500 dark:text-gray-400">Nothing due today <span class="text-gradient font-semibold">✦</span></p>
+    </div>
+    
+    <div class="glass lift relative flex flex-col rounded-2xl p-3 sm:p-5">
+      
+      <dt class="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+        Studying
+        <span title="Active cards across all your decks. The brain shows cards in study-enabled decks only." class="cursor-help text-gray-300 dark:text-gray-600 hover:text-gray-400 dark:hover:text-gray-500 transition-colors">
+          <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0-4h.01"/></svg>
+        </span>
+      </dt>
+      <dd class="mt-2 flex items-center gap-1.5 text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+        <svg fill="#F09C9D" viewBox="0 -32 576 576" class="h-6 w-6 shrink-0" xmlns="http://www.w3.org/2000/svg"><path d="M208 0c-29.9 0-54.7 20.5-61.8 48.2-.8 0-1.4-.2-2.2-.2-35.3 0-64 28.7-64 64 0 4.8.6 9.5 1.7 14C52.5 138 32 166.6 32 200c0 12.6 3.2 24.3 8.3 34.9C16.3 248.7 0 274.3 0 304c0 33.3 20.4 61.9 49.4 73.9-.9 4.6-1.4 9.3-1.4 14.1 0 39.8 32.2 72 72 72 4.1 0 8.1-.5 12-1.2 9.6 28.5 36.2 49.2 68 49.2 39.8 0 72-32.2 72-72V64c0-35.3-28.7-64-64-64zm368 304c0-29.7-16.3-55.3-40.3-69.1 5.2-10.6 8.3-22.3 8.3-34.9 0-33.4-20.5-62-49.7-74 1-4.5 1.7-9.2 1.7-14 0-35.3-28.7-64-64-64-.8 0-1.5.2-2.2.2C422.7 20.5 397.9 0 368 0c-35.3 0-64 28.6-64 64v376c0 39.8 32.2 72 72 72 31.8 0 58.4-20.7 68-49.2 3.9.7 7.9 1.2 12 1.2 39.8 0 72-32.2 72-72 0-4.8-.5-9.5-1.4-14.1 29-12 49.4-40.6 49.4-73.9z"/></svg>
+        41
+      </dd>
+      <dd class="mt-1 text-xs text-gray-400 dark:text-gray-500">41 total</dd>
+      
+    </div>
+    <div class="glass lift flex flex-col rounded-2xl p-3 sm:p-5">
+      <dt class="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+        Not memorized
+        <span title="Cards in study-enabled decks not yet committed to long-term memory (grade &lt; 2)." class="cursor-help text-gray-300 dark:text-gray-600 hover:text-gray-400 dark:hover:text-gray-500 transition-colors">
+          <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0-4h.01"/></svg>
+        </span>
+      </dt>
+      <dd class="mt-2 flex items-center gap-1.5 text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+        <svg class="h-6 w-6 shrink-0 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z" />
+        </svg>
+        0
+      </dd>
+      
+      
+    </div>
+  </dl>
+
+  
+  
+    <div class="glass mt-5 rounded-2xl p-8 text-center">
+      <p class="text-sm text-gray-500 dark:text-gray-400">All caught up — nothing due right now. <span class="text-gradient font-semibold">✦</span></p>
+    </div>
+  
+
+  <div class="mt-5 flex flex-col lg:flex-row gap-5">
+  
+    <div class="glass rounded-2xl p-5 flex-1">
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Upcoming reviews</h2>
+        <span class="text-xs text-gray-400">next 7 days</span>
+      </div>
+      <div class="max-w-sm mx-auto grid grid-cols-7 gap-2">
+        
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="flex h-24 w-full items-end">
+              <div
+                class="flex w-full flex-col-reverse overflow-hidden rounded-t-md bg-gray-200 dark:bg-white/10"
+                style="height: 0%; min-height: 3px;"
+                title="0 due"
+              >
+                
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gray-800 dark:text-gray-100">0</span>
+            <span class="text-[10px] uppercase tracking-wide text-gray-400">Today</span>
+          </div>
+        
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="flex h-24 w-full items-end">
+              <div
+                class="flex w-full flex-col-reverse overflow-hidden rounded-t-md bg-gray-200 dark:bg-white/10"
+                style="height: 0%; min-height: 3px;"
+                title="0 due"
+              >
+                
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gray-800 dark:text-gray-100">0</span>
+            <span class="text-[10px] uppercase tracking-wide text-gray-400">Mon</span>
+          </div>
+        
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="flex h-24 w-full items-end">
+              <div
+                class="flex w-full flex-col-reverse overflow-hidden rounded-t-md bg-gray-200 dark:bg-white/10"
+                style="height: 100%; min-height: 3px;"
+                title="4 due"
+              >
+                
+                  
+                    <div style="height: 100%; background: #4EB3D5;" title="Selected: 4"></div>
+                  
+                
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gray-800 dark:text-gray-100">4</span>
+            <span class="text-[10px] uppercase tracking-wide text-gray-400">Tue</span>
+          </div>
+        
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="flex h-24 w-full items-end">
+              <div
+                class="flex w-full flex-col-reverse overflow-hidden rounded-t-md bg-gray-200 dark:bg-white/10"
+                style="height: 50%; min-height: 3px;"
+                title="2 due"
+              >
+                
+                  
+                    <div style="height: 100%; background: #4EB3D5;" title="Selected: 2"></div>
+                  
+                
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gray-800 dark:text-gray-100">2</span>
+            <span class="text-[10px] uppercase tracking-wide text-gray-400">Wed</span>
+          </div>
+        
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="flex h-24 w-full items-end">
+              <div
+                class="flex w-full flex-col-reverse overflow-hidden rounded-t-md bg-gray-200 dark:bg-white/10"
+                style="height: 0%; min-height: 3px;"
+                title="0 due"
+              >
+                
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gray-800 dark:text-gray-100">0</span>
+            <span class="text-[10px] uppercase tracking-wide text-gray-400">Thu</span>
+          </div>
+        
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="flex h-24 w-full items-end">
+              <div
+                class="flex w-full flex-col-reverse overflow-hidden rounded-t-md bg-gray-200 dark:bg-white/10"
+                style="height: 0%; min-height: 3px;"
+                title="0 due"
+              >
+                
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gray-800 dark:text-gray-100">0</span>
+            <span class="text-[10px] uppercase tracking-wide text-gray-400">Fri</span>
+          </div>
+        
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="flex h-24 w-full items-end">
+              <div
+                class="flex w-full flex-col-reverse overflow-hidden rounded-t-md bg-gray-200 dark:bg-white/10"
+                style="height: 0%; min-height: 3px;"
+                title="0 due"
+              >
+                
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gray-800 dark:text-gray-100">0</span>
+            <span class="text-[10px] uppercase tracking-wide text-gray-400">Sat</span>
+          </div>
+        
+      </div>
+    </div>
+  
+
+  
+    <div class="glass rounded-2xl p-3 flex-1 min-w-0">
+      <div class="mb-2 flex items-center justify-between">
+        <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-200">Study activity</h2>
+        <span class="text-xs text-gray-400">
+          54 days studied
+          
+        </span>
+      </div>
+      <div class="max-w-[750px] mx-auto overflow-x-auto pb-0.5" id="heatmapContainer">
+        <div style="width: fit-content; padding-right: 2px;">
+          <div class="mb-0.5 flex gap-[2px]">
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Nov</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Dec</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Jan</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Feb</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Mar</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Apr</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">May</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Jun</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Jul</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Aug</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Sep</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400">Oct</div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+              <div class="heat-col text-[8px] sm:text-[10px] leading-tight text-gray-400"></div>
+            
+          </div>
+          <div class="flex gap-[2px]">
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Oct 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Oct 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Oct 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Oct 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Oct 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Oct 31"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Nov 1"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Nov 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Nov 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Nov 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Nov 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Nov 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Nov 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Nov 8"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Nov 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Nov 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Nov 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Nov 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Nov 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Nov 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Nov 15"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Nov 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Nov 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Nov 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Nov 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Nov 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Nov 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Nov 22"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Nov 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Nov 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Nov 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Nov 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Nov 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Nov 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Nov 29"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Nov 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Dec 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Dec 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Dec 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Dec 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Dec 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Dec 6"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Dec 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Dec 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Dec 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Dec 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Dec 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Dec 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Dec 13"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Dec 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Dec 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Dec 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Dec 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Dec 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Dec 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Dec 20"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Dec 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Dec 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Dec 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Dec 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Dec 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Dec 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Dec 27"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Dec 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Dec 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Dec 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Dec 31"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jan 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jan 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jan 3"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jan 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jan 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jan 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jan 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jan 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jan 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jan 10"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jan 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jan 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jan 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jan 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jan 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jan 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jan 17"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jan 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jan 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jan 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jan 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jan 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jan 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jan 24"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jan 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jan 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jan 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jan 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jan 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jan 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jan 31"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Feb 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Feb 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Feb 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Feb 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Feb 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Feb 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Feb 7"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Feb 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Feb 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Feb 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Feb 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Feb 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Feb 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Feb 14"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Feb 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Feb 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Feb 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Feb 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Feb 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Feb 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Feb 21"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Feb 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Feb 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Feb 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Feb 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Feb 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Feb 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Feb 28"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Mar 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Mar 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Mar 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Mar 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Mar 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Mar 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Mar 7"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Mar 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Mar 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Mar 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Mar 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Mar 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Mar 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Mar 14"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Mar 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Mar 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Mar 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Mar 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Mar 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Mar 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Mar 21"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Mar 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Mar 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Mar 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Mar 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Mar 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Mar 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Mar 28"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Mar 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Mar 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Mar 31"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Apr 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Apr 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Apr 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Apr 4"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Apr 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Apr 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Apr 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Apr 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Apr 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Apr 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Apr 11"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Apr 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Apr 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Apr 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Apr 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Apr 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Apr 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Apr 18"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Apr 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Apr 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Apr 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Apr 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Apr 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Apr 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Apr 25"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Apr 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Apr 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Apr 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Apr 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Apr 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, May 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, May 2"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, May 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, May 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, May 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, May 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, May 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, May 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, May 9"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, May 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, May 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, May 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, May 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, May 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, May 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, May 16"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, May 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, May 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, May 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, May 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, May 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, May 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, May 23"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, May 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, May 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, May 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, May 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, May 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, May 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, May 30"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, May 31"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jun 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jun 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jun 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jun 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jun 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jun 6"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jun 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jun 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jun 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jun 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jun 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jun 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jun 13"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jun 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jun 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jun 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jun 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jun 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jun 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jun 20"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jun 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jun 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jun 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jun 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jun 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jun 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jun 27"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jun 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jun 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jun 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jul 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jul 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jul 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jul 4"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jul 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jul 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jul 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jul 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jul 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jul 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jul 11"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jul 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jul 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jul 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jul 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jul 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jul 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jul 18"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jul 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jul 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jul 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jul 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jul 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jul 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Jul 25"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Jul 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Jul 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Jul 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Jul 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Jul 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Jul 31"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Aug 1"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Aug 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Aug 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Aug 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Aug 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Aug 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Aug 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Aug 8"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Aug 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Aug 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Aug 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Aug 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Aug 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Aug 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Aug 15"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Aug 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Aug 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Aug 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Wed, Aug 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Thu, Aug 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Aug 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Aug 22"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Aug 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Aug 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Tue, Aug 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="3 reviews · Wed, Aug 26"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="3 reviews · Thu, Aug 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="4 reviews · Fri, Aug 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="5 reviews · Sat, Aug 29"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sun, Aug 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="12 reviews · Mon, Aug 31"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="7 reviews · Tue, Sep 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="5 reviews · Wed, Sep 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="12 reviews · Thu, Sep 3"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="7 reviews · Fri, Sep 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="11 reviews · Sat, Sep 5"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l3"
+                    title="12 reviews · Sun, Sep 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Sep 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l4"
+                    title="15 reviews · Tue, Sep 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="9 reviews · Wed, Sep 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="9 reviews · Thu, Sep 10"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Fri, Sep 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="13 reviews · Sat, Sep 12"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l3"
+                    title="11 reviews · Sun, Sep 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Mon, Sep 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l4"
+                    title="20 reviews · Tue, Sep 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="5 reviews · Wed, Sep 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="10 reviews · Thu, Sep 17"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="5 reviews · Fri, Sep 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Sep 19"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l2"
+                    title="5 reviews · Sun, Sep 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="3 reviews · Mon, Sep 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="9 reviews · Tue, Sep 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="13 reviews · Wed, Sep 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="7 reviews · Thu, Sep 24"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="9 reviews · Fri, Sep 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="8 reviews · Sat, Sep 26"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Sun, Sep 27"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="4 reviews · Mon, Sep 28"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="5 reviews · Tue, Sep 29"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="6 reviews · Wed, Sep 30"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="7 reviews · Thu, Oct 1"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="9 reviews · Fri, Oct 2"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="4 reviews · Sat, Oct 3"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l2"
+                    title="6 reviews · Sun, Oct 4"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="4 reviews · Mon, Oct 5"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="4 reviews · Tue, Oct 6"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Wed, Oct 7"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="7 reviews · Thu, Oct 8"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l3"
+                    title="8 reviews · Fri, Oct 9"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="1 review · Sat, Oct 10"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Sun, Oct 11"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="6 reviews · Mon, Oct 12"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Tue, Oct 13"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Wed, Oct 14"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Thu, Oct 15"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Fri, Oct 16"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Sat, Oct 17"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l2"
+                    title="4 reviews · Sun, Oct 18"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Mon, Oct 19"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Tue, Oct 20"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Wed, Oct 21"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l1"
+                    title="2 reviews · Thu, Oct 22"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l2"
+                    title="6 reviews · Fri, Oct 23"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0"
+                    title="No reviews · Sat, Oct 24"
+                  ></div>
+                
+              </div>
+            
+              <div class="flex flex-col gap-[2px]">
+                
+                  <div
+                    class="heat heat-l0 heat-today"
+                    title="No reviews · Sun, Oct 25"
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0 heat-empty"
+                    
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0 heat-empty"
+                    
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0 heat-empty"
+                    
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0 heat-empty"
+                    
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0 heat-empty"
+                    
+                  ></div>
+                
+                  <div
+                    class="heat heat-l0 heat-empty"
+                    
+                  ></div>
+                
+              </div>
+            
+          </div>
+        </div>
+      </div>
+      <script>
+        (function () {
+          function scrollHeatmapToEnd() {
+            var container = document.getElementById('heatmapContainer');
+            if (container) container.scrollLeft = container.scrollWidth;
+          }
+          
+          
+          
+          scrollHeatmapToEnd();
+          setTimeout(scrollHeatmapToEnd, 0);
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', scrollHeatmapToEnd);
+          }
+        })();
+      </script>
+      <div class="mt-3 flex items-center justify-end gap-1.5 text-[10px] text-gray-400">
+        Less
+        <span class="heat heat-l0"></span>
+        <span class="heat heat-l1"></span>
+        <span class="heat heat-l2"></span>
+        <span class="heat heat-l3"></span>
+        <span class="heat heat-l4"></span>
+        More
+      </div>
+    </div>
+    <style>
+      .heat { width: 12px; height: 12px; border-radius: 1px; }
+      .heat-col { width: 12px; white-space: nowrap; }
+      .heat-empty { background: transparent !important; }
+      .heat-today { box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.9); }
+      .heat-l0 { background: rgba(17, 24, 39, 0.08); }
+      .heat-l1 { background: #fbcfe8; }
+      .heat-l2 { background: #f472b6; }
+      .heat-l3 { background: #db2777; }
+      .heat-l4 { background: #9d174d; }
+      .dark .heat-l0 { background: rgba(255, 255, 255, 0.06); }
+      .dark .heat-l1 { background: #831843; }
+      .dark .heat-l2 { background: #be185d; }
+      .dark .heat-l3 { background: #db2777; }
+      .dark .heat-l4 { background: #f472b6; }
+    </style>
+  
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

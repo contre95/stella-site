@@ -1,0 +1,173 @@
+<div
+  id="card-preview-modal"
+  class="fixed inset-0 z-50 flex items-center justify-center p-4"
+  _="on keyup[key=='Escape'] from window remove me"
+>
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" _="on click remove #card-preview-modal"></div>
+
+  <div id="pv-panel" class="glass-strong relative flex w-full max-w-md flex-col rounded-2xl p-4" style="height: min(640px, 85vh);">
+    <button
+      type="button"
+      title="Fullscreen"
+      class="absolute left-4 top-4 z-30 rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-500 transition-colors dark:hover:text-pink-400"
+      _="on click
+           toggle .pv-fullscreen on #card-preview-modal
+           toggle .hidden on #pv-expand-icon
+           toggle .hidden on #pv-collapse-icon
+           if #card-preview-modal matches .pv-fullscreen
+             set my title to 'Exit fullscreen'
+           else
+             set my title to 'Fullscreen'
+           end"
+    >
+      <span id="pv-expand-icon">
+<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9M20.25 20.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+</svg>
+</span>
+      <span id="pv-collapse-icon" class="hidden">
+<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
+</svg>
+</span>
+    </button>
+
+    <button
+      type="button"
+      title="Close preview"
+      class="absolute right-4 top-4 z-30 rounded-lg p-1.5 text-gray-400 hover:bg-pink-500/10 hover:text-pink-500 transition-colors dark:hover:text-pink-400"
+      _="on click remove #card-preview-modal"
+    >
+      
+<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+</svg>
+
+    </button>
+
+    <div id="pv-card-outer" class="relative flex-1 min-h-0">
+      <div id="pv-flip-card" class="absolute inset-0 cursor-pointer">
+
+        
+        <div id="pv-card-front" class="absolute inset-0 flex flex-col items-center justify-center text-center overflow-hidden rounded-2xl glass-strong" style="transition: opacity 0.32s ease;">
+          
+          <span class="absolute top-4 left-1/2 -translate-x-1/2 z-10 text-xs font-semibold uppercase tracking-widest text-pink-500/80 dark:text-pink-300/70">Question</span>
+          
+          <div class="relative z-10 flex w-full flex-1 min-h-0 flex-col overflow-y-auto overscroll-contain">
+            <div class="m-auto flex w-full flex-col items-center gap-3 px-4 py-4 sm:px-6 sm:py-5">
+              
+              <div class="md-content w-full text-center text-xl font-medium leading-relaxed text-gray-800 dark:text-gray-100 sm:text-2xl"
+                 _="on load
+                      set L to my textContent.trim().length
+                      if L <= 3
+                        set my style.fontSize to '4rem'
+                        set my style.lineHeight to '1'
+                      else if L > 200
+                        set my style.fontSize to '0.85em'
+                      else if L > 100
+                        set my style.fontSize to '0.92em'
+                      end">
+                <div style="text-align:center"><p><span class="katex-math" data-tex-display="1" data-tex="\int_{-\infty}^{\infty} e^{-x^2} \,dx">$$\int_{-\infty}^{\infty} e^{-x^2} \,dx$$</span></p>
+</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+        
+        <div id="pv-card-back" class="absolute inset-0 flex flex-col items-center justify-center text-center overflow-hidden rounded-2xl glass-strong" style="display: none; opacity: 0; pointer-events: none;">
+          
+          <span class="absolute top-4 left-1/2 -translate-x-1/2 z-10 text-xs font-semibold uppercase tracking-widest text-emerald-500/80 dark:text-emerald-300/70">Answer</span>
+          
+          <div class="relative z-10 flex w-full flex-1 min-h-0 flex-col overflow-y-auto overscroll-contain">
+            <div class="m-auto flex w-full flex-col items-center gap-3 px-4 py-4 sm:px-6 sm:py-5">
+              
+              <div class="md-content w-full text-justify text-xl font-medium leading-relaxed text-gray-900 dark:text-white sm:text-2xl"
+                 _="on load
+                      set L to my textContent.trim().length
+                      if L <= 3
+                        set my style.fontSize to '4rem'
+                        set my style.lineHeight to '1'
+                      else if L > 200
+                        set my style.fontSize to '0.85em'
+                      else if L > 100
+                        set my style.fontSize to '0.92em'
+                      end">
+                <div style="text-align:center"><p><span class="katex-math" data-tex-display="1" data-tex="\sqrt{\pi}">$$\sqrt{\pi}$$</span><br>
+The Gaussian integral.</p>
+</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+    </div>
+
+    <p class="mt-2 shrink-0 text-center text-xs text-gray-400 dark:text-gray-500">Tap the card to flip &middot; preview only, not counted as a review</p>
+  </div>
+
+  <style>
+    #card-preview-modal.pv-fullscreen { padding: 0; }
+    #card-preview-modal.pv-fullscreen #pv-panel {
+      max-width: none;
+      width: 100%;
+      height: 100dvh !important;
+      border-radius: 0;
+    }
+  </style>
+
+  <script>
+  (function () {
+    
+    
+    var viewportMeta = document.querySelector('meta[name="viewport"]');
+    var originalViewportContent = viewportMeta ? viewportMeta.getAttribute('content') : null;
+    if (viewportMeta) {
+      viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
+    }
+    var viewportRestored = false;
+    function restoreViewport() {
+      if (viewportRestored) return;
+      viewportRestored = true;
+      if (viewportMeta && originalViewportContent) viewportMeta.setAttribute('content', originalViewportContent);
+      modalObserver.disconnect();
+    }
+    var modalObserver = new MutationObserver(function () {
+      if (!document.getElementById('card-preview-modal')) restoreViewport();
+    });
+    modalObserver.observe(document.body, { childList: true });
+
+    var flipCard = document.getElementById('pv-flip-card');
+    var front    = document.getElementById('pv-card-front');
+    var back     = document.getElementById('pv-card-back');
+    var showingBack = false;
+
+    var audioFront = document.getElementById('pv-audio-front');
+    var audioBack  = document.getElementById('pv-audio-back');
+    if (audioFront) window.stellaInitAudioPlayer(audioFront, 'pv-', 'front');
+    if (audioBack)  window.stellaInitAudioPlayer(audioBack,  'pv-', 'back');
+
+    flipCard.addEventListener('click', function () {
+      showingBack = !showingBack;
+      if (audioFront) { audioFront.pause(); }
+      if (audioBack)  { audioBack.pause(); }
+      if (showingBack) {
+        front.style.opacity = '0';
+        front.style.pointerEvents = 'none';
+        back.style.display = 'flex';
+        void back.offsetHeight;
+        back.style.opacity = '1';
+        back.style.pointerEvents = 'auto';
+      } else {
+        back.style.opacity = '0';
+        back.style.pointerEvents = 'none';
+        front.style.opacity = '1';
+        front.style.pointerEvents = 'auto';
+      }
+    });
+  })();
+  </script>
+</div>
