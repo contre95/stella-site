@@ -24,7 +24,6 @@ as-is (no build command):
 | --- | --- |
 | `content/` | Homepage, license and privacy pages |
 | `layouts/`, `assets/`, `static/`, `config/` | Theme overrides and Hugo config |
-| `data/sidebar.toml` | Docs sidebar icons, per page |
 | `scripts/fetch-stella.sh` | Puts a stella checkout at `.stella/` (latest release, a given ref, or a local working copy) |
 | `scripts/publish-branch.sh` | Force-pushes a built folder as the only commit of a `build/*` branch |
 | `demo/` | Demo builder: deck content, history generator, seeding, crawler and the browser shim |
