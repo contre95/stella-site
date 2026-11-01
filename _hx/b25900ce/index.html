@@ -1,0 +1,50 @@
+<div id="contenido">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">API Tokens</h1>
+    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+      Bearer tokens for MCP clients and stella-x4 devices. A token is shown only once when created — copy it immediately.
+    </p>
+  </div>
+
+  
+
+  
+  <form
+    hx-post="/settings/tokens"
+    hx-target="#contenido" hx-sync="#contenido:replace"
+    hx-swap="outerHTML"
+    class="glass mb-6 rounded-2xl p-5 sm:p-6"
+  >
+    <h2 class="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Create new token</h2>
+    <div class="flex gap-3">
+      <input
+        name="name"
+        placeholder="Token name (e.g. Claude Desktop)"
+        class="glass-input flex-1 rounded-xl px-3 py-2 text-sm"
+      />
+      <button type="submit" class="btn-primary rounded-xl px-4 py-2 text-sm font-medium">
+        Generate
+      </button>
+    </div>
+  </form>
+
+  
+  
+  <div class="glass rounded-2xl p-8 text-center text-sm text-gray-400 dark:text-gray-500">
+    No tokens yet. Create one above to connect an MCP client or a stella-x4 device.
+  </div>
+  
+
+  
+  <div class="mb-6 mt-10">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Connected apps</h2>
+    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+      MCP clients connected via OAuth (sign-in through the browser) instead of a pasted token.
+    </p>
+  </div>
+  
+  <div class="glass rounded-2xl p-8 text-center text-sm text-gray-400 dark:text-gray-500">
+    No connected apps yet. Point an MCP client at this server's /mcp endpoint and it will prompt you to sign in.
+  </div>
+  
+</div>
