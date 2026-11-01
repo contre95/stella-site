@@ -29,6 +29,10 @@ from collections import deque
 from html.parser import HTMLParser
 
 SHIM_PATH = "/static-demo.js"
+UMAMI_TAGS = (
+    '<script defer src="https://umami.contre.io/script.js" data-website-id="8878ebdc-8a97-4275-94ba-54c199e7225f"></script>\n'
+    '  <script defer src="https://umami.contre.io/recorder.js" data-website-id="8878ebdc-8a97-4275-94ba-54c199e7225f"></script>'
+)
 
 # GET endpoints with side effects or nothing to show. They are left unresolved,
 # so in the demo they 404 and the shim shows a "not available" toast.
@@ -333,7 +337,7 @@ def rewrite(doc, resources, strip):
 
 
 def inject_shim(doc):
-    tag = f'<script src="{SHIM_PATH}"></script>'
+    tag = f'<script src="{SHIM_PATH}"></script>\n  {UMAMI_TAGS}'
     # Not every static host sends a charset header; without one the UTF-8 icons turn to mojibake.
     if "charset" not in doc[:1024].lower():
         tag = '<meta charset="utf-8">\n  ' + tag
