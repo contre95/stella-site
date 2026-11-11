@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Stella</title><link>/</link><description>Recent content on Stella</description><generator>Hugo</generator><language>en</language><copyright>Copyright (c) 2026 Stella</copyright><lastBuildDate>Sun, 05 Oct 2025 00:00:00 +0200</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Self hosted</title><link>/docs/self-host/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/self-host/</guid><description>&lt;h2 id="container-image">Container image&lt;/h2>
+&lt;p>Images are published to the GitHub Container Registry:&lt;/p>
+
+
+
+&lt;div class="expressive-code">
+ &lt;figure class="frame is-terminal not-content">
+ &lt;figcaption class="header">
+ &lt;span class="title">&lt;/span>
+ &lt;/figcaption>
+ &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">podman pull ghcr.io/contre95/stella:beta &lt;span class="c1"># newest release&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+ &lt;/figure>
+&lt;/div>
+&lt;p>Every version is listed in &lt;a href="https://github.com/contre95/stella/pkgs/container/stella">GitHub packages&lt;/a>.
+There is deliberately no &lt;code>latest&lt;/code> tag: pin a version, or track &lt;code>beta&lt;/code>.&lt;/p></description></item><item><title>Configuration</title><link>/docs/config/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/config/</guid><description>&lt;p>Stella reads &lt;code>config.yaml&lt;/code> from the working directory, or from the path in
+&lt;code>STELLA_CONFIG_PATH&lt;/code>. This is the full example config (&lt;code>config.example.yaml&lt;/code> in the repo),
+with every setting at its default:&lt;/p></description></item><item><title>Users &amp; login</title><link>/docs/auth/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/auth/</guid><description>&lt;p>Stella runs in one of two modes, controlled by &lt;code>auth.enabled&lt;/code>.&lt;/p>
+&lt;h2 id="single-user">Single user&lt;/h2>
+&lt;p>&lt;code>auth.enabled: false&lt;/code> (the default). There is no login, and all data belongs to one built-in
+local account. The &lt;code>/mcp&lt;/code> endpoint (when enabled) has no auth either, so put it behind a
+trusted network (Tailscale, localhost, VPN) if you expose it.&lt;/p></description></item><item><title>Cards</title><link>/docs/cards/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/cards/</guid><description>&lt;h2 id="data-model">Data model&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Group&lt;/strong>: an optional folder for decks. A deck belongs to at most one group.&lt;/li>
+&lt;li>&lt;strong>Deck&lt;/strong>: a named collection of facts (name up to 32 characters, description, optional
+cover image, optional group).&lt;/li>
+&lt;li>&lt;strong>Tag&lt;/strong>: a free label; a deck can carry any number of them, independent of groups.&lt;/li>
+&lt;li>&lt;strong>Fact&lt;/strong>: the content itself, a &lt;code>front&lt;/code> and a &lt;code>back&lt;/code>, plus an optional image and audio
+file per side. A fact belongs to one deck.&lt;/li>
+&lt;li>&lt;strong>Card&lt;/strong>: one direction of quizzing derived from a fact. The &lt;strong>forward&lt;/strong> card
+(front → back) always exists; the &lt;strong>reverse&lt;/strong> card (back → front) is optional and needs a
+non-empty back.&lt;/li>
+&lt;/ul>
+&lt;p>Groups are one per deck (exclusive categories); tags are many per deck (cross-cutting
+labels).&lt;/p></description></item><item><title>Reviewing</title><link>/docs/reviewing/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/reviewing/</guid><description>&lt;p>Stella schedules cards with a Go port of &lt;a href="https://github.com/mnemosyne-proj/mnemosyne">Mnemosyne&lt;/a>&amp;rsquo;s
+SM2 algorithm. After each card you grade how well you remembered it, from 0 (blackout) to 5
+(perfect recall), and the grade sets when you see the card next: well-remembered cards come
+back at ever longer intervals, forgotten ones come back soon.&lt;/p></description></item><item><title>Import &amp; export</title><link>/docs/import-export/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/import-export/</guid><description>&lt;p>Decks and groups can be exported and imported as archives. An export carries the content,
+the media, and each card&amp;rsquo;s scheduling state and review history, so an imported deck resumes
+where it left off.&lt;/p></description></item><item><title>MCP server</title><link>/docs/mcp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/mcp/</guid><description>&lt;p>Stella can expose a &lt;a href="https://modelcontextprotocol.io">Model Context Protocol&lt;/a> server, so an AI
+assistant can create decks and cards for you, tag and group them, and edit or move existing
+cards.&lt;/p></description></item><item><title>Device sync</title><link>/docs/device-sync/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/device-sync/</guid><description>&lt;p>&lt;a href="https://codeberg.org/monopieza/stella-x4">stella-x4&lt;/a> is a standalone spaced-repetition
+firmware for the Xteink X4 e-ink reader. It runs the same SM2 review loop offline, from the
+SD card, and syncs with a Stella server over WiFi.&lt;/p></description></item><item><title>License</title><link>/license/</link><pubDate>Sun, 05 Oct 2025 00:00:00 +0200</pubDate><guid>/license/</guid><description>&lt;p>MIT License&lt;/p>
+&lt;p>Copyright (c) 2020-2025 Thulite&lt;/p>
+&lt;p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:&lt;/p></description></item><item><title>Privacy Policy</title><link>/privacy/</link><pubDate>Sun, 05 Oct 2025 00:00:00 +0200</pubDate><guid>/privacy/</guid><description/></item></channel></rss>
