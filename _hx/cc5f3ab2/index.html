@@ -1,0 +1,1931 @@
+
+  <div class="divide-y divide-gray-200/60 dark:divide-white/10 glass overflow-hidden rounded-2xl">
+    <div class="hidden sm:flex bg-white/40 dark:bg-white/[0.03] px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+      <div class="w-1/3">Front</div>
+      <div class="w-1/3">Back</div>
+      <div class="w-1/3">Status</div>
+    </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="f7e4fdaa-b9d7-401b-a852-902eced4fcbb" data-idx="0">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/f7e4fdaa-b9d7-401b-a852-902eced4fcbb/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/f7e4fdaa-b9d7-401b-a852-902eced4fcbb"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>ね</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>ne</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">ね</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 1 month
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/f7e4fdaa-b9d7-401b-a852-902eced4fcbb/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="b9a093ad-0191-40ca-8fcc-1db7a74ba737" data-idx="1">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/b9a093ad-0191-40ca-8fcc-1db7a74ba737/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/b9a093ad-0191-40ca-8fcc-1db7a74ba737"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>ぬ</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>nu</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">ぬ</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 5 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/b9a093ad-0191-40ca-8fcc-1db7a74ba737/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="2fc36ea6-f295-45d5-9ccd-2791c1f8cc29" data-idx="2">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/2fc36ea6-f295-45d5-9ccd-2791c1f8cc29/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/2fc36ea6-f295-45d5-9ccd-2791c1f8cc29"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>に</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>ni</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">に</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 10 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/2fc36ea6-f295-45d5-9ccd-2791c1f8cc29/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="0d5848c6-5188-481b-ac3c-729dc4fd9823" data-idx="3">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/0d5848c6-5188-481b-ac3c-729dc4fd9823/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/0d5848c6-5188-481b-ac3c-729dc4fd9823"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>な</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>na</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">な</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 24 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/0d5848c6-5188-481b-ac3c-729dc4fd9823/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="4160e549-0948-4a7a-844b-deccb7b16a8a" data-idx="4">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/4160e549-0948-4a7a-844b-deccb7b16a8a/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/4160e549-0948-4a7a-844b-deccb7b16a8a"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>と</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>to</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">と</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 1 month
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/4160e549-0948-4a7a-844b-deccb7b16a8a/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="2d93e899-9396-4a92-a316-7365e258c4ce" data-idx="5">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/2d93e899-9396-4a92-a316-7365e258c4ce/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/2d93e899-9396-4a92-a316-7365e258c4ce"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>て</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>te</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">て</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 21 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/2d93e899-9396-4a92-a316-7365e258c4ce/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="8997431a-4f35-45dd-8aff-39f37c50be19" data-idx="6">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/8997431a-4f35-45dd-8aff-39f37c50be19/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/8997431a-4f35-45dd-8aff-39f37c50be19"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>つ</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>tsu</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">つ</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 10 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/8997431a-4f35-45dd-8aff-39f37c50be19/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="a1ca4267-2cbf-469d-a5ae-d5bfb67236b5" data-idx="7">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/a1ca4267-2cbf-469d-a5ae-d5bfb67236b5/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/a1ca4267-2cbf-469d-a5ae-d5bfb67236b5"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>ち</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>chi</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">ち</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 1 month
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/a1ca4267-2cbf-469d-a5ae-d5bfb67236b5/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="14204577-3028-4c70-a084-2537a9c97d1a" data-idx="8">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/14204577-3028-4c70-a084-2537a9c97d1a/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/14204577-3028-4c70-a084-2537a9c97d1a"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>た</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>ta</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">た</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 13 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/14204577-3028-4c70-a084-2537a9c97d1a/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="6a497684-f757-491f-b22c-463f96076493" data-idx="9">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/6a497684-f757-491f-b22c-463f96076493/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/6a497684-f757-491f-b22c-463f96076493"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>そ</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>so</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">そ</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 12 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/6a497684-f757-491f-b22c-463f96076493/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="4f930a28-2eb9-46e6-9848-05f64938bc58" data-idx="10">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/4f930a28-2eb9-46e6-9848-05f64938bc58/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/4f930a28-2eb9-46e6-9848-05f64938bc58"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>せ</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>se</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">せ</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 16 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/4f930a28-2eb9-46e6-9848-05f64938bc58/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="cf4d3b21-47f0-4a85-974e-17efadaa4bd3" data-idx="11">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/cf4d3b21-47f0-4a85-974e-17efadaa4bd3/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/cf4d3b21-47f0-4a85-974e-17efadaa4bd3"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>す</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>su</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">す</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 3 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/cf4d3b21-47f0-4a85-974e-17efadaa4bd3/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="a1cd8736-6007-448a-9427-045457324d66" data-idx="12">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/a1cd8736-6007-448a-9427-045457324d66/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/a1cd8736-6007-448a-9427-045457324d66"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>し</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>shi</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">し</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 6 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/a1cd8736-6007-448a-9427-045457324d66/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="382de0a6-45ac-422a-b98c-24cdc86e2d06" data-idx="13">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/382de0a6-45ac-422a-b98c-24cdc86e2d06/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/382de0a6-45ac-422a-b98c-24cdc86e2d06"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>さ</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>sa</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">さ</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 1 month
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/382de0a6-45ac-422a-b98c-24cdc86e2d06/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="63f91a48-3f2a-43ba-a92e-e479c515c663" data-idx="14">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/63f91a48-3f2a-43ba-a92e-e479c515c663/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/63f91a48-3f2a-43ba-a92e-e479c515c663"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>こ</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>ko</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">こ</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 3 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/63f91a48-3f2a-43ba-a92e-e479c515c663/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="d93b8603-bb35-46bc-ac42-1faa958565a4" data-idx="15">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/d93b8603-bb35-46bc-ac42-1faa958565a4/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/d93b8603-bb35-46bc-ac42-1faa958565a4"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>け</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>ke</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">け</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → tomorrow
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/d93b8603-bb35-46bc-ac42-1faa958565a4/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="fa1c3e4d-cef1-437d-838b-cff9746b2c30" data-idx="16">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/fa1c3e4d-cef1-437d-838b-cff9746b2c30/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/fa1c3e4d-cef1-437d-838b-cff9746b2c30"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>く</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>ku</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">く</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 16 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/fa1c3e4d-cef1-437d-838b-cff9746b2c30/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="bdef8757-ba06-4861-a34c-b782cbd8b071" data-idx="17">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/bdef8757-ba06-4861-a34c-b782cbd8b071/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/bdef8757-ba06-4861-a34c-b782cbd8b071"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>き</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>ki</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">き</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 2 months
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/bdef8757-ba06-4861-a34c-b782cbd8b071/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="f5bdb275-9556-4238-9e9b-62fe5e520ac6" data-idx="18">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/f5bdb275-9556-4238-9e9b-62fe5e520ac6/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/f5bdb275-9556-4238-9e9b-62fe5e520ac6"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>か</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>ka</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">か</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 5 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/f5bdb275-9556-4238-9e9b-62fe5e520ac6/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="0c81f0db-7673-48da-a504-0881220cb64c" data-idx="19">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/0c81f0db-7673-48da-a504-0881220cb64c/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/0c81f0db-7673-48da-a504-0881220cb64c"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>お</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>o</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">お</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 11 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/0c81f0db-7673-48da-a504-0881220cb64c/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="8254a633-1b1f-430b-8caa-461b2cc74861" data-idx="20">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/8254a633-1b1f-430b-8caa-461b2cc74861/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/8254a633-1b1f-430b-8caa-461b2cc74861"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>え</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>e</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">え</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 14 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/8254a633-1b1f-430b-8caa-461b2cc74861/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="3be03514-994a-48e8-aa49-f0c24e841ac2" data-idx="21">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/3be03514-994a-48e8-aa49-f0c24e841ac2/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/3be03514-994a-48e8-aa49-f0c24e841ac2"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>う</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>u</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">う</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 1 month
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/3be03514-994a-48e8-aa49-f0c24e841ac2/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="5486b345-1902-4f0b-b67b-15805c9d2211" data-idx="22">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/5486b345-1902-4f0b-b67b-15805c9d2211/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/5486b345-1902-4f0b-b67b-15805c9d2211"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>い</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>i</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">い</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 26 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/5486b345-1902-4f0b-b67b-15805c9d2211/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="c80b6a06-095b-4ab4-89b0-9b7394aa67be" data-idx="23">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/c80b6a06-095b-4ab4-89b0-9b7394aa67be/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/c80b6a06-095b-4ab4-89b0-9b7394aa67be"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><div style="text-align:center"><h1>あ</h1>
+</div></div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-get="/decks/c0b4fbd6-8fba-4afd-a4b6-3880587acefd"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#a78bfa18; color:#a78bfa; box-shadow:inset 0 0 0 1px #a78bfa33;">
+                <span class="deck-badge-inner">Hiragana</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><div style="text-align:center"><p><strong>a</strong> <span class="tts-wrap" data-tts-lang="ja"><button type="button" class="tts-btn" aria-label="Read aloud"><svg class="tts-icon-speak" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg><svg class="tts-icon-stop" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button><span class="tts-text">あ</span></span></p>
+</div></div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 20 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/c80b6a06-095b-4ab4-89b0-9b7394aa67be/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div class="swipe-row border-t border-gray-100/70 dark:border-white/[0.06]" data-fact-id="08798625-722a-4bd1-8d35-6b3dd6744605" data-idx="24">
+        <div class="swipe-actions left">
+          <button class="swipe-btn swipe-btn-reset"
+            hx-post="/cards/08798625-722a-4bd1-8d35-6b3dd6744605/reset"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Reset this card to unseen?">Reset</button>
+        </div>
+        <div class="swipe-actions right">
+          <button class="swipe-btn swipe-btn-del"
+            hx-delete="/cards/08798625-722a-4bd1-8d35-6b3dd6744605"
+            hx-target="#card-list" hx-swap="innerHTML"
+            hx-confirm="Delete this fact and its cards?">Delete</button>
+        </div>
+        <div class="swipe-content flex flex-col gap-3 cursor-pointer px-4 py-3 sm:flex-row sm:gap-4 bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors" title="Click to edit" ontouchstart="clTouchStart(event,this)" ontouchmove="clTouchMove(event,this)" ontouchend="clTouchEnd(event,this)" onmousedown="clMouseDown(event,this)">
+          <div class="w-full min-w-0 sm:w-1/3">
+            
+            
+            <div class="font-medium text-gray-900 dark:text-gray-100 line-clamp-2 break-words"><p>Croatia</p>
+</div>
+            <div class="mt-1 flex gap-1">
+              <span class="cl-ind" title="Has image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-5-5L5 21"/></svg>
+              </span>
+              <span class="cl-ind" title="Has audio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </span>
+              <span class="cl-ind cl-ind-rev" title="Has reverse">↔</span>
+            </div>
+            
+              <a href="/decks/f5cd9608-7288-4fc4-81ec-2b1c6438692a"
+                 hx-get="/decks/f5cd9608-7288-4fc4-81ec-2b1c6438692a"
+                 hx-target="#contenido" hx-sync="#contenido:replace"
+                 hx-swap="outerHTML"
+                 hx-push-url="true"
+                 class="deck-badge mt-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset"
+                 style="background-color:#818cf818; color:#818cf8; box-shadow:inset 0 0 0 1px #818cf833;">
+                <span class="deck-badge-inner">European capitals</span>
+              </a>
+            
+          </div>
+          <div class="w-full min-w-0 sm:w-1/3 text-gray-500 dark:text-gray-400">
+            
+            
+            <div class="line-clamp-2 break-words"><p>Zagreb</p>
+</div>
+          </div>
+          <div class="flex w-full min-w-0 items-start justify-between gap-2 sm:w-1/3">
+            <div class="flex flex-col gap-1">
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  → in 19 days
+                </span>
+              
+                <span class="inline-flex items-center gap-1 self-start rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset
+                  bg-pink-500/15 text-pink-600 ring-pink-500/20 dark:text-pink-400">
+                  ← in 2 days
+                </span>
+              
+            </div>
+            <button
+              type="button"
+              hx-get="/cards/08798625-722a-4bd1-8d35-6b3dd6744605/edit"
+              hx-target="body"
+              hx-swap="beforeend"
+              title="Edit card"
+              class="shrink-0 rounded-lg p-1.5 text-gray-300 hover:bg-pink-500/10 hover:text-pink-600 transition-colors dark:text-gray-600 dark:hover:text-pink-400"
+            >
+              
+<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.862 4.487z" />
+</svg>
+
+            </button>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  
+    <div class="mt-4 flex items-center justify-center gap-3 text-sm">
+      <button
+        type="button"
+        
+        class="rounded-lg px-3 py-1.5 font-medium text-gray-600 ring-1 ring-inset ring-gray-300/60 hover:bg-gray-100 disabled:opacity-40 disabled:pointer-events-none dark:text-gray-300 dark:ring-white/10 dark:hover:bg-white/5"
+        hx-get="/cards/list?page=4"
+        hx-include="#card-search"
+        hx-target="#card-list" hx-swap="innerHTML"
+      >Previous</button>
+      <span class="text-gray-500 dark:text-gray-400">Page 5 of 6</span>
+      <button
+        type="button"
+        
+        class="rounded-lg px-3 py-1.5 font-medium text-gray-600 ring-1 ring-inset ring-gray-300/60 hover:bg-gray-100 disabled:opacity-40 disabled:pointer-events-none dark:text-gray-300 dark:ring-white/10 dark:hover:bg-white/5"
+        hx-get="/cards/list?page=6"
+        hx-include="#card-search"
+        hx-target="#card-list" hx-swap="innerHTML"
+      >Next</button>
+    </div>
+  
+  <script>
+  (function(){
+    var SD = {};
+    function resetAll(){
+      document.querySelectorAll('.swipe-content').forEach(function(e){
+        e.style.transform = ''; e.style.transition = 'transform 0.2s ease';
+      });
+    }
+    window.clTouchStart = function(e,node){
+      var t = e.touches[0];
+      var idx = node.closest('.swipe-row').dataset.idx;
+      SD[idx] = { startX: t.clientX, startY: t.clientY };
+      node.style.transition = 'none';
+    };
+    window.clTouchMove = function(e,node){
+      var idx = node.closest('.swipe-row').dataset.idx;
+      var d = SD[idx]; if(!d) return;
+      var dy = Math.abs(e.touches[0].clientY - d.startY);
+      var dx = e.touches[0].clientX - d.startX;
+      if(Math.abs(dx) <= dy) return;
+      e.preventDefault();
+      node.style.transform = 'translateX(' + dx + 'px)';
+    };
+    window.clTouchEnd = function(e,node){
+      var idx = node.closest('.swipe-row').dataset.idx;
+      var d = SD[idx]; if(!d) return;
+      delete SD[idx];
+      clSnapRow(node, e.changedTouches[0].clientX - d.startX);
+    };
+    document.addEventListener('click',function(e){
+      if(!e.target.closest('.swipe-row')) resetAll();
+    });
+    document.querySelectorAll('.swipe-row').forEach(function(row){
+      row.querySelector('.swipe-content').addEventListener('click',function(e){
+        if(e.target.closest('.swipe-btn')) return;
+        var t = this.style.transform;
+        if(t && t !== 'none' && t !== 'translateX(0px)'){ resetAll(); return; }
+        
+        
+        if(e.target.closest('button, a, input')) return;
+        var sel = window.getSelection();
+        if(sel && sel.toString()) return;
+        htmx.ajax('GET', '/cards/' + row.dataset.factId + '/edit', {target:'body', swap:'beforeend'});
+      });
+    });
+  })();
+  </script>
+  <style>
+    .cl-ind {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 2px 5px;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(156, 163, 175, 0.6);
+      background: rgba(156, 163, 175, 0.08);
+    }
+    .cl-ind svg { width: 10px; height: 10px; stroke: currentColor; }
+    .cl-ind-img { color: #ca8a04; background: rgba(234, 179,   8, 0.12); }
+    .cl-ind-aud { color: #3b82f6; background: rgba( 59, 130, 246, 0.12); }
+    .cl-ind-rev { color: #7c3aed; background: rgba(124,  58, 237, 0.12); }
+    .dark .cl-ind { color: rgba(75, 85, 99, 0.7); }
+    .dark .cl-ind-img { color: #facc15; background: rgba(234, 179,   8, 0.18); }
+    .dark .cl-ind-aud { color: #60a5fa; background: rgba( 59, 130, 246, 0.18); }
+    .dark .cl-ind-rev { color: #a78bfa; background: rgba(124,  58, 237, 0.18); }
+  </style>
+
+

@@ -1,0 +1,183 @@
+<div id="contenido">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Cards</h1>
+    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+      Add a fact; each becomes a forward card (and an optional reverse).
+    </p>
+  </div>
+
+  
+<form
+  hx-post="/cards"
+  hx-target="this"
+  hx-swap="outerHTML"
+  hx-encoding="multipart/form-data"
+  class="glass rounded-2xl p-5 sm:p-6"
+>
+  <div class="grid gap-4 sm:grid-cols-2">
+    <label class="block">
+      <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front</span>
+      <textarea
+        name="front"
+        required
+        rows="2"
+        placeholder="Question / prompt — Markdown works: # Title, **bold**, - list"
+        class="glass-input mt-1.5 w-full rounded-xl px-3 py-2 text-sm"
+      ></textarea>
+      
+    </label>
+
+    <label class="block">
+      <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back</span>
+      <textarea
+        name="back"
+        rows="2"
+        placeholder="Answer"
+        class="glass-input mt-1.5 w-full rounded-xl px-3 py-2 text-sm"
+      ></textarea>
+    </label>
+
+    <label class="block">
+      <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Initial grade</span>
+      <select
+        name="grade"
+        class="glass-input mt-1.5 w-full rounded-xl px-3 py-2 text-sm"
+      >
+        <option value="-1" selected>Unseen (grade in review)</option>
+        <option value="0" >0 — blackout</option>
+        <option value="1" >1 — wrong, familiar</option>
+        <option value="2" >2 — wrong, easy recall</option>
+        <option value="3" >3 — right, hard</option>
+        <option value="4" >4 — right, hesitant</option>
+        <option value="5" >5 — perfect</option>
+      </select>
+    </label>
+
+    <label class="block">
+      <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Deck</span>
+      <select
+        name="deckId"
+        required
+        class="glass-input mt-1.5 w-full rounded-xl px-3 py-2 text-sm"
+      >
+        <option value="" disabled selected>Select a deck</option>
+        
+          <option value="bb7803e4-4b1a-4369-8d2a-c540b2bbff8d" >Calculus</option>
+        
+          <option value="17590f07-dd18-409e-8c5f-96995d1fdd47" >Physics</option>
+        
+          <option value="9ac5185f-36ce-42a7-92f8-dccc65bbf304" >Spanish colors</option>
+        
+          <option value="da4683be-ff27-42fa-a72b-1b1809d9ff6e" >Spanish phrases</option>
+        
+          <option value="f5cd9608-7288-4fc4-81ec-2b1c6438692a" >European capitals</option>
+        
+          <option value="0e44e7d8-bdc3-474e-9e9a-faa489602041" >Flags</option>
+        
+          <option value="c0b4fbd6-8fba-4afd-a4b6-3880587acefd" >Hiragana</option>
+        
+          <option value="dccf26b2-2584-4e85-a1d8-02f7ecbf7159" >Japanese words</option>
+        
+          <option value="ccdf801a-4d8d-4e68-8e82-486005abc9a4" >Kanji: first steps</option>
+        
+          <option value="8771aef1-73a3-45d6-8842-4f9e52e228c2" >Welcome to Stella</option>
+        
+      </select>
+      
+    </label>
+
+    <div class="block">
+      <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front image <span class="font-normal normal-case">(optional)</span></span>
+      <div class="image-paste-widget">
+        <input
+          type="file"
+          name="image_front"
+          accept=".jpg,.jpeg,.png,.gif,.webp"
+          class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+        />
+        <div class="paste-ui"></div>
+      </div>
+      
+    </div>
+
+    <div class="block">
+      <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back image <span class="font-normal normal-case">(optional)</span></span>
+      <div class="image-paste-widget">
+        <input
+          type="file"
+          name="image_back"
+          accept=".jpg,.jpeg,.png,.gif,.webp"
+          class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+        />
+        <div class="paste-ui"></div>
+      </div>
+      
+    </div>
+
+    <div class="block">
+      <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Front audio <span class="font-normal normal-case">(optional)</span></span>
+      <div class="audio-rec-widget" data-for="audio_front">
+        <input
+          type="file"
+          name="audio_front"
+          accept=".mp3,.ogg,.wav,.m4a,.webm,.aac,.flac"
+          class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+        />
+        <div class="rec-ui"></div>
+      </div>
+      
+    </div>
+
+    <div class="block">
+      <span class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Back audio <span class="font-normal normal-case">(optional)</span></span>
+      <div class="audio-rec-widget" data-for="audio_back">
+        <input
+          type="file"
+          name="audio_back"
+          accept=".mp3,.ogg,.wav,.m4a,.webm,.aac,.flac"
+          class="glass-input mt-1.5 w-full rounded-xl px-3 py-1.5 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-pink-500/15 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-pink-700 hover:file:bg-pink-500/25 dark:file:text-pink-300"
+        />
+        <div class="rec-ui"></div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="mt-4 flex items-center justify-between">
+    <label class="flex items-center gap-2">
+      <input
+        type="checkbox"
+        name="reverse"
+        
+        class="h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500 dark:border-gray-600"
+      />
+      <span class="text-sm text-gray-600 dark:text-gray-300">Also add reverse card</span>
+    </label>
+    <button
+      type="submit"
+      class="btn-primary inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold"
+    >
+      Add card
+      <svg class="htmx-indicator h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+    </button>
+  </div>
+</form>
+
+
+
+  <div class="mt-5 mb-3">
+    <input
+      id="card-search"
+      type="search"
+      name="q"
+      placeholder="Search cards…"
+      class="glass-input w-full rounded-xl px-3 py-2 text-sm"
+      hx-get="/cards/list"
+      hx-trigger="input changed delay:300ms"
+      hx-target="#card-list"
+      hx-swap="innerHTML"
+    />
+  </div>
+
+  <div id="card-list" hx-get="/cards/list" hx-trigger="load" class="mt-2"></div>
+</div>
